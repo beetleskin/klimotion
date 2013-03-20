@@ -19,6 +19,8 @@ register_activation_hook( __FILE__, 'kpt_hook_install' );
 /* action hooks */
 add_action('init', 'kpt_hook_init');
 
+/* add link manager */
+add_filter( 'pre_option_link_manager_enabled', '__return_true' );
 
 
 
