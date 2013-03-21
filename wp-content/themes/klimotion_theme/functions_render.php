@@ -11,7 +11,6 @@ class LocalGroupsPage {
 	
 	
 	public static function prepare_map() {
-		
 		// add group map script
 	    wp_register_script('klimo-groupspage', get_stylesheet_directory_uri() . '/script/klimo_localgroupspage.js', array('jquery', 'jvectormap'));
 	    wp_enqueue_script('klimo-groupspage');
