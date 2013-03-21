@@ -11,17 +11,20 @@
  License: GPLv2 or later
  */
 
-include_once dirname( __FILE__ ).'/klimoPT_install.php';
+
 
 /* install hooks*/
-register_activation_hook( __FILE__, 'kpt_hook_install' );
+// include_once dirname( __FILE__ ).'/klimoPT_install.php';
+// register_activation_hook( __FILE__, 'kpt_hook_install' );
 
-/* action hooks */
+/* front end action hooks */
 add_action('init', 'kpt_hook_init');
 
-/* add link manager */
-add_filter( 'pre_option_link_manager_enabled', '__return_true' );
-
+/* back end action hooks */
+add_action('add_meta_boxes', 'kpt_hook_metaboxes' );
+add_action('save_post', 'kpt_hook_save_post_info', 1, 2); 
+add_action('admin_init',  'kpt_hook_add_admin_style');
+add_action('admin_init',  'kpt_hook_add_admin_script');
 
 
 function kpt_hook_init() {
@@ -29,14 +32,87 @@ function kpt_hook_init() {
     ob_start("ob_gzhandler");
 	
 	// add post types
-	kpt_add_pt_idea();
+	kpt_add_idea();
 	kpt_add_localGroups();
+}
+
+
+function kpt_hook_add_admin_style() {
+    wp_enqueue_style( 'kpt-admin-style', plugins_url('css/klimoPT_admin.css', __FILE__) );
+}
+
+function kpt_hook_add_admin_script() {
+	wp_enqueue_script('autosuggest', plugins_url('script/klimoPT_admin.js', __FILE__), array('jquery'));
+}
+
+
+function kpt_hook_metaboxes() {
+	add_meta_box('idea-post-meta-links', 'Links',  'kpt_hook_metabox_links', 'klimo_idea', 'normal', 'default');
+}
+
+
+function kpt_hook_metabox_links($post) {
+	// get current _links meta
+	$links_slug = '_links';
+    $links_meta = get_post_meta($post->ID, $links_slug, TRUE);
+
+	// create html
+	echo '<input type="hidden" name="linksmeta_noncella" id="linksmeta" value="' . wp_create_nonce( plugin_basename(__FILE__) ) . '" />';
+	echo '<table id="linkmeta">';
+	echo '<thead>
+			<tr>
+				<th class="left"><label for="linksmetatext">Text</label></th>
+				<th><label for="linksmetavalue">URL</label></th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>';
+
+	
+	$i = 0;
+	if(!$links_meta) {
+		echo '<tr><td class="left"><input type="text" maxlength="40" name="_linktext_' . $i . '" value=""></td>';
+		echo '<td><input type="text" name="_linkurl' . $i . '" value=""></td></tr>';
+	}
+	foreach ($links_meta as $i => $link) {
+		echo '<tr><td class="left"><input type="text" maxlength="40" name="_linktext_' . $i . '" value="' . $link['text']  . '"></td>';
+		echo '<td><input type="text" name="_linkurl' . $i . '" value="' . $link['url']  . '"></td>';
+		echo '<td>entfernen</td></tr>';
+	}
+	
+	echo '<tr><td>hinzufügen</td></tr>';	
+	echo '</tbody></table>';
+}
+
+function kpt_hook_save_post_info($post_id, $post) {
+	// authorization,
+	if ( !wp_verify_nonce( $_POST['linksmeta_noncella'], plugin_basename(__FILE__) )) {
+		return;
+	}
+	if ( !current_user_can( 'edit_post', $post->ID ))
+		return;
+	
+	
+	$newPostMeta = array();
+	for ($i=0; ;$i++) { 
+		$keyText = '_linktext_' . $i;
+		$keyUrl = '_linkurl' . $i;
+		if(!array_key_exists ( $keyText , $_POST ))
+			break;
+		$valText  = trim(wp_strip_all_tags($_POST[$keyText]));
+		$valUrl  = trim(wp_strip_all_tags($_POST[$keyUrl]));
+		$newPostMeta[] = array('text' => $valText, 'url' => $valUrl);
+	}
+	
+	// update post link meta
+	update_post_meta($post->ID, '_links', $newPostMeta);
 }
 
 
 
 
-function kpt_add_pt_idea()  {
+
+function kpt_add_idea()  {
     
     $post_type_labels = array(
         'name' =>               _x('Ideen', 'post type general name'),
