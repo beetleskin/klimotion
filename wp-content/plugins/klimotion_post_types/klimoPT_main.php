@@ -34,6 +34,7 @@ function kpt_hook_init() {
 	// add post types
 	kpt_add_idea();
 	kpt_add_localGroups();
+	wls_simple_log("klimotion", "text");
 }
 
 
