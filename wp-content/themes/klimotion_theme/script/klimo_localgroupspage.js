@@ -5,7 +5,7 @@
 jQuery(function($) { klimo_localgroupspage : {
 
 
-		function Mapcontrol(wrapper) {
+		function MapControl(wrapper) {
 			var me = this;
 			this.wrapper = wrapper
 		
@@ -25,7 +25,7 @@ jQuery(function($) { klimo_localgroupspage : {
 		
 
 		$(document).ready(function() {
-			var mapsControl = new MapsControl('#groupmap');
+			var mapControl = new MapControl('#groupmap');
 		});
 	}
 
