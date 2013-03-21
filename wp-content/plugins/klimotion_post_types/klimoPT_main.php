@@ -19,61 +19,93 @@ add_action('init', 'kpt_hook_init');
 /* back end action hooks */
 add_action('add_meta_boxes', 'kpt_hook_metaboxes' );
 add_action('save_post', 'kpt_hook_save_post_idea', 1, 2); 
+add_action('save_post', 'kpt_hook_save_post_group', 1, 2); 
 add_action('admin_init',  'kpt_hook_add_admin_style');
 add_action('admin_init',  'kpt_hook_add_admin_script');
+
+
+add_action( 'attachments_register', 'init_attachments' );
 
 
 function kpt_hook_init() {
 	// add post types
 	kpt_add_idea();
 	kpt_add_localGroups();
+	
 }
 
+function init_attachments($attachments) {
+	
+	$fields         = array(
+		array(
+			'name'      => 'title',                         // unique field name
+			'type'      => 'text',                          // registered field type
+			'label'     => __( 'Title', 'attachments' ),    // label to display
+			'default'   => 'title',                         // default value upon selection
+		),
+		array(
+			'name'      => 'caption',                       // unique field name
+			'type'      => 'textarea',                      // registered field type
+			'label'     => __( 'Caption', 'attachments' ),  // label to display
+			'default'   => 'caption',                       // default value upon selection
+		),
+	);
+
+	$args = array(
+		'label'         => 'My Attachments',
+		'post_type'     => array( 'klimo_idea'),
+		'position'      => 'normal',
+		'priority'      => 'high',
+		'filetype'      => null,  // no filetype limit
+		'note'          => 'Attach files here!',
+		'append'        => true,
+		'button_text'   => __( 'Attach Files', 'attachments' ),
+		'modal_text'    => __( 'Attach', 'attachments' ),
+		'router'        => 'browse',
+		'fields'        => $fields,
+	);
+
+	$attachments->register( 'klimo_attachments', $args ); // unique instance name
+
+}
 
 function kpt_hook_add_admin_style() {
-    wp_enqueue_style( 'kpt-admin-style', plugins_url('css/klimoPT_admin.css', __FILE__) );
+	wp_enqueue_style('kpt-admin-style', plugins_url('css/klimoPT_admin.css', __FILE__) );
 }
 
 function kpt_hook_add_admin_script() {
-	wp_enqueue_script('autosuggest', plugins_url('script/klimoPT_admin.js', __FILE__), array('jquery'));
+	wp_enqueue_script('kpt-admin-script', plugins_url('script/klimoPT_admin.js', __FILE__), array('jquery'));
 }
 
 
 function kpt_hook_metaboxes() {
 	add_meta_box('idea-post-meta-links', 'Links',  'kpt_hook_metabox_links', 'klimo_idea', 'normal', 'default');
-	add_meta_box('idea-post-meta-group', 'Gruppe',  'kpt_hook_metabox_group', 'klimo_idea', 'normal', 'side');
+	add_meta_box('idea-post-meta-group', 'Gruppe',  'kpt_hook_metabox_group', 'klimo_idea', 'side', 'default');
 }
 
 
 function kpt_hook_metabox_group($post) {
 	// get current _links meta
 	$idea_group_meta_slug = '_group';
-    $group_meta = get_post_meta($post->ID, $idea_links_meta_slug, TRUE);
+    $group_meta = get_post_meta($post->ID, $idea_group_meta_slug, TRUE);
 	if(!$group_meta) {
 		$group_meta = -1;
 	}
 	
 	// get local groups
+	$groupQueryArgs = array( 'post_type' => 'klimo_localGroups', 'suppress_filters' => true, 'numberposts' => -1);
+	$groups = get_posts( $groupQueryArgs );
 	
-
-	// create html
+	
+	// render select dropdown
 	echo '<input type="hidden" name="groupmeta_nonce" id="groupmeta" value="' . wp_create_nonce( plugin_basename(__FILE__) ) . '" />';
 	echo '<select name="meta-group" id="meta-group">';
-	echo '<option value="-1 ' . ($group_meta == -1)? 'selected="selected"' : '' . '"></option>';
-	
-	
-	
-	
-	$i = 0;
-	foreach ($links_meta as $i => $link) {
-		echo '<tr class="links_meta_pair">';
-		echo '<td><input type="text" maxlength="40" name="_linktext_' . $i . '" value="' . $link['text']  . '"></td>';
-		echo '<td><input type="text" name="_linkurl_' . $i . '" value="' . $link['url']  . '"></td>';
-		echo '<td><a class="removelink" href="#" onclick="return false;">entfernen</a></td></tr>';
+	echo '<option value="-1" ' . (($group_meta == -1)? 'selected="selected"' : '') . '>keine Gruppe</option>';
+	foreach ($groups as $group) {
+		echo '<option value="' . $group->ID . '" ' . (($group_meta == $group->ID)? 'selected="selected"' : '') . '>' . $group->post_title . '</option>';
 	}
 	
-	echo '</tbody></table>';
-	echo '<a id="addlink" href="#" onclick="return false;">hinzufügen</a>';
+	echo '</select>';	
 }
 
 
@@ -108,6 +140,28 @@ function kpt_hook_metabox_links($post) {
 	
 	echo '</tbody></table>';
 	echo '<a id="addlink" href="#" onclick="return false;">hinzufügen</a>';
+}
+
+function kpt_hook_save_post_group($post_id, $post) {
+
+	// authorization,
+	if ( !array_key_exists ( 'post_type' , $_POST ) || 'klimo_idea' != $_POST['post_type'] )
+		return;
+	if ( !current_user_can( 'edit_post', $post->ID ))
+		return;
+	if ( !wp_verify_nonce( $_POST['groupmeta_nonce'], plugin_basename(__FILE__) ))
+		return;
+	
+	
+	$newPostMeta = $_POST['meta-group'];
+
+	// update post link meta
+	$idea_group_meta_slug = '_group';
+	if($idea_group_meta_slug == -1) {
+		delete_post_meta($post->ID, $idea_group_meta_slug);
+	} else {
+		update_post_meta($post->ID, $idea_group_meta_slug, $newPostMeta);
+	}
 }
 
 
@@ -169,7 +223,7 @@ function kpt_add_idea()  {
         'show_in_menu'  => true,
         'map_meta_cap'  => true,
         'has_archive'   => false,
-        'supports'      => array('title', 'editor', 'author', 'thumbnail', 'excerpt', 'custom-fields', 'comments'),
+        'supports'      => array('title', 'editor', 'author', 'thumbnail', 'excerpt', 'custom-fields', 'comments', 'attachment'),
         'taxonomies'    => array('klimo_idea_topics'),
     );
 
@@ -227,8 +281,8 @@ function kpt_add_localGroups()  {
     
     $post_taxonomy_args = array(
         "hierarchical"      => true,
-        "label"             => "Postleitzahlen",
-        "singular_label"    => "Postleitzahl",
+        "label"             => "Landkreise",
+        "singular_label"    => "Landkreis",
         "rewrite"           => true,
     );
         
