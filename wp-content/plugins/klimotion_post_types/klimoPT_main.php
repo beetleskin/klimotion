@@ -64,7 +64,7 @@ function init_attachments($attachments) {
 		'router'        => 'browse',
 		'fields'        => $fields,
 	);
-
+ 
 	$attachments->register( 'klimo_attachments', $args ); // unique instance name
 
 }
