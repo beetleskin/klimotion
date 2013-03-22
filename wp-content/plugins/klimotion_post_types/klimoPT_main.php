@@ -52,7 +52,7 @@ function init_attachments($attachments) {
 	);
 
 	$args = array(
-		'label'         => 'Anhänge',
+		'label'         => 'My Attachments',
 		'post_type'     => array( 'klimo_idea'),
 		'position'      => 'normal',
 		'priority'      => 'high',
