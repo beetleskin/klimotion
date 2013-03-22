@@ -13,9 +13,10 @@ jQuery(function($) { klimo_localgroupspage : {
 
 			this.__contruct = function() {
 				$(wrapper).vectorMap({
-					map: "de_mill_en",
+					map: "lower_saxony_de",
 				});
 			}
+			//hier alle hinpinselnnnn
 			
 			
 			// call constructor
