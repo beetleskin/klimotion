@@ -48,7 +48,7 @@ function init_attachments($attachments) {
 			'type'      => 'textarea',                      // registered field type
 			'label'     => __( 'Caption', 'attachments' ),  // label to display
 			'default'   => 'caption',                       // default value upon selection
-		), 
+		),
 	);
 
 	$args = array(
