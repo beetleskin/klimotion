@@ -1,6 +1,11 @@
 <?php
 /**
- * Template Name: Lokale Gruppen
+ * The template for displaying all pages.
+ *
+ * This is the template that displays all pages by default.
+ * Please note that this is the WordPress construct of pages
+ * and that other 'pages' on your WordPress site will use a
+ * different template.
  *
  * @package Cazuela
  * @since Cazuela 1.0
@@ -16,28 +21,13 @@ get_header(); ?>
 				thsp_hook_before_content();
 			?>
 
-			<?php while ( have_posts() ) : the_post(); ?>
-
-				<?php get_template_part( 'content', 'page' ); ?>
-
-			<?php endwhile; // end of the loop. ?>
-			
 			<?php
-				LocalGroupsPage::prepare_map();
-				LocalGroupsPage::render_map();
+				// render form
+				$form = new NewIdeaForm();
+			    $form->render();
+				$form->postRender();
 			?>
 			
-			<?php
-				LocalGroupsPage::local_groups_query();
-			?>
-			
-			<?php while ( have_posts() ) : the_post(); ?>
-
-				<?php get_template_part( 'content' ); ?>
-
-			<?php endwhile; // end of the loop. ?>
-			
-
 			<?php
 				// After Content theme hook callback
 				thsp_hook_after_content();

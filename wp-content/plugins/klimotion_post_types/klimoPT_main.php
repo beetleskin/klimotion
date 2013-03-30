@@ -27,6 +27,9 @@ add_action('admin_init',  'kpt_hook_add_admin_script');
 add_action( 'attachments_register', 'init_attachments' );
 
 
+include_once('klimoPT_idea_form.php');
+
+
 function kpt_hook_init() {
 	// add post types
 	kpt_add_idea();
@@ -52,8 +55,8 @@ function init_attachments($attachments) {
 	);
 
 	$args = array(
-		'label'         => 'fasdfasdfasdfasdf',
-		'post_type'     => array( 'klimo_idea'),
+		'label'         => 'Anhänge',
+		'post_type'     => array( 'klimo_idea, klimo_localGroups'),
 		'position'      => 'normal',
 		'priority'      => 'high',
 		'filetype'      => null,  // no filetype limit
@@ -280,14 +283,14 @@ function kpt_add_localGroups()  {
 
     
     $post_taxonomy_args = array(
-        "hierarchical"      => true,
+        "hierarchical"      => false,
         "label"             => "Landkreise",
         "singular_label"    => "Landkreis",
         "rewrite"           => true,
     );
         
         
-    register_taxonomy("klimo_localGroups_ZIPCode", array("klimo_localGroups"), $post_taxonomy_args);
+    register_taxonomy("klimo_localGroups_states", array("klimo_localGroups"), $post_taxonomy_args);
     register_post_type('klimo_localGroups', $post_type_args);
 }
 
