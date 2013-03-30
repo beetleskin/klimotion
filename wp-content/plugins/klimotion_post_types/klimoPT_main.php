@@ -14,7 +14,8 @@
 
 
 /* front end action hooks */
-add_action('init', 'kpt_hook_init');
+register_activation_hook(__FILE__, 'kpt_hook_init');
+
 
 /* back end action hooks */
 add_action('add_meta_boxes', 'kpt_hook_metaboxes' );
@@ -34,7 +35,6 @@ function kpt_hook_init() {
 	// add post types
 	kpt_add_idea();
 	kpt_add_localGroups();
-	
 }
 
 function init_attachments($attachments) {
