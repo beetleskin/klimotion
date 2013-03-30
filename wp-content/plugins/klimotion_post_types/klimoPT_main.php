@@ -14,7 +14,7 @@
 
 
 /* front end action hooks */
-register_activation_hook(__FILE__, 'kpt_hook_init');
+add_action("init", 'kpt_hook_init');
 
 
 /* back end action hooks */
@@ -27,6 +27,9 @@ add_action('admin_init',  'kpt_hook_add_admin_script');
 
 add_action( 'attachments_register', 'init_attachments' );
 
+// database hooks
+register_activation_hook(__FILE__, "kpt_create_db_tables");
+register_uninstall_hook(__FILE__, "kpt_delete_db_tables");
 
 include_once('klimoPT_idea_form.php');
 
@@ -36,6 +39,36 @@ function kpt_hook_init() {
 	kpt_add_idea();
 	kpt_add_localGroups();
 }
+
+global $klimotion_db_version;
+$klimotion_db_version = "1.0";
+
+function kpt_create_db_tables() {
+	
+	require_once('lower_saxony_list.php');
+	require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+    global $wpdb;
+    $table_name = $wpdb->prefix . "klimotion";
+      
+    $sql = "CREATE TABLE $table_name (
+	id TINYINT NOT NULL ,
+	name tinytext NOT NULL,
+	UNIQUE KEY id (id)
+    );";
+	   
+    dbDelta( $sql );
+}
+//noch zu testen! wer weiss ob die beim Uninstall tut was sie soll, die alte function.
+function kpt_delete_db_tables() {
+	
+	require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+	global $wpdb;
+	
+	$table_name = $wpdb->prefix . "klimotion";
+	$sql = "DROP TABLE IF EXISTS $table_name;";
+	
+	dbDelta( $sql );
+}	
 
 function init_attachments($attachments) {
 	
