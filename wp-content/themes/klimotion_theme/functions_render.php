@@ -5,6 +5,7 @@ class LocalGroupsPage {
 	
 	
 	public static function local_groups_query() {
+		// TODO: query_posts or get_posts ?
 		$newQuery = query_posts( array( 'post_type' => array('klimo_localGroups') ) );
 		return $newQuery;
 	}

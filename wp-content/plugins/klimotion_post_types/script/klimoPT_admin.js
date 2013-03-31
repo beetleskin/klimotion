@@ -6,10 +6,14 @@ jQuery(function($) { adminidea : {
 
 
 		function LinksControl(wrapper) {
+			// TODO: this class is a exact copy of the one in klimoPT_frontend_forms.js ... merge!
 			var me = this;
 			this.wrapper = wrapper;
 			this.noLinks = 0;
 			this.templateRow = 0;
+			this.textSelect = '_linktext_';
+			this.urlSelect = '_linkurl_'
+			
 
 
 			this.__contruct = function() {
@@ -35,24 +39,24 @@ jQuery(function($) { adminidea : {
 			
 			this.addLink = function() {
 				lastPair = $('tr.links_meta_pair', me.wrapper).last();
-					if( $('input', lastPair).last().val() == '') {
-						lastPair.fadeTo(400, 0.2).fadeTo(400, 1.0);
-					} else {
-						newPair = me.templateRow.clone();
-						$('input[name*=_linktext_]', newPair).attr('name', '_linktext_' + me.noLinks);
-  						$('input[name*=_linkurl_]', newPair).attr('name', '_linkurl_' + me.noLinks);
-  						$('a.removelink', newPair).click(me.removeLink);
-						$('tbody', me.wrapper).append(newPair);
-						me.noLinks++;
-					}
+				if( $('input', lastPair).last().val() == '') {
+					lastPair.fadeTo(400, 0.2).fadeTo(400, 1.0);
+				} else {
+					newPair = me.templateRow.clone();
+					$('input[name*=' + me.textSelect + ']', newPair).attr('name', me.textSelect + me.noLinks);
+					$('input[name*=' + me.urlSelect + ']', newPair).attr('name', me.urlSelect + me.noLinks);
+					$('a.removelink', newPair).click(me.removeLink);
+					$('tbody', me.wrapper).append(newPair);
+					me.noLinks++;
+				}
 			}
 			
 			
 			this.renameIDs = function() {
 				i = 0;
 				$('tr.links_meta_pair', me.wrapper).each(function(index, value) {
-  					$('input[name*=_linktext_]', value).attr('name', '_linktext_' + i);
-  					$('input[name*=_linkurl_]', value).attr('name', '_linkurl_' + i);
+  					$('input[name*=' + me.textSelect + ']', value).attr('name', me.textSelect + i);
+  					$('input[name*=' + me.urlSelect + ']', value).attr('name', me.urlSelect + i);
   					i++;
   				});
   				me.noLinks = $('.links_meta_pair', me.wrapper).length;
