@@ -19,6 +19,7 @@ class NewIdeaForm {
         'title_max_chars'     	=> 100,
         'title_min_chars'     	=> 20,
         'excerp_max_chars'    	=> 200,
+        'image_size_max'		=> 5000000,
     );
     
 
@@ -168,7 +169,7 @@ class NewIdeaForm {
 			        
 			        
 			        <h2>Ziele</h2>
-			        <input type="text" id="idea_aim" name="idea_aim">
+			        <input type="text" id="idea_aims" name="idea_aims">
 			        
 			        
 			        <div class="idea_submit_container"><a href="<?php echo $data['submitLink'] ?>" <?php echo $data['onClick'] ?> id="idea_submit">Abschicken</a></div>
@@ -224,7 +225,7 @@ class NewIdeaForm {
 		
 		// security check and validations
 		$securityVeto = self::securityCheck($_REQUEST);
-		$validationVeto = self::validate($_REQUEST, $postData);
+		$validationVeto = self::validate($_REQUEST, $_FILES, $postData);
 		if ( !empty($securityVeto))  {
 			self::ajaxRespond($securityVeto);
 			die();
@@ -243,7 +244,7 @@ class NewIdeaForm {
 		$idea_excerp = $postData['idea_excerp'];
 		$idea_description = $postData['idea_description'];
 		$idea_topic_id = $postData['idea_topic'];
-		$idea_aim_id = $postData['idea_aim'];
+		$idea_aim_ids = $postData['idea_aims'];
 		$idea_links = $postData['idea_links'];
 		// $idea_file1 = wp_strip_all_tags($postData['']);
 		// $idea_image = wp_strip_all_tags($postData['']);
@@ -259,7 +260,7 @@ class NewIdeaForm {
             'post_excerpt'  => $idea_excerp,
             'tax_input'		=> array(
             	'klimo_idea_topics' => array(intval($idea_topic_id)),
-            	'klimo_idea_aims' => array(intval($idea_aim_id)),
+            	'klimo_idea_aims' => $idea_aim_ids,
 			),
         );
 		
@@ -271,7 +272,7 @@ class NewIdeaForm {
             die();
         }
 		
-		// save local group meta
+		// attach local group meta
 		$group_meta_slug = '_group';
 		if($idea_group_id == -1) {
 			delete_post_meta($postID, $group_meta_slug);
@@ -280,11 +281,22 @@ class NewIdeaForm {
 		}
 		
 		
-		// save link meta
+		// attach link meta
 		$idea_links_meta_slug = '_links';
 		if(!empty($idea_links)){
 			update_post_meta($postID, $idea_links_meta_slug, $idea_links);
 		} 
+		
+		
+		// attach features image
+		if( key_exists('idea_image', $_FILES) ) {
+            $attach_id = media_handle_upload( 'idea_image', $postID );
+            if(!is_wp_error($attach_id)) {
+                update_post_meta( $postID, '_thumbnail_id', $attach_id );
+            } else {
+                $error = $postID->get_error_message();
+            }
+        }
 		
 		
 		
@@ -310,8 +322,9 @@ class NewIdeaForm {
     }
 
 
-    private static function validate(&$args, &$postData) {
-    	
+    private static function validate(&$args, &$files, &$postData) {
+    	$response = array();
+		
 		// check title
         $element = "idea_title";
         $value = trim(wp_strip_all_tags($args[$element]));
@@ -380,8 +393,14 @@ class NewIdeaForm {
 		
 		
 		// check aim
-		$element = 'idea_aim';
-		$value = intval(wp_strip_all_tags($args['idea_aim']));
+		$element = 'idea_aims';
+		$value = explode(",", wp_strip_all_tags($args['as_values_idea_aims']));
+		foreach ($value as &$aim) {
+			if(is_numeric($aim))
+				$aim = intval($aim);
+		}
+		$last = end($value);
+		if( empty($last) ) array_pop($value);
 		$postData[$element] = $value;
 		
 		
@@ -400,6 +419,18 @@ class NewIdeaForm {
 				$value[] = array('text' => $valText, 'url' => $valUrl);
 		}
 		$postData[$element] = $value;
+		
+		
+		// check file
+        $element = "idea_image";
+        if( key_exists($element, $files) && key_exists('size', $files[$element]) ) {
+            if( $files[$element]['size'] > self::$validationConfig['image_size_max'] ) {
+                $response['error'][] = array(
+                    'element'   => $element,
+                    'message'   => "Bilder dürfen nicht größer als " . (self::$validationConfig['image_size_max'] / 1000000) . " MB groß sein.",
+                );
+            }
+        }
 		
 		
 		return $response;

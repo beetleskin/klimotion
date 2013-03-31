@@ -83,12 +83,13 @@ jQuery(function($) { ideaform : {
 				
 				
 				// aims autosuggest
-				$('input#idea_aim').autoSuggest(me.config.as_aims, {
+				$('input#idea_aims').autoSuggest(me.config.as_aims, {
 					selectedItemProp : "name",
 					searchObjProps : "name",
 					minChars : 1,
 					startText : "Ziele ...",
 					emptyText : "neues Ziel mit TAB",
+					asHtmlID : "idea_aims"
 				});
 				
 				
@@ -115,6 +116,7 @@ jQuery(function($) { ideaform : {
 			}
 			
 			this.beforeSubmit = function(formData, jqForm, options) {
+				console.log(formData);
 			}
 			
 			this.successHandler = function(response, statusText, xhr, $form) {
