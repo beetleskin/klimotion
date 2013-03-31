@@ -45,18 +45,22 @@ $klimotion_db_version = "1.0";
 
 function kpt_create_db_tables() {
 	
-	require_once('lower_saxony_list.php');
 	require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+	require_once('lower_saxony_list.php');
     global $wpdb;
     $table_name = $wpdb->prefix . "klimotion";
       
-    $sql = "CREATE TABLE $table_name (
+    $sql = "CREATE TABLE IF NOT EXISTS $table_name (
 	id TINYINT NOT NULL ,
 	name tinytext NOT NULL,
 	UNIQUE KEY id (id)
     );";
 	   
     dbDelta( $sql );
+	foreach ($lower_saxony_array as $key => $value) {
+		$rows_affected = $wpdb->insert( $table_name, array('id' => $key, 'name' => $value ));
+	}
+	
 }
 //noch zu testen! wer weiss ob die beim Uninstall tut was sie soll, die alte function.
 function kpt_delete_db_tables() {

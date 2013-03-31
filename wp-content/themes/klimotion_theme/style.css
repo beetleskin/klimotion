@@ -12,12 +12,31 @@ Text Domain: klimotion_theme
 /* -------------------------------------------------------------- */
 
 /* Top-Menu */
+.entry-lead {
+	display: inline;
+    height: auto;
+}
+
 .entry-title{
 	font-size: 24px;
-   font-size: 2.4rem;	
+	font-size: 2.4rem;	
 }
+
 .entry-lead img {
-  display: block;
-  width: 10%;
-  height: auto;
+  	width: 15%;
+ 	height: auto;
+  	float: left;
+}
+
+
+.hentry .entry-inner,
+.not-found .entry-inner,
+.entry-lead img {
+  padding: 20px 20px 0;
+  padding: 2rem 2rem 0;
+}
+
+.masonry-post .hentry .entry-inner {
+  padding: 15px;
+  padding: 1.5rem;
 }
