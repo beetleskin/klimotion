@@ -24,8 +24,6 @@ add_action('add_meta_boxes', 'kpt_hook_metaboxes' );
 add_action('save_post', 'kpt_hook_save_post_idea', 1, 2); 
 add_action('admin_init',  'kpt_hook_add_admin_style');
 add_action('admin_init',  'kpt_hook_add_admin_script');
-
-
 add_action( 'attachments_register', 'init_attachments' );
 
 // database hooks
@@ -86,34 +84,29 @@ function my_rewrite_flush() {
 
 function init_attachments($attachments) {
 	
-	$fields         = array(
+	$fields = array(
 		array(
-			'name'      => 'title',                         // unique field name
-			'type'      => 'text',                          // registered field type
-			'label'     => __( 'Title', 'attachments' ),    // label to display
-			'default'   => 'title',                         // default value upon selection
-		),
-		array(
-			'name'      => 'caption',                       // unique field name
-			'type'      => 'textarea',                      // registered field type
-			'label'     => __( 'Caption', 'attachments' ),  // label to display
-			'default'   => 'caption',                       // default value upon selection
+		  'name'      => 'title',                         // unique field name
+		  'type'      => 'text',                          // registered field type
+		  'label'     => __( 'Title', 'attachments' ),    // label to display
+		  'default'   => 'title',                         // default value upon selection
 		),
 	);
 
 	$args = array(
-		'label'         => 'Anhänge',
-		'post_type'     => array( 'klimo_idea, klimo_localGroups'),
-		'position'      => 'normal',
-		'priority'      => 'high',
-		'filetype'      => null,  // no filetype limit
-		'note'          => 'Attach files here!',
-		'append'        => true,
-		'button_text'   => __( 'Attach Files', 'attachments' ),
-		'modal_text'    => __( 'Attach', 'attachments' ),
-		'router'        => 'browse',
-		'fields'        => $fields,
-	);
+    'label'         => 'My Attachments',
+    'post_type'     => array( 'klimo_idea', 'klimo_localGroup' ),
+    'position'      => 'normal',
+    'priority'      => 'high',
+    'filetype'      => null,  // no filetype limit
+    'note'          => 'Attach files here!',
+    'append'        => true,
+    'button_text'   => __( 'Attach Files', 'attachments' ),
+    'modal_text'    => __( 'Attach', 'attachments' ),
+    'router'        => 'browse',
+    'fields'        => $fields,
+
+  );
  
 	$attachments->register( 'klimo_attachments', $args ); // unique instance name
 

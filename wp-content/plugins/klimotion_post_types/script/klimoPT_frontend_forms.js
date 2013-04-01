@@ -83,14 +83,17 @@ jQuery(function($) { ideaform : {
 				
 				
 				// aims autosuggest
-				$('input#idea_aims').autoSuggest(me.config.as_aims, {
-					selectedItemProp : "name",
-					searchObjProps : "name",
-					minChars : 1,
-					startText : "Ziele ...",
-					emptyText : "neues Ziel mit TAB",
-					asHtmlID : "idea_aims"
-				});
+				$('input#idea_aims', me.wrapper).autoSuggest(
+					me.config.as_aims, 
+					{
+						selectedItemProp : "name",
+						searchObjProps : "name",
+						minChars : 1,
+						startText : "Ziele ...",
+						emptyText : "neues Ziel mit TAB",
+						asHtmlID : "idea_aims"
+					}
+				);
 				
 				
 				
@@ -116,7 +119,6 @@ jQuery(function($) { ideaform : {
 			}
 			
 			this.beforeSubmit = function(formData, jqForm, options) {
-				console.log(formData);
 			}
 			
 			this.successHandler = function(response, statusText, xhr, $form) {
@@ -134,7 +136,6 @@ jQuery(function($) { ideaform : {
 			}
 			
 			this.transmissionErrorHandler = function(param) {
-				return;
 				me.form.animate({
 					opacity : 'toggle',
 					height : 'toggle'
@@ -147,7 +148,8 @@ jQuery(function($) { ideaform : {
 						height : 'toggle'
 					}, "slow");
 				});
-
+				
+				$("html, body").animate({ scrollTop: 0 }, "slow");
 				setTimeout("location.reload()", 5000);
 			}
 			
@@ -177,6 +179,8 @@ jQuery(function($) { ideaform : {
 						}, "slow");
 					}
 				});
+				
+				$("html, body").animate({ scrollTop: 0 }, "slow");
 			}
 			
 			
@@ -194,6 +198,7 @@ jQuery(function($) { ideaform : {
 							opacity : 'toggle',
 							height : 'toggle'
 						}, "slow");
+						me.form.scrollTop(300);
 					});
 
 					setTimeout("location.reload()", 5000);

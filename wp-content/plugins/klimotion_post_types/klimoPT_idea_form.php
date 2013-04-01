@@ -70,6 +70,7 @@ class NewIdeaForm {
 		
 		
 		// aims		
+		// TODO: Wen keine 'aims' in der Datenbank liegen, scheiß AutoSuggest ab und das Formular funktioniert nicht richtig.
 		$aims = get_terms("klimo_idea_aims", array(
             'hide_empty'    => false,
             'hierarchical'  => false,
@@ -239,7 +240,7 @@ class NewIdeaForm {
 		
 		// add post
 		// collect values
-		$error = null;
+		$errors = array();
         $idea_title = $postData['idea_title'];
 		$idea_group_id = $postData['idea_group'];
 		$idea_excerp = $postData['idea_excerp'];
@@ -290,13 +291,35 @@ class NewIdeaForm {
 		
 		
 		// attach features image
-		if( key_exists('idea_image', $_FILES) ) {
+		if( !empty($_FILES['idea_image']['name']) ) {
             $attach_id = media_handle_upload( 'idea_image', $postID );
             if(!is_wp_error($attach_id)) {
-                update_post_meta( $postID, '_thumbnail_id', $attach_id );
+                // update_post_meta( $postID, '_thumbnail_id', $attach_id );
+				set_post_thumbnail($postID, $attach_id);
             } else {
-                $error = $postID->get_error_message();
+                $errors[] = array(
+                    'element'   => 'idea_image',
+                    'message'   => $attach_id->get_error_message(),
+				);
+				wp_delete_post($postID, true);
+				goto finish;
             }
+        }
+		
+		
+		// attach other files
+		if( !empty($_FILES['idea_file1']['name']) ) {
+            $attach_id = media_handle_upload('idea_file1', $postID, array('post_title' => "leTitle"));
+            /*if(!is_wp_error($attach_id)) {
+                update_post_meta( $postID, '_idea_file1', $attach_id );
+            } else {
+            	$errors[] = array(
+                    'element'   => 'idea_file1',
+                    'message'   => $attach_id->get_error_message(),
+				);
+				wp_delete_post($postID, true);
+				goto finish;
+            }*/
         }
 		
 		
@@ -304,12 +327,15 @@ class NewIdeaForm {
 		
 		
 		// return
-		$response = array();
-        if($error == null) {
-            $response['success'] = self::createSuccessMessage($postID);
-        } else {
-            $response['error'] = $error;
-        }
+		finish: {
+			$response = array();
+	        if(empty($errors)) {
+	            $response['success'] = self::createSuccessMessage($postID);
+	        } else {
+	            $response['error'] = $errors;
+	        }
+		}
+		
             
 			
 			
@@ -449,7 +475,6 @@ class NewIdeaForm {
         if( !isset($nonce) || wp_verify_nonce($nonce, self::$nonceName) != 1 ) {
             $response['securityError'] = array(
                 'message'  => '<div id="securityErrorMessage"><p>Sorry, deine Session ist abgelaufen ... </p><a href=".">Neue Idee Schreiben</a></div>',
-                'args' => $args
             );
         }
         
