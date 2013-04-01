@@ -196,10 +196,11 @@ class NewIdeaForm {
 
 
     function enqueue_scripts() {
-    	// frontend forms script
-        wp_enqueue_script('klimo_frontend_forms', plugins_url('script/klimoPT_frontend_forms.js', __FILE__), array('jquery', 'jquery-form'));
-		// autosuggest
+    	// autosuggest
         wp_enqueue_script('autosuggest', plugins_url('script/autoSuggestv14/jquery.autoSuggest.packed.js', __FILE__), array('jquery'));
+		
+    	// frontend forms script
+        wp_enqueue_script('klimo_frontend_forms', plugins_url('script/klimoPT_frontend_forms.js', __FILE__), array('jquery', 'jquery-form', 'autosuggest'));
     }
     
     
