@@ -89,7 +89,9 @@ function kpt_hook_add_admin_style() {
 
 
 function kpt_hook_add_admin_script() {
-	wp_enqueue_script('kpt-admin-script', plugins_url('script/klimoPT_admin.js', __FILE__), array('jquery'));
+	// adaptivetableinput
+    wp_enqueue_script('adaptivetableinput', plugins_url('script/adaptiveTableInput.js', __FILE__), array('jquery'));
+	wp_enqueue_script('kpt-admin-script', plugins_url('script/klimoPT_admin.js', __FILE__), array('jquery', 'adaptivetableinput'));
 }
 
 

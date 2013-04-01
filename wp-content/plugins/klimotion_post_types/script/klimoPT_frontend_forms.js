@@ -2,88 +2,6 @@
  * @author Stefan Kaiser
  */
 
-/**
- * $plugins
- */
-
-(function( $ ) {
-	$.fn.adaptiveTableInput = function( options ) {
-		
-		var $this = this;
-		var defaults = {
-			'trSelector' : '',
-			'tplNames' : []
-		};
-		
-		$this.opts = $.extend(defaults, options);
-		$this.templateRow = 0;
-		
-		return this.each( function() {
-			
-			// gather inputs per row
-			if($this.opts.tplNames.length == 0) {
-				var tplNames = [];
-				$('tr:first input', this).each(function() {
-					name = $(this).attr('name');
-					tplNames.push(name.substring(0, name.length - 1));
-				});
-				$this.opts.tplNames = tplNames;
-			}
-			
-			
-			$this.noLinks = $('tr' + $this.opts.trSelector, this).length;
-			$this.templateRow = $('tr' + $this.opts.trSelector, this).first().clone();
-			$('input', $this.templateRow).val('');
-			
-			// remove-link-meta button
-			$('a.removelink', $this).click(removeLink);
-			
-			// add-link-meta-button
-			$('a.addlink', $this).click(addLink);
-		});
-			
-			
-		function removeLink() {
-			var row = $(this).closest('tr' + $this.opts.trSelector);
-			row.remove();
-			$this.noLinks--;
-			renameIDs();
-		}
-			
-			
-		function addLink() {
-			var lastPair = $('tr' + $this.opts.trSelector, $this).last();
-			if( $('input', lastPair).last().val() == '') {
-				lastPair.fadeTo(400, 0.2).fadeTo(400, 1.0);
-			} else {
-				var newPair = $this.templateRow.clone();
-				// for each input
-				for(var i=0,j=$this.opts.tplNames.length; i<j; i++){
-					$('input[name*=' + $this.opts.tplNames[i] + ']', newPair).attr('name', $this.opts.tplNames[i] + $this.noLinks);
-				};
-			
-				$('a.removelink', newPair).click(removeLink);
-				$('tbody', $this).append(newPair);
-				$this.noLinks++;
-			}
-		}
-			
-			
-		function renameIDs() {
-			// for each row
-			$('tr' + $this.opts.trSelector, $this).each(function(index, value) {
-				// for each input
-				for(var i=0,j=$this.opts.tplNames.length; i<j; i++){
-					$('input[name*=' + $this.opts.tplNames[i] + ']', value).attr('name', $this.opts.tplNames[i] + index);
-				};
-			});
-			$this.noLinks = $('tr' + $this.opts.trSelector, $this).length;
-		}
-	};
-})( jQuery );
-
-
-
 
 jQuery(function($) { ideaform : {
 	
@@ -97,8 +15,8 @@ jQuery(function($) { ideaform : {
 
 			this.__contruct = function() {
 				me.config = ideaform_config;
-				$("#idea_links", wrapper).adaptiveTableInput({ trSelector: '.links_meta_pair'});
-				$("#idea_files", wrapper).adaptiveTableInput({ trSelector: '.files_meta_pair'});
+				$("#idea_links", wrapper).adaptiveTableInput({ trSelector: '.links_meta_pair', maxRows: 10});
+				$("#idea_files", wrapper).adaptiveTableInput({ trSelector: '.files_meta_pair', maxRows: 6});
 				
 				
 				// aims autosuggest
