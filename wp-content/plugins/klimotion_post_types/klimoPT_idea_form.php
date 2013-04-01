@@ -448,7 +448,6 @@ class NewIdeaForm {
         if( !isset($nonce) || wp_verify_nonce($nonce, self::$nonceName) != 1 ) {
             $response['securityError'] = array(
                 'message'  => '<div id="securityErrorMessage"><p>Sorry, deine Session ist abgelaufen ... </p><a href=".">Neue Idee Schreiben</a></div>',
-                'args' => $args
             );
         }
         

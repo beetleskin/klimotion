@@ -83,14 +83,17 @@ jQuery(function($) { ideaform : {
 				
 				
 				// aims autosuggest
-				$('input#idea_aims').autoSuggest(me.config.as_aims, {
-					selectedItemProp : "name",
-					searchObjProps : "name",
-					minChars : 1,
-					startText : "Ziele ...",
-					emptyText : "neues Ziel mit TAB",
-					asHtmlID : "idea_aims"
-				});
+				$('input#idea_aims', me.wrapper).autoSuggest(
+					me.config.as_aims, 
+					{
+						selectedItemProp : "name",
+						searchObjProps : "name",
+						minChars : 1,
+						startText : "Ziele ...",
+						emptyText : "neues Ziel mit TAB",
+						asHtmlID : "idea_aims"
+					}
+				);
 				
 				
 				
