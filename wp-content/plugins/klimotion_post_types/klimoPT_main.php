@@ -33,7 +33,6 @@ register_uninstall_hook(__FILE__, "kpt_delete_db_tables");
 
 
 
-
 function kpt_hook_init() {
 	// add post types
 	kpt_add_idea();
@@ -63,7 +62,9 @@ function kpt_create_db_tables() {
 	}
 	
 }
-//noch zu testen! wer weiss ob die beim Uninstall tut was sie soll, die alte function.
+
+
+// TODO: noch zu testen! wer weiss ob die beim Uninstall tut was sie soll, die alte function.
 function kpt_delete_db_tables() {
 	
 	require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
@@ -82,39 +83,10 @@ function my_rewrite_flush() {
 }
 
 
-function init_attachments($attachments) {
-	
-	$fields = array(
-		array(
-		  'name'      => 'title',                         // unique field name
-		  'type'      => 'text',                          // registered field type
-		  'label'     => __( 'Title', 'attachments' ),    // label to display
-		  'default'   => 'title',                         // default value upon selection
-		),
-	);
-
-	$args = array(
-    'label'         => 'My Attachments',
-    'post_type'     => array( 'klimo_idea', 'klimo_localGroup' ),
-    'position'      => 'normal',
-    'priority'      => 'high',
-    'filetype'      => null,  // no filetype limit
-    'note'          => 'Attach files here!',
-    'append'        => true,
-    'button_text'   => __( 'Attach Files', 'attachments' ),
-    'modal_text'    => __( 'Attach', 'attachments' ),
-    'router'        => 'browse',
-    'fields'        => $fields,
-
-  );
- 
-	$attachments->register( 'klimo_attachments', $args ); // unique instance name
-
-}
-
 function kpt_hook_add_admin_style() {
 	wp_enqueue_style('kpt-admin-style', plugins_url('css/klimoPT_admin.css', __FILE__) );
 }
+
 
 function kpt_hook_add_admin_script() {
 	wp_enqueue_script('kpt-admin-script', plugins_url('script/klimoPT_admin.js', __FILE__), array('jquery'));
