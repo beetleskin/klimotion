@@ -4,9 +4,9 @@
  */
 
  
-// TODO: Counter für Textfelder
+ 
 
-class NewIdeaForm {
+class NewGroupForm {
 
     private $form_action;
     private $form_id;
@@ -16,16 +16,13 @@ class NewIdeaForm {
     private static $ioConfig = array();
 	private static $nonceName = "klimoIdeaFormNonce";
 	private static $validationConfig = array(
-        'title_max_chars'     	=> 100,
-        'title_min_chars'     	=> 3,
-        'excerp_max_chars'    	=> 200,
-        'image_size_max'		=> 5000000,
+        'name_max_chars'     	=> 100,
     );
     
 
     function __construct() {
         $this -> form_action = "";
-        $this -> form_id = "ideaform";
+        $this -> form_id = "groupform";
         $this -> form_method = "POST";
     }
 
@@ -46,15 +43,15 @@ class NewIdeaForm {
         }
 		
 		
-		// groups:
-		$groups = get_posts( array( 
-			'post_type' 	=> array('klimo_localGroups'),
-			'post_status'	=> 'publish',
-			'numberposts' 	=> -1
-		));
-		$data['groups'] = array();
-		foreach ($groups as $group) {
-			$data['groups'][] = array("value" => $group->ID, "name" => $group->post_title);
+		// districts:
+		$districts = get_terms("klimo_districts", array(
+            'hide_empty'    => false,
+            'hierarchical'  => false,
+            'order_by'      =>'count'
+        ));
+		$data['districts'] = array();
+		foreach ($districts as &$district) {
+			$data['districts'][] = array("value" => $district->term_id, "name" => $district->name);
 		}
 
 		// topics
@@ -115,84 +112,60 @@ class NewIdeaForm {
         <?php endif; ?>
         
         
-        <div id="ideaform_wrap">   	
+        <div id="groupform_wrap">   	
 		    <form action="<?php echo $this->form_action ?>" id="<?php echo $this->form_id ?>" class="<?php echo $data['nopriv'] ?>" method="<?php echo $this->form_method ?>">
 		        <div class="wrap">   
+		        	<h1><?php echo __("Gruppe-Formular") ?></h1>
 		        	<div id="errormessage"></div>
 		        
-		      	  	<h1>Idee-Formular</h1>
-		      	  	
-		      	  	<h2>Titel</h2>
-		        	<input type="text" id="idea_title" name="idea_title" placeholder="Gib deiner Idee einen Namen" maxlength="<?php echo self::$validationConfig['title_max_chars'] ?>">
-		        
-			        <h2>Gruppe</h2>
-			        <select id="idea_group" name="idea_group">
-			        	<option value="-1" selected="selected">Keine Gruppe</option>
-			        	<?php foreach ( $data['groups'] as &$group ): ?>
-		                    <option value="<?php echo $group['value']; ?>"><?php echo $group['name']; ?></option>
-		                <?php endforeach; ?>
-			        </select>
+		        	<fieldset>
+			      	  	<label><?php echo __("Name der Lokalgruppe") ?></label>
+			        	<input type="text" id="group_name" name="group_name" placeholder="Name" maxlength="<?php echo self::$validationConfig['name_max_chars'] ?>">
+			        
+				        <label><?php echo __("Landkreis") ?></label>
+				        <select id="group_district" name="group_district">
+				        	<?php foreach ( $data['districts'] as &$district ): ?>
+			                    <option value="<?php echo $district['value']; ?>"><?php echo $district['name']; ?></option>
+			                <?php endforeach; ?>
+				        </select>
+				        
+				        <label><?php echo __("Ort") ?></label>
+						<input type="text" id="group_city" name="group_city"  placeholder="Ort">
+						<input type="text" id="idea_image" name="idea_image"  placeholder="Postleitzahl">
+						
+						<label><?php echo __("Wirkungskreis") ?></label>
+						<input type="text" id="group_scope" name="group_scope"  placeholder="Schule / etc.">
+	
+						<label><?php echo __("Kurzvorstellung") ?></label>
+				        <?php wp_editor("", 'group_description', array(
+				        	'media_buttons' => false,
+				        	'textarea_name' => 'group_description',
+				        	'tabindex'		=> 0
+							));
+						?>
+				        
+				        <label><?php echo __("Homepage") ?></label>
+				        <input type="url" id="group_homepage" name="group_homepage" placeholder="www.deineseite.de">
+			        </fieldset>
+			        
+			        
+			        <fieldset>
+				        <h1><?php echo __("Ansprechpartner") ?></h1>
+	
+						<label><?php echo __("Name") ?></label>
+						<input type="text" id="group_contact_name" name="group_contact_name"  placeholder="Ort">
+						
+						<label><?php echo __("Vorname") ?></label>
+						<input type="text" id="group_contact_surname" name="group_contact_surname"  placeholder="Ort">
+						
+						<label><?php echo __("E-Mail") ?></label>
+						<input type="email" id="group_contact_mail" name="group_contact_mail"  placeholder="Ort">
+						
+						<label><?php echo __("Telefon") ?></label>
+						<input type="email" id="group_contact_mail" name="group_contact_mail"  placeholder="Ort">
+						<input type="checkbox" id="group_contact_publish" name="group_contact_publish" value="<?php echo __("öffentlich") ?>">
+					</fieldset>
 
-			        <h2>Kurze Beschreibung</h2>
-			        <textarea id="idea_excerp" name="idea_excerp" placeholder="Textfeld begrenzt auf 200 Wörter" maxlength="<?php echo self::$validationConfig['excerp_max_chars'] ?>"></textarea>
-			        
-
-					<h2>Titelbild</h2>
-					<input type="file" id="idea_image" name="idea_image" accept="image/*">
-		        
-		            <h2>Detaillierte Beschreibung</h2>
-			        <?php wp_editor("", 'idea_description', array(
-			        	'media_buttons' => false,
-			        	'textarea_name' => 'idea_description',
-			        	'tabindex'		=> 0,
-			        	'teeny'			=> true,
-						));
-					?>
-		
-		
-					<h2>Dateien Hinzufügen</h2>
-					<div id="idea_files">
-						<table>
-							<tbody>
-								<tr class="files_meta_pair">
-									<td><input type="text" maxlength="40" name="filetext_0" placeholder="Beschreibung"></td>
-									<td><input type="file" id="" name="idea_file_0"></td>
-									<td><a class="removelink" href="#" onclick="return false;">entfernen</a></td>
-								</tr>
-							</tbody>
-						</table>
-						<a class="addlink" href="#" onclick="return false;">hinzufügen</a>
-					</div>
-					
-					
-					
-					<h2>Weiterführende Links</h2>
-					<div id="idea_links">
-						<table>
-							<tbody>
-								<tr class="links_meta_pair">
-									<td><input type="url" maxlength="40" name="linktext_0" placeholder="Beschreibung"></td>
-									<td><input type="url" name="linkurl_0" placeholder="Link"></td>
-									<td><a class="removelink" href="#" onclick="return false;">entfernen</a></td>
-								</tr>
-							</tbody>
-						</table>
-						<a class="addlink" href="#" onclick="return false;">hinzufügen</a>
-					</div>
-					
-					
-					<h2>Thema</h2>
-					<select id="idea_topic" name="idea_topic">
-			        	<?php foreach ( $data['topics'] as &$topic ): ?>
-		                    <option value="<?php echo $topic['value'] ?>"><?php echo $topic['name'] ?></option>
-		                <?php endforeach; ?>
-			        </select>
-			        
-			        
-			        <h2>Ziele</h2>
-			        <input type="text" id="idea_aims" name="idea_aims">
-			        
-			        
 			        <div class="idea_submit_container"><a href="<?php echo $data['submitLink'] ?>" <?php echo $data['onClick'] ?> id="idea_submit">Abschicken</a></div>
 				</div>	
         	</form>
@@ -232,7 +205,6 @@ class NewIdeaForm {
         wp_enqueue_style('autosuggest', plugins_url('script/autoSuggestv14/autoSuggest.css', __FILE__));
 		// form styles
 		wp_enqueue_style('klimo_frontend_forms', plugins_url('css/klimoPT_forms.css', __FILE__));
-		
     }
 
 

@@ -1,0 +1,18 @@
+/*
+ * klimotion_post_types Form Styles
+ * Version: 1.1
+ */
+
+form {
+	background-color: red;
+}
+
+form#ideaform {
+	background-color: green;
+}
+
+form#groupform {
+	background-color: lightblue;
+}
+
+

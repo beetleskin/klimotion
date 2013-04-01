@@ -13,6 +13,7 @@
 
 
 include_once('klimoPT_idea_form.php');
+include_once('klimoPT_group_form.php');
 
 
 /* front end action hooks */
@@ -40,6 +41,7 @@ function kpt_hook_init() {
 	
 	// register ajax callbacks
 	NewIdeaForm::initAjax();
+	NewGroupForm::initAjax();
 }
 
 
@@ -283,7 +285,7 @@ function kpt_add_localGroups()  {
         'map_meta_cap'  => true,
         'has_archive'   => false,
         'supports'      => array('title', 'author', 'thumbnail', 'custom-fields', 'comments'),
-        'taxonomies'    => array('klimo_localGroups_ZIPCode'),
+        'taxonomies'    => array('klimo_districts'),
     );
 
     
@@ -295,7 +297,7 @@ function kpt_add_localGroups()  {
     );
         
         
-    register_taxonomy("klimo_localGroups_states", array("klimo_localGroups"), $post_taxonomy_args);
+    register_taxonomy("klimo_districts", array("klimo_localGroups"), $post_taxonomy_args);
     register_post_type('klimo_localGroups', $post_type_args);
 }
 
