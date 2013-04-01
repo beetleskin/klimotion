@@ -41,6 +41,15 @@ Text Domain: klimotion_theme
 footer.entry-meta {
 	clear: both;
 }
+
+footer.entry-meta .entry-bookmark{
+	display: none;
+}
+
+.entry-meta .entry-cats-tags{
+	display: inline;
+}
+
 .hentry .entry-inner,
 .not-found .entry-inner,
 .entry-lead img {
