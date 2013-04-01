@@ -57,7 +57,18 @@ footer.entry-meta .entry-bookmark{
   padding: 2rem 2rem 0;
 }
 
+.nav-previous a,
+.nav-next a{
+	display: none; 
+}
 
+.comment-form-comment #comment{
+	height: 120px;
+}
+
+.form-allowed-tags {
+	display: none; 
+}
 
 .masonry-post .hentry .entry-inner {
   padding: 15px;

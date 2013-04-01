@@ -154,7 +154,8 @@ endif; // ends check for thsp_comment_cb()
  */
 if ( ! function_exists( 'thsp_posted_on' ) ) :
 function thsp_posted_on() {
-	printf( __( 'Erstellt am <a href="%1$s" title="%2$s" rel="bookmark"><time class="entry-date" datetime="%3$s" pubdate>%4$s</time></a><span class="byline"> von <span class="author vcard"><a class="url fn n" href="%5$s" title="%6$s" rel="author">%7$s</a></span></span>', 'cazuela'),
+	//TODO:sprachdatei hinzufuegen "Posted on" -> "Erstellt am" ud "by" "von"
+	printf( __( 'Erstellt am <a href="%1$s" title="%2$s" rel="bookmark"><time class="entry-date" datetime="%3$s" pubdate>%4$s</time></a><span class="byline"> von <span class="author vcard"><a class="url fn n" href="%5$s" title="%6$s" rel="author">%7$s</a></span></span>'),
 		esc_url( get_permalink() ),
 		esc_attr( get_the_time() ),
 		esc_attr( get_the_date( 'c' ) ),
