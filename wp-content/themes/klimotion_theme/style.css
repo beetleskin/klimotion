@@ -15,6 +15,7 @@ Text Domain: klimotion_theme
 .entry-lead {
 	display: inline;
     height: auto;
+    padding-bottom: 2%;
 }
 
 .entry-title{
@@ -23,18 +24,31 @@ Text Domain: klimotion_theme
 }
 
 .entry-lead img {
-  	width: 15%;
+  	width: 17%;
  	height: auto;
   	float: left;
 }
 
+.entry-lead a img {
+  	width: 17%;
+ 	height: auto;
+  	float: left;
+}
 
+.entry-content {
+}
+
+footer.entry-meta {
+	clear: both;
+}
 .hentry .entry-inner,
 .not-found .entry-inner,
 .entry-lead img {
   padding: 20px 20px 0;
   padding: 2rem 2rem 0;
 }
+
+
 
 .masonry-post .hentry .entry-inner {
   padding: 15px;
