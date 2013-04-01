@@ -144,7 +144,20 @@ class NewIdeaForm {
 		
 		
 					<h2>Dateien Hinzufügen</h2>
-					<input type="file" id="idea_file1" name="idea_file1">
+					<div id="idea_files">
+						<table>
+							<tbody>
+								<tr class="files_meta_pair">
+									<td><input type="text" maxlength="40" name="filetext_0" placeholder="Beschreibung"></td>
+									<td><input type="file" id="" name="idea_file_0"></td>
+									<td><a class="removelink" href="#" onclick="return false;">entfernen</a></td>
+								</tr>
+							</tbody>
+						</table>
+						<a class="addlink" href="#" onclick="return false;">hinzufügen</a>
+					</div>
+					
+					
 					
 					<h2>Weiterführende Links</h2>
 					<div id="idea_links">
@@ -157,7 +170,7 @@ class NewIdeaForm {
 								</tr>
 							</tbody>
 						</table>
-						<a id="addlink" href="#" onclick="return false;">hinzufügen</a>
+						<a class="addlink" href="#" onclick="return false;">hinzufügen</a>
 					</div>
 					
 					
@@ -307,20 +320,20 @@ class NewIdeaForm {
         }
 		
 		
+		
+		
 		// attach other files
-		if( !empty($_FILES['idea_file1']['name']) ) {
-            $attach_id = media_handle_upload('idea_file1', $postID, array('post_title' => "leTitle"));
-            /*if(!is_wp_error($attach_id)) {
-                update_post_meta( $postID, '_idea_file1', $attach_id );
-            } else {
-            	$errors[] = array(
-                    'element'   => 'idea_file1',
+		foreach ($postData['idea_files'] as $attachment) {
+			$attach_id = media_handle_upload($attachment['name'], $postID, array('post_title' => $attachment['description']));
+			if(is_wp_error($attach_id)) {
+				$errors[] = array(
+                    'element'   => 'idea_files',
                     'message'   => $attach_id->get_error_message(),
 				);
 				wp_delete_post($postID, true);
 				goto finish;
-            }*/
-        }
+            }
+		}
 		
 		
 		
@@ -448,16 +461,40 @@ class NewIdeaForm {
 		$postData[$element] = $value;
 		
 		
-		// check file
+		// check featured image
         $element = "idea_image";
-        if( key_exists($element, $files) && key_exists('size', $files[$element]) ) {
+        if( key_exists($element, $files) && !empty($files[$element]['name']) ) {
+        	$value = $files[$element];
             if( $files[$element]['size'] > self::$validationConfig['image_size_max'] ) {
                 $response['error'][] = array(
                     'element'   => $element,
                     'message'   => "Bilder dürfen nicht größer als " . (self::$validationConfig['image_size_max'] / 1000000) . " MB groß sein.",
                 );
+            } else {
+            	$postData[$element] = $value;
             }
         }
+		
+		
+		// check attachments
+		$element = 'idea_files';
+		$value = array();
+		for ($i=0; ;$i++) { 
+			$descrKey = 'filetext_' . $i;
+			$fileKey = 'idea_file_' . $i;
+			
+			// check (assumption: element names are ordered, starting from 0)
+			if(!array_key_exists ( $descrKey , $args ) || !array_key_exists ( $fileKey , $files ))
+				break;
+			if( (empty($files[$fileKey]['name'])) || (intval($files[$fileKey]['error'] != 0)) )
+				continue;
+			
+			$valText  = trim(wp_strip_all_tags($args[$descrKey]));
+			$fileValue = $files[$fileKey];
+			$fileValue['description'] = $valText;
+			$value[] = $fileValue;
+		}
+		$postData[$element] = $value;
 		
 		
 		return $response;
