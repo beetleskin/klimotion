@@ -87,7 +87,7 @@ msgstr ""
 #: ../content-page.php:19 ../image.php:45 ../image.php:109
 #: ../post-footer.php:50 ../page-templates/template-authors.php:76
 #: ../page-templates/template-sitemap.php:53
-msgid "Edit"
+msgid ""
 msgstr ""
 
 #: ../content.php:22
@@ -376,7 +376,7 @@ msgstr ""
 
 #: ../post-footer.php:35
 msgid "1 Comment"
-msgstr ""
+msgstr "1 Kommentar"
 
 #: ../post-footer.php:35
 msgid "% Comments"

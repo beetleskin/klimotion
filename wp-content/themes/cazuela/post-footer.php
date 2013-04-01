@@ -32,7 +32,7 @@
 		<?php endif; // End if $tags_list ?>
 	
 		<?php if ( ! post_password_required() && ( comments_open() || '0' != get_comments_number() ) ) : ?>
-		<span class="comments-link"><?php comments_popup_link( __( 'Leave a comment', 'cazuela' ), __( '1 Comment', 'cazuela' ), __( '% Comments', 'cazuela' ) ); ?></span>
+		<span class="comments-link"><?php comments_popup_link( __( 'Leave a comment' ), __( '1 Comment' ), __( '% Comments') ); echo ' | '?></span>
 		<?php endif; ?>
 	</div><!-- .entry-cats-tags -->
 
@@ -47,5 +47,5 @@
 		?>
 	</div><!-- .entry-bookmark -->
 
-	<?php edit_post_link( __( 'Edit', 'cazuela' ), '<span class="edit-link">', '</span>' ); ?>
+	<?php edit_post_link( __( 'Edit' ), '<span class="edit-link">', '</span>' ); ?>
 </footer><!-- .entry-meta -->
