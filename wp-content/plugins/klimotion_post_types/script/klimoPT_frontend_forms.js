@@ -119,7 +119,6 @@ jQuery(function($) { ideaform : {
 			}
 			
 			this.beforeSubmit = function(formData, jqForm, options) {
-				console.log(formData);
 			}
 			
 			this.successHandler = function(response, statusText, xhr, $form) {
@@ -137,7 +136,6 @@ jQuery(function($) { ideaform : {
 			}
 			
 			this.transmissionErrorHandler = function(param) {
-				return;
 				me.form.animate({
 					opacity : 'toggle',
 					height : 'toggle'
@@ -150,7 +148,8 @@ jQuery(function($) { ideaform : {
 						height : 'toggle'
 					}, "slow");
 				});
-
+				
+				$("html, body").animate({ scrollTop: 0 }, "slow");
 				setTimeout("location.reload()", 5000);
 			}
 			
@@ -180,6 +179,8 @@ jQuery(function($) { ideaform : {
 						}, "slow");
 					}
 				});
+				
+				$("html, body").animate({ scrollTop: 0 }, "slow");
 			}
 			
 			
@@ -197,6 +198,7 @@ jQuery(function($) { ideaform : {
 							opacity : 'toggle',
 							height : 'toggle'
 						}, "slow");
+						me.form.scrollTop(300);
 					});
 
 					setTimeout("location.reload()", 5000);
