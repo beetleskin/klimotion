@@ -28,8 +28,8 @@ add_action('admin_init',  'kpt_hook_add_admin_style');
 add_action('admin_init',  'kpt_hook_add_admin_script');
 
 // database hooks
-register_activation_hook(__FILE__, "kpt_create_db_tables");
-register_uninstall_hook(__FILE__, "kpt_delete_db_tables");
+register_activation_hook(__FILE__, "kpt_create_districtss");
+register_uninstall_hook(__FILE__, "kpt_delete_districtss");
 
 
 
@@ -45,37 +45,20 @@ function kpt_hook_init() {
 }
 
 
-function kpt_create_db_tables() {
-	
-	require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+function kpt_create_districtss() {
 	require_once('lower_saxony_list.php');
-    global $wpdb;
-    $table_name = $wpdb->prefix . "klimotion";
-      
-    $sql = "CREATE TABLE IF NOT EXISTS $table_name (
-	id TINYINT NOT NULL ,
-	name tinytext NOT NULL,
-	UNIQUE KEY id (id)
-    );";
-	   
-    dbDelta( $sql );
-	foreach ($lower_saxony_array as $key => $value) {
-		$rows_affected = $wpdb->insert( $table_name, array('id' => $key, 'name' => $value ));
+	foreach ($lower_saxony_districts as $id => $name) {
+		wp_insert_term($name, 'klimo_districts', array('slug' => '_district_' . $id));
 	}
 	
 }
 
 
-// TODO: noch zu testen! wer weiss ob die beim Uninstall tut was sie soll, die alte function.
-function kpt_delete_db_tables() {
-	
-	require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
-	global $wpdb;
-	
-	$table_name = $wpdb->prefix . "klimotion";
-	$sql = "DROP TABLE IF EXISTS $table_name;";
-	
-	dbDelta( $sql );
+function kpt_delete_districts() {
+	$districtTerms = get_terms('klimo_districts', array('name__linke' => '_district_'));
+	foreach ($districtTerms as $term) {
+		wp_delete_term($term->term_id);
+	}
 }	
 
 

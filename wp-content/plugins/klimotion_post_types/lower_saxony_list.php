@@ -1,6 +1,6 @@
 <?php
 
-$lower_saxony_array = array(
+$lower_saxony_districts = array(
 	
 	'0'         => 'Gifhorn',
 	'1'			=> 'Celle',
