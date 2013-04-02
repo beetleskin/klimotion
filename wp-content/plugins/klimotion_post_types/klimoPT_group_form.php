@@ -16,7 +16,12 @@ class NewGroupForm {
     private static $ioConfig = array();
 	private static $nonceName = "klimoGroupFormNonce";
 	private static $validationConfig = array(
-        'name_max_chars'     	=> 100,
+        'name_max_chars'     	=> 100,*
+        'name_min_chars'     	=> 3,*
+        'city_max_chars'		=> 200,*
+        'zipcode_chars'			=> 5,*
+        'scope_min'				=> 1,*
+        'homepage_max_chars'	=> 300,
     );
     
 

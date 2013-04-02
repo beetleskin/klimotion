@@ -22,6 +22,7 @@ class NewIdeaForm {
         'title_min_chars'     	=> 3,
         'excerp_max_chars'    	=> 200,
         'image_size_max'		=> 5000000,
+        'min_aims'				=> 1,
     );
     
 
@@ -454,6 +455,12 @@ class NewIdeaForm {
 		}
 		$last = end($value);
 		if( empty($last) ) array_pop($value);
+		if( count($value) < self::$validationConfig['min_aims']) {
+            $response['error'][] = array(
+                'element'   => $element,
+                'message'   => "Gib bitte mindestens " . self::$validationConfig['min_aims'] . " Projektziel" . ((self::$validationConfig['min_aims'] == 1)? "e" : "") . " an",
+            );
+        }
 		$postData[$element] = $value;
 		
 		
