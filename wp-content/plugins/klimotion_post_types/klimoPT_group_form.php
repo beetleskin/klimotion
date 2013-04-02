@@ -14,7 +14,7 @@ class NewGroupForm {
 	private $renderData;
     
     private static $ioConfig = array();
-	private static $nonceName = "klimoIdeaFormNonce";
+	private static $nonceName = "klimoGroupFormNonce";
 	private static $validationConfig = array(
         'name_max_chars'     	=> 100,
     );
@@ -53,30 +53,21 @@ class NewGroupForm {
 		foreach ($districts as &$district) {
 			$data['districts'][] = array("value" => $district->term_id, "name" => $district->name);
 		}
+		
+		
+		// scopes:
+		// TODO: Wen keine 'scopes' in der Datenbank liegen, scheiß AutoSuggest ab und das Formular funktioniert nicht richtig.
+		$scopes = get_terms("klimo_scopes", array(
+            'hide_empty'    => false,
+            'hierarchical'  => false,
+            'order_by'      =>'count'
+        ));
+		$data['scopes'] = array();
+		foreach ($scopes as &$scope) {
+			$data['scopes'][] = array("value" => $scope->term_id, "name" => $scope->name);
+		}
 
-		// topics
-		$topics = get_terms("klimo_idea_topics", array(
-            'hide_empty'    => false,
-            'hierarchical'  => false,
-            'order_by'      =>'count'
-        ));
-		$data['topics'] = array();
-		foreach ($topics as $topic) {
-			$data['topics'][] = array("value" => $topic->term_id, "name" => $topic->name);
-		}
 		
-		
-		// aims		
-		// TODO: Wen keine 'aims' in der Datenbank liegen, scheiß AutoSuggest ab und das Formular funktioniert nicht richtig.
-		$aims = get_terms("klimo_idea_aims", array(
-            'hide_empty'    => false,
-            'hierarchical'  => false,
-            'order_by'      =>'count'
-        ));
-		$data['aims'] = array();
-		foreach ($aims as $aim) {
-			$data['aims'][] = array("value" => $aim->term_id, "name" => $aim->name);
-		}
 
 		
 		// leftover
@@ -134,7 +125,7 @@ class NewGroupForm {
 						<input type="text" id="idea_image" name="idea_image"  placeholder="Postleitzahl">
 						
 						<label><?php echo __("Wirkungskreis") ?></label>
-						<input type="text" id="group_scope" name="group_scope"  placeholder="Schule / etc.">
+						<input type="text" id="group_scopes" name="group_scopes" placeholder="Schule / etc.">
 	
 						<label><?php echo __("Kurzvorstellung") ?></label>
 				        <?php wp_editor("", 'group_description', array(
@@ -163,10 +154,10 @@ class NewGroupForm {
 						
 						<label><?php echo __("Telefon") ?></label>
 						<input type="email" id="group_contact_mail" name="group_contact_mail"  placeholder="Ort">
-						<input type="checkbox" id="group_contact_publish" name="group_contact_publish" value="<?php echo __("öffentlich") ?>">
+						<input type="checkbox" id="group_contact_publish" name="group_contact_publish" value="public" checked="checked"><?php echo __("öffentlich") ?>
 					</fieldset>
 
-			        <div class="idea_submit_container"><a href="<?php echo $data['submitLink'] ?>" <?php echo $data['onClick'] ?> id="idea_submit">Abschicken</a></div>
+			        <div class="group_submit_container"><a href="<?php echo $data['submitLink'] ?>" <?php echo $data['onClick'] ?> id="group_submit">Abschicken</a></div>
 				</div>	
         	</form>
        </div>
@@ -180,12 +171,11 @@ class NewGroupForm {
         $ioConfig[self::$nonceName] = wp_create_nonce  (self::$nonceName);
 		$formData = array(
 			'ajaxConfig' 	=> $ioConfig,
-			'as_groups'		=> $this->renderData['groups'],
-			'as_aims'		=> $this->renderData['aims'],
+			'as_scopes'		=> (object)(array('items' => $this->renderData['scopes'])),
 		);
         
         // Print data to sourcecode
-        wp_localize_script('klimo_frontend_forms', 'ideaform_config', $formData);
+        wp_localize_script('klimo_frontend_forms', 'groupform_config', $formData);
     }
 
 
@@ -196,7 +186,7 @@ class NewGroupForm {
         wp_enqueue_script('adaptivetableinput', plugins_url('script/adaptiveTableInput.js', __FILE__), array('jquery'));
 		
     	// frontend forms script
-        wp_enqueue_script('klimo_frontend_forms', plugins_url('script/klimoPT_frontend_forms.js', __FILE__), array('jquery', 'jquery-form', 'autosuggest', 'adaptivetableinput'));
+        wp_enqueue_script('klimo_frontend_forms', plugins_url('script/klimoPT_group_form.js', __FILE__), array('jquery', 'jquery-form', 'autosuggest', 'adaptivetableinput'));
     }
     
     
@@ -210,10 +200,10 @@ class NewGroupForm {
 
     public static function initAjax() {
     	self::$ioConfig['ajaxurl'] = admin_url('admin-ajax.php');
-		self::$ioConfig['submitAction'] = 'ideaform_submit-ajax.php';
+		self::$ioConfig['submitAction'] = 'groupform_submit-ajax.php';
     	
 		// register form ajax
-        add_action('wp_ajax_' . self::$ioConfig['submitAction'], 'NewIdeaForm::submitHandler');
+        add_action('wp_ajax_' . self::$ioConfig['submitAction'], 'NewGroupForm::submitHandler');
     }
 
 

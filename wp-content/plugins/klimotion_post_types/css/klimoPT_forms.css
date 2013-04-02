@@ -3,16 +3,14 @@
  * Version: 1.1
  */
 
-form {
-	background-color: red;
-}
-
-form#ideaform {
+form#ideaform  {
 	background-color: green;
 }
 
-form#groupform {
-	background-color: lightblue;
+form#groupform label,
+form#groupform input,
+form#groupform select {
+	width: 100%
 }
 
 

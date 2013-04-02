@@ -285,19 +285,27 @@ function kpt_add_localGroups()  {
         'map_meta_cap'  => true,
         'has_archive'   => false,
         'supports'      => array('title', 'author', 'thumbnail', 'custom-fields', 'comments'),
-        'taxonomies'    => array('klimo_districts'),
+        'taxonomies'    => array('klimo_districts', 'klimo_scopes'),
     );
 
     
-    $post_taxonomy_args = array(
+    $post_taxonomy_args1 = array(
         "hierarchical"      => false,
         "label"             => "Landkreise",
         "singular_label"    => "Landkreis",
         "rewrite"           => true,
     );
+	
+	$post_taxonomy_args2 = array(
+        "hierarchical"      => false,
+        "label"             => "Wirkungskreise",
+        "singular_label"    => "Wirkungskreis",
+        "rewrite"           => true,
+    );
         
         
-    register_taxonomy("klimo_districts", array("klimo_localGroups"), $post_taxonomy_args);
+    register_taxonomy("klimo_districts", array("klimo_localGroups"), $post_taxonomy_args1);
+	register_taxonomy("klimo_scopes", array("klimo_localGroups"), $post_taxonomy_args2);
     register_post_type('klimo_localGroups', $post_type_args);
 }
 

@@ -5,30 +5,28 @@
 
 jQuery(function($) { ideaform : {
 	
-		function IdeaForm(wrapper) {
+		function GroupForm(wrapper) {
 			var me = this;
 			this.wrapper = $(wrapper);
 			this.form = $('form', me.wrapper);
-			this.submit = $('a#idea_submit', wrapper);
+			this.submit = $('a#group_submit', wrapper);
 			this.linksControl = null;
 
 
 			this.__contruct = function() {
-				me.config = ideaform_config;
-				$("#idea_links", wrapper).adaptiveTableInput({ trSelector: '.links_meta_pair', maxRows: 10});
-				$("#idea_files", wrapper).adaptiveTableInput({ trSelector: '.files_meta_pair', maxRows: 6});
+				me.config = groupform_config;
 				
 				
-				// aims autosuggest
-				$('input#idea_aims', me.wrapper).autoSuggest(
-					me.config.as_aims, 
+				// district autosuggest
+				$('input#group_scopes', me.wrapper).autoSuggest(
+					me.config.as_scopes.items, 
 					{
 						selectedItemProp : "name",
 						searchObjProps : "name",
-						minChars : 1,
-						startText : "Ziele ...",
+						minChars : 2,
+						startText : "Schule / etc.",
 						emptyText : "neues Ziel mit TAB",
-						asHtmlID : "idea_aims"
+						asHtmlID : "idea_scopes"
 					}
 				);
 				
@@ -43,7 +41,7 @@ jQuery(function($) { ideaform : {
 					dataType : "json",
 					data : {
 						'action' : me.config.ajaxConfig.submitAction,
-						'klimoIdeaFormNonce' : me.config.ajaxConfig.klimoIdeaFormNonce
+						'klimoGroupFormNonce' : me.config.ajaxConfig.klimoIdeaFormNonce
 					},
 
 				};
@@ -171,7 +169,7 @@ jQuery(function($) { ideaform : {
 		
 
 		$(document).ready(function() {
-			var ideaForm = new IdeaForm('#ideaform_wrap');
+			var groupForm = new GroupForm('#groupform_wrap');
 		});
 	}
 

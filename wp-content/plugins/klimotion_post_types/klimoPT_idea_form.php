@@ -5,6 +5,8 @@
 
  
 // TODO: Counter für Textfelder
+// TODO: Multiselect für Themen
+
 
 class NewIdeaForm {
 
@@ -207,8 +209,7 @@ class NewIdeaForm {
         $ioConfig[self::$nonceName] = wp_create_nonce  (self::$nonceName);
 		$formData = array(
 			'ajaxConfig' 	=> $ioConfig,
-			'as_groups'		=> $this->renderData['groups'],
-			'as_aims'		=> $this->renderData['aims'],
+			'as_aims'		=> (object)(array('items' => $this->renderData['aims'])),
 		);
         
         // Print data to sourcecode
@@ -223,7 +224,7 @@ class NewIdeaForm {
         wp_enqueue_script('adaptivetableinput', plugins_url('script/adaptiveTableInput.js', __FILE__), array('jquery'));
 		
     	// frontend forms script
-        wp_enqueue_script('klimo_frontend_forms', plugins_url('script/klimoPT_frontend_forms.js', __FILE__), array('jquery', 'jquery-form', 'autosuggest', 'adaptivetableinput'));
+        wp_enqueue_script('klimo_frontend_forms', plugins_url('script/klimoPT_idea_form.js', __FILE__), array('jquery', 'jquery-form', 'autosuggest', 'adaptivetableinput'));
     }
     
     
