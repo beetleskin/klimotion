@@ -34,14 +34,14 @@ jQuery(function($) { ideaform : {
 				
 				// declare ajaxForm
 				var formOptions = {
-					beforeSubmit : me.beforeSubmit,
+					beforeSerialize : me.beforeSerialize,
 					success : me.successHandler,
 					error : me.transmissionErrorHandler,
 					url : me.config.ajaxConfig.ajaxurl,
 					dataType : "json",
 					data : {
 						'action' : me.config.ajaxConfig.submitAction,
-						'klimoGroupFormNonce' : me.config.ajaxConfig.klimoIdeaFormNonce
+						'klimoGroupFormNonce' : me.config.ajaxConfig.klimoGroupFormNonce
 					},
 
 				};
@@ -53,7 +53,8 @@ jQuery(function($) { ideaform : {
 				});
 			}
 			
-			this.beforeSubmit = function(formData, jqForm, options) {
+			this.beforeSerialize = function(formData, jqForm, options) {
+				tinyMCE.get("groupdescription").save();
 			}
 			
 			this.successHandler = function(response, statusText, xhr, $form) {

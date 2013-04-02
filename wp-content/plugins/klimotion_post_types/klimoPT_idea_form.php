@@ -144,7 +144,7 @@ class NewIdeaForm {
 					<input type="file" id="idea_image" name="idea_image" accept="image/*">
 		        
 		            <h2>Detaillierte Beschreibung</h2>
-			        <?php wp_editor("", 'idea_description', array(
+			        <?php wp_editor("", 'ideadescription', array(
 			        	'media_buttons' => false,
 			        	'textarea_name' => 'idea_description',
 			        	'tabindex'		=> 0,
@@ -303,9 +303,7 @@ class NewIdeaForm {
 		
 		// attach local group meta
 		$group_meta_slug = '_group';
-		if($idea_group_id == -1) {
-			delete_post_meta($postID, $group_meta_slug);
-		} else {
+		if($idea_group_id != -1) {
 			update_post_meta($postID, $group_meta_slug, $idea_group_id);
 		}
 		
@@ -436,7 +434,7 @@ class NewIdeaForm {
 		
 		// check description
         $element = "idea_description";
-        $value = trim(wp_strip_all_tags($args[$element]));
+        $value = $args[$element];
 		$postData[$element] = $value;
 		
 		
@@ -458,7 +456,7 @@ class NewIdeaForm {
 		if( count($value) < self::$validationConfig['aims_min']) {
             $response['error'][] = array(
                 'element'   => $element,
-                'message'   => "Gib bitte mindestens " . self::$validationConfig['aims_min'] . " Projektziel" . ((self::$validationConfig['aims_min'] == 1)? "e" : "") . " an",
+                'message'   => "Gib bitte mindestens " . self::$validationConfig['aims_min'] . " Projektziel" . ((self::$validationConfig['aims_min'] > 1)? "e" : "") . " an",
             );
         }
 		$postData[$element] = $value;
