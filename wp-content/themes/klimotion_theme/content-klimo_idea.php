@@ -10,8 +10,6 @@
 	<?php get_template_part( 'post', 'lead' ); ?>
 
 		<div class="idea-picture">
-			<?php $picture = "http://klimotion.marina.bplaced.de/filemanager/wordpress/wp-content/uploads/2013/03/DSC_1343.jpg" ?>
-			<img src="<?php echo $picture?>"/>
 			
 	    <div class="entry-inner">
 		<?php get_template_part( 'post', 'header' ); ?>

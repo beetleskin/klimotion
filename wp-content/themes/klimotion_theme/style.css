@@ -18,7 +18,8 @@ Text Domain: klimotion_theme
     padding-bottom: 2%;
 }
 
-.entry-title{
+.entry-title,
+.comments-title{
 	font-size: 24px;
 	font-size: 2.4rem;	
 }
@@ -40,6 +41,7 @@ Text Domain: klimotion_theme
 
 footer.entry-meta {
 	clear: both;
+	padding: 1rem 2rem;
 }
 
 footer.entry-meta .entry-bookmark{
@@ -52,7 +54,7 @@ footer.entry-meta .entry-bookmark{
 
 .hentry .entry-inner,
 .not-found .entry-inner,
-.entry-lead img {
+.entry-lead img{
   padding: 20px 20px 0;
   padding: 2rem 2rem 0;
 }
@@ -62,6 +64,33 @@ footer.entry-meta .entry-bookmark{
 	display: none; 
 }
 
+.wrap{
+	  margin-bottom: 30px;
+	  margin-bottom: 3rem;
+	  background: #fff;
+	  box-shadow: 0 0 2px #d9d9d9;
+	  box-shadow: 0 0 2px rgba(0, 0, 0, 0.15);
+	  word-wrap: break-word;
+	  -webkit-hyphens: auto;
+	  -moz-hyphens: auto;
+	  -ms-hyphens: auto;
+	  hyphens: auto;
+}
+
+.wrap h2{
+	border: 0;
+	font-family: inherit;
+	font-size: 100%;
+	font-style: inherit;
+	font-weight: inherit;
+	margin: 0;
+	outline: 0;
+	vertical-align: baseline;
+}
+
+.hentry, .not-found {
+	margin-bottom: 2rem;
+}	
 .comment-form-comment #comment{
 	height: 120px;
 }
@@ -70,7 +99,7 @@ footer.entry-meta .entry-bookmark{
 	display: none; 
 }
 
-.masonry-post .hentry .entry-inner {
+.masonry-post .hentry .entry-inner  {
   padding: 15px;
   padding: 1.5rem;
 }

@@ -104,13 +104,12 @@ class NewIdeaForm {
         $data = $this->preRender();
         ?>
         
-        // display hint if not logged in
-        <?php if($data['isLoggedIn'] == false) : ?>
+        
+        <?php if($data['isLoggedIn'] == false) : //TODO: display hint if not logged in?>
         <div class="entry-content">
 		<?php while ( have_posts() ) : the_post(); ?>
 			<?php get_template_part( 'content', 'page' ); ?>
 		<?php endwhile; // end of the loop. ?>
-
         </div>
         <?php endif; ?>
         
@@ -118,62 +117,79 @@ class NewIdeaForm {
         <div id="ideaform_wrap">   	
 		    <form action="<?php echo $this->form_action ?>" id="<?php echo $this->form_id ?>" class="<?php echo $data['nopriv'] ?>" method="<?php echo $this->form_method ?>">
 		        <div class="wrap">   
+		        	<h1>Idee-Formular</h1>
 		        	<div id="errormessage"></div>
-		        
-		      	  	<h1>Idee-Formular</h1>
+		        		<fieldset form="neue_idee">   
+		        			
+		        			<div id="idea-titel">
+		        				<label>Titel</label>
+		       				 	<input type="text" id="idea_title" name="idea_title" placeholder="Gib deiner Idee einen Namen" maxlength="<?php echo self::$validationConfig['title_max_chars'] ?>">
+		        			</div>
+		        			
+		        			<div id="idea-group">
+		        				<label>Gruppe</label>
+		        				<select id="idea_group" name="idea_group">
+			        				<option value="-1" selected="selected">Keine Gruppe</option>
+			        				<?php foreach ( $data['groups'] as &$group ): ?>
+		                  			<option value="<?php echo $group['value']; ?>"><?php echo $group['name']; ?></option>
+		               				<?php endforeach; ?>
+			       				</select>
+		        			</div>	
 		      	  	
-		      	  	<h2>Titel</h2>
-		        	<input type="text" id="idea_title" name="idea_title" placeholder="Gib deiner Idee einen Namen" maxlength="<?php echo self::$validationConfig['title_max_chars'] ?>">
-		        
-			        <h2>Gruppe</h2>
-			        <select id="idea_group" name="idea_group">
-			        	<option value="-1" selected="selected">Keine Gruppe</option>
-			        	<?php foreach ( $data['groups'] as &$group ): ?>
-		                    <option value="<?php echo $group['value']; ?>"><?php echo $group['name']; ?></option>
-		                <?php endforeach; ?>
-			        </select>
-
-			        <h2>Kurze Beschreibung</h2>
-			        <textarea id="idea_excerp" name="idea_excerp" placeholder="Textfeld begrenzt auf 200 Wörter" maxlength="<?php echo self::$validationConfig['excerp_max_chars'] ?>"></textarea>
-
-					<h2>Titelbild</h2>
-					<input type="file" id="idea_image" name="idea_image" accept="image/*">
-		        
-		            <h2>Detaillierte Beschreibung</h2>
-			        <textarea id="idea_description" name="idea_description" placeholder="Textfeld unbegrenzt"></textarea>
-		
-		
-					<h2>Dateien Hinzufügen</h2>
-					<input type="file" id="idea_file1" name="idea_file1">
-					
-					<h2>Weiterführende Links</h2>
-					<div id="idea_links">
-						<table>
-							<tbody>
-								<tr class="links_meta_pair">
-									<td><input type="url" maxlength="40" name="linktext_0" placeholder="Beschreibung"></td>
-									<td><input type="url" name="linkurl_0" placeholder="Link"></td>
-									<td><a class="removelink" href="#" onclick="return false;">entfernen</a></td>
-								</tr>
-							</tbody>
-						</table>
-						<a id="addlink" href="#" onclick="return false;">hinzufügen</a>
-					</div>
-					
-					
-					<h2>Thema</h2>
-					<select id="idea_topic" name="idea_topic">
-			        	<?php foreach ( $data['topics'] as &$topic ): ?>
-		                    <option value="<?php echo $topic['value'] ?>"><?php echo $topic['name'] ?></option>
-		                <?php endforeach; ?>
-			        </select>
-			        
-			        
-			        <h2>Ziele</h2>
-			        <input type="text" id="idea_aims" name="idea_aims">
-			        
-			        
-			        <div class="idea_submit_container"><a href="<?php echo $data['submitLink'] ?>" <?php echo $data['onClick'] ?> id="idea_submit">Abschicken</a></div>
+		      	  			<div id="idea-short-description">
+		      	  				<label for="idea-label-short-description">Kurze Beschreibung</label>
+		      	  				<textarea id="idea_excerp" name="idea_excerp" placeholder="Textfeld begrenzt auf 200 Wörter" maxlength="<?php echo self::$validationConfig['excerp_max_chars'] ?>"></textarea>
+		      	  			</div>
+		      	  			
+		      	  			<div id_"idea-title-picture">
+		      	  				<label for="idea-label-title-picture">Titelbild</label>
+		      	  				<input type="file" id="idea_image" name="idea_image" accept="image/*">
+		      	  			</div>
+		      	  			
+		      	  			<div id_"idea-full-description">
+		      	  				<label for="idea-label-full-description"></label>
+		      	  				<textarea id="idea_description" name="idea_description" placeholder="Textfeld unbegrenzt"></textarea>
+		      	  			</div>
+		      	  			
+		      	  			<div id="idea-upload-fildes">
+		      	  				<label for="idea-label-upload-fildes">Dateien Hinzufügen</label>
+		      	  				<input type="file" id="idea_file1" name="idea_file1">
+		      	  			</div>
+		      	  			
+		      	  			<div id="idea-collection-links">
+		      	  				<label>Weiterführende Links</label>
+			      	  			<div id="idea_links">
+									<table>
+										<tbody>
+											<tr class="links_meta_pair">
+												<td><input type="url" maxlength="40" name="linktext_0" placeholder="Beschreibung"></td>
+												<td><input type="url" name="linkurl_0" placeholder="Link"></td>
+												<td><a class="removelink" href="#" onclick="return false;">entfernen</a></td>
+											</tr>
+										</tbody>
+									</table>
+									<a id="addlink" href="#" onclick="return false;">hinzufügen</a>
+								</div>
+			        		</div>
+			      
+			        		<div id="idea-topics">
+			        			<label>Thema</label>
+			        			<select id="idea_topic" name="idea_topic">
+						        	<?php foreach ( $data['topics'] as &$topic ): ?>
+					                    <option value="<?php echo $topic['value'] ?>"><?php echo $topic['name'] ?></option>
+					                <?php endforeach; ?>
+						        </select>
+			        		</div>
+			        		
+			        		<div id="idea-goals">
+			        			<label>Ziele</label>
+			        			<input type="text" id="idea_aims" name="idea_aims">
+			        		</div>
+			        		<div class="idea_submit_container">
+			        			<button>
+			        			<a href="<?php echo $data['submitLink'] ?>" <?php echo $data['onClick'] ?> id="idea_submit">Abschicken</a>
+			        			</button>	
+			        		</div>
 				</div>	
         	</form>
        </div>

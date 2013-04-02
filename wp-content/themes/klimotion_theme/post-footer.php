@@ -4,6 +4,7 @@
  *
  * @package Cazuela
  * @since Cazuela 1.0
+ * //TODO: "Postet in" -> "Erstellt in"
  */
 ?>
 
@@ -14,8 +15,9 @@
 			$categories_list = get_the_category_list( __( ', ', 'cazuela' ) );
 			if ( $categories_list && thsp_categorized_blog() ) :
 		?>
-		<span class="cat-links">
-			<?php printf( __( 'Posted in %1$s', 'cazuela' ), $categories_list ); ?>
+		
+		<span class="cat-links">	
+			<?php printf( __( 'Erstellt in %1$s' ), $categories_list ); ?>
 		</span>
 		<span class="sep"> | </span>
 		<?php endif; // End if categories ?>
