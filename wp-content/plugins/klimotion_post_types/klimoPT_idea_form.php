@@ -22,7 +22,7 @@ class NewIdeaForm {
         'title_min_chars'     	=> 3,
         'excerp_max_chars'    	=> 200,
         'image_size_max'		=> 5000000,
-        'min_aims'				=> 1,
+        'aims_min'				=> 1,
     );
     
 
@@ -417,7 +417,7 @@ class NewIdeaForm {
 		
 		// check group
 		$element = 'idea_group';
-		$value = intval(wp_strip_all_tags($args['idea_group']));
+		$value = intval(wp_strip_all_tags($args[$element]));
 		$postData[$element] = $value;
 		
 
@@ -442,11 +442,11 @@ class NewIdeaForm {
 		
 		// check topic
 		$element = 'idea_topic';
-		$value = intval(wp_strip_all_tags($args['idea_topic']));
+		$value = intval(wp_strip_all_tags($args[$element]));
 		$postData[$element] = $value;
 		
 		
-		// check aim
+		// check aims
 		$element = 'idea_aims';
 		$value = explode(",", wp_strip_all_tags($args['as_values_idea_aims']));
 		foreach ($value as &$aim) {
@@ -455,10 +455,10 @@ class NewIdeaForm {
 		}
 		$last = end($value);
 		if( empty($last) ) array_pop($value);
-		if( count($value) < self::$validationConfig['min_aims']) {
+		if( count($value) < self::$validationConfig['aims_min']) {
             $response['error'][] = array(
                 'element'   => $element,
-                'message'   => "Gib bitte mindestens " . self::$validationConfig['min_aims'] . " Projektziel" . ((self::$validationConfig['min_aims'] == 1)? "e" : "") . " an",
+                'message'   => "Gib bitte mindestens " . self::$validationConfig['aims_min'] . " Projektziel" . ((self::$validationConfig['aims_min'] == 1)? "e" : "") . " an",
             );
         }
 		$postData[$element] = $value;

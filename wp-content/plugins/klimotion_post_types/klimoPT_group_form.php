@@ -16,12 +16,14 @@ class NewGroupForm {
     private static $ioConfig = array();
 	private static $nonceName = "klimoGroupFormNonce";
 	private static $validationConfig = array(
-        'name_max_chars'     	=> 100,*
-        'name_min_chars'     	=> 3,*
-        'city_max_chars'		=> 200,*
-        'zipcode_chars'			=> 5,*
-        'scope_min'				=> 1,*
+        'name_max_chars'     	=> 100,
+        'name_min_chars'     	=> 3,
+        'city_max_chars'		=> 200,
+        'zipcode_chars'			=> 5,
+        'scope_min'				=> 1,
+        'description_max_chars' => 5000,
         'homepage_max_chars'	=> 300,
+        'contact_max_chars'		=> 200,
     );
     
 
@@ -127,7 +129,7 @@ class NewGroupForm {
 				        
 				        <label><?php echo __("Ort") ?></label>
 						<input type="text" id="group_city" name="group_city"  placeholder="Ort">
-						<input type="text" id="idea_image" name="idea_image"  placeholder="Postleitzahl">
+						<input type="text" id="group_zipcode" name="group_zipcode"  placeholder="Postleitzahl">
 						
 						<label><?php echo __("Wirkungskreis") ?></label>
 						<input type="text" id="group_scopes" name="group_scopes" placeholder="Schule / etc.">
@@ -149,17 +151,17 @@ class NewGroupForm {
 				        <h1><?php echo __("Ansprechpartner") ?></h1>
 	
 						<label><?php echo __("Name") ?></label>
-						<input type="text" id="group_contact_name" name="group_contact_name"  placeholder="Ort">
+						<input type="text" id="group_contact_name" name="group_contact_name"  placeholder="Name">
 						
 						<label><?php echo __("Vorname") ?></label>
-						<input type="text" id="group_contact_surname" name="group_contact_surname"  placeholder="Ort">
+						<input type="text" id="group_contact_surname" name="group_contact_surname"  placeholder="Vorname">
 						
 						<label><?php echo __("E-Mail") ?></label>
-						<input type="email" id="group_contact_mail" name="group_contact_mail"  placeholder="Ort">
+						<input type="email" id="group_contact_mail" name="group_contact_mail"  placeholder="E-Mail">
 						
 						<label><?php echo __("Telefon") ?></label>
-						<input type="email" id="group_contact_mail" name="group_contact_mail"  placeholder="Ort">
-						<input type="checkbox" id="group_contact_publish" name="group_contact_publish" value="public" checked="checked"><?php echo __("öffentlich") ?>
+						<input type="email" id="group_contact_phone" name="group_contact_phone"  placeholder="Telefon">
+						<input type="checkbox" id="group_contact_publish" name="group_contact_publish" value="group_contact_publish" checked="checked"><?php echo __("öffentlich") ?>
 					</fieldset>
 
 			        <div class="group_submit_container"><a href="<?php echo $data['submitLink'] ?>" <?php echo $data['onClick'] ?> id="group_submit">Abschicken</a></div>
@@ -344,26 +346,26 @@ class NewGroupForm {
     private static function validate(&$args, &$files, &$postData) {
     	$response = array();
 		
-		// check title
-        $element = "idea_title";
+		// check name
+        $element = "group_name";
         $value = trim(wp_strip_all_tags($args[$element]));
         // too short?
-        if(strlen($value) < self::$validationConfig['title_min_chars']) {
+        if(strlen($value) < self::$validationConfig['name_min_chars']) {
             $response['error'][] = array(
                 'element'   => $element,
-                'message'   => "Der Titel muss mindestens " . self::$validationConfig['title_min_chars'] . " Zeichen lang sein.",
+                'message'   => "Gib einen Namen für deine Lokalgruppe an (mindestens " . self::$validationConfig['name_min_chars'] . " Zeichen).",
             );
         // too long?
-        } else if(strlen($value) > self::$validationConfig['title_max_chars']) {
+        } else if(strlen($value) > self::$validationConfig['name_min_chars']) {
             $response['error'][] = array(
                 'element'   => $element,
-                'message'   => "Der Titel darf maximal " . self::$validationConfig['title_max_chars'] . " Zeichen lang sein.",
+                'message'   => "Der Name darf maximal " . self::$validationConfig['name_max_chars'] . " Zeichen lang sein.",
             );
         // check if post is already there
         } else {
             $matchingPosts = get_posts(array(
                 'name' => $value,
-                'post_type' => 'klimo_idea',
+                'post_type' => 'klimo_localGroups',
                 'post_status' => 'publish',
                 'posts_per_page' => 1,)
             );
@@ -373,106 +375,161 @@ class NewGroupForm {
                 $post = &$matchingPosts[0];
                 $response['error'][] = array(
                     'element'   => $element,
-                    'message'   => 'Diese Idee gibt es <a href="' . get_post_permalink($post->ID , false) . '" title="' . $post->post_title . '" target="_blank">hier</a> schon!',
+                    'message'   => 'Diese Lokalgruppe gibt es <a href="' . get_post_permalink($post->ID , false) . '" title="' . $post->post_title . '" target="_blank">hier</a> schon!',
                 );
             }
         }
 		$postData[$element] = $value;
 		
 		
-		// check group
-		$element = 'idea_group';
-		$value = intval(wp_strip_all_tags($args['idea_group']));
-		$postData[$element] = $value;
-		
-
-		// check excerp
-		$element = 'idea_excerp';
-		$value = trim(wp_strip_all_tags($args[$element]));
-		// too long?
-		if(strlen($value) > self::$validationConfig['excerp_max_chars']) {
+		// check city
+		$element = 'group_city';
+		$value = intval(wp_strip_all_tags($args[$element]));
+		if(empty($value)) {
             $response['error'][] = array(
                 'element'   => $element,
-                'message'   => "Kurzbeschreibung darf maximal " . self::$validationConfig['excerp_max_chars'] . " Zeichen lang sein.",
+                'message'   => "Gib eine Stadt für deine Lokalgruppe an.",
+            );
+        // too long?
+        } else if(strlen($value) > self::$validationConfig['city_max_chars']) {
+            $response['error'][] = array(
+                'element'   => $element,
+                'message'   => "Die Stadt deiner Lokalgruppe ist zu lang.",
+            );
+        }
+		$postData[$element] = $value;
+		
+		
+		// check zip code
+		$element = 'group_zipcode';
+		$value = intval(wp_strip_all_tags($args[$element]));
+		if(strlen($value) != 5) {
+            $response['error'][] = array(
+                'element'   => $element,
+                'message'   => "Die Postleitzahl deiner Lokalgruppe ist ungültig.",
+            );
+		}
+		$postData[$element] = $value;
+		
+		
+		// check scopes
+		$element = 'group_scopes';
+		$value = explode(",", wp_strip_all_tags($args['as_values_group_scopes']));
+		foreach ($value as &$scope) {
+			if(is_numeric($scope))
+				$scope = intval($scope);
+		}
+		$last = end($value);
+		if( empty($last) ) array_pop($value);
+		if( count($value) < self::$validationConfig['scope_min']) {
+            $response['error'][] = array(
+                'element'   => $element,
+                'message'   => "Gib bitte mindestens " . self::$validationConfig['scope_min'] . " Wirkungsbereich" . ((self::$validationConfig['scope_min'] == 1)? "e" : "") . " an",
             );
         }
 		$postData[$element] = $value;
 		
 		
 		// check description
-        $element = "idea_description";
-        $value = trim(wp_strip_all_tags($args[$element]));
-		$postData[$element] = $value;
-		
-		
-		// check topic
-		$element = 'idea_topic';
-		$value = intval(wp_strip_all_tags($args['idea_topic']));
-		$postData[$element] = $value;
-		
-		
-		// check aim
-		$element = 'idea_aims';
-		$value = explode(",", wp_strip_all_tags($args['as_values_idea_aims']));
-		foreach ($value as &$aim) {
-			if(is_numeric($aim))
-				$aim = intval($aim);
-		}
-		$last = end($value);
-		if( empty($last) ) array_pop($value);
-		$postData[$element] = $value;
-		
-		
-		// check links
-		$element = 'idea_links';
-		$value = array();
-		for ($i=0; ;$i++) { 
-			$keyText = 'linktext_' . $i;
-			$keyUrl = 'linkurl_' . $i;
-			if(!array_key_exists ( $keyText , $args ) || !array_key_exists ( $keyUrl , $postData ))
-				break;
-			$valText  = trim(wp_strip_all_tags($args[$keyText]));
-			$valUrl  = trim(wp_strip_all_tags($args[$keyUrl]));
-			
-			if(strlen($valUrl))
-				$value[] = array('text' => $valText, 'url' => $valUrl);
-		}
-		$postData[$element] = $value;
-		
-		
-		// check featured image
-        $element = "idea_image";
-        if( key_exists($element, $files) && !empty($files[$element]['name']) ) {
-        	$value = $files[$element];
-            if( $files[$element]['size'] > self::$validationConfig['image_size_max'] ) {
-                $response['error'][] = array(
-                    'element'   => $element,
-                    'message'   => "Bilder dürfen nicht größer als " . (self::$validationConfig['image_size_max'] / 1000000) . " MB groß sein.",
-                );
-            } else {
-            	$postData[$element] = $value;
-            }
+		$element = 'group_description';
+		$value = intval(wp_strip_all_tags($args[$element]));
+        if(strlen($value) > self::$validationConfig['description_max_chars']) {
+            $response['error'][] = array(
+                'element'   => $element,
+                'message'   => "Die Kurzbeschreibung deiner Lokalgruppe ist zu lang (maximal " . self::$validationConfig['description_max_chars'] . " Zeichen).",
+            );
         }
+		$postData[$element] = $value;
+		
+
+		// check homepage
+		$element = 'group_homepage';
+		$value = intval(wp_strip_all_tags($args[$element]));
+        if(strlen($value) > self::$validationConfig['homepage_max_chars']) {
+            $response['error'][] = array(
+                'element'   => $element,
+                'message'   => "Die URL deiner Lokalgruppe ist zu lang (maximal " . self::$validationConfig['homepage_max_chars'] . " Zeichen).",
+            );
+        }
+		$postData[$element] = $value;
+		
+
+		// check contact name
+		$element = 'group_contact_name';
+		$value = intval(wp_strip_all_tags($args[$element]));
+		if(empty($value)) {
+            $response['error'][] = array(
+                'element'   => $element,
+                'message'   => "Gib den Nachnamen deiner Kontaktperson an",
+            );
+        // too long?
+        } else if(strlen($value) > self::$validationConfig['contact_max_chars']) {
+            $response['error'][] = array(
+                'element'   => $element,
+                'message'   => "Der Nachname deiner Kontaktperson ist zu lang an (maximal " . self::$validationConfig['contact_max_chars'] . " Zeichen).",
+            );
+        }
+		$postData[$element] = $value;
 		
 		
-		// check attachments
-		$element = 'idea_files';
-		$value = array();
-		for ($i=0; ;$i++) { 
-			$descrKey = 'filetext_' . $i;
-			$fileKey = 'idea_file_' . $i;
-			
-			// check (assumption: element names are ordered, starting from 0)
-			if(!array_key_exists ( $descrKey , $args ) || !array_key_exists ( $fileKey , $files ))
-				break;
-			if( (empty($files[$fileKey]['name'])) || (intval($files[$fileKey]['error'] != 0)) )
-				continue;
-			
-			$valText  = trim(wp_strip_all_tags($args[$descrKey]));
-			$fileValue = $files[$fileKey];
-			$fileValue['description'] = $valText;
-			$value[] = $fileValue;
-		}
+		// check contact surname
+		$element = 'group_contact_surname';
+		$value = intval(wp_strip_all_tags($args[$element]));
+		if(empty($value)) {
+            $response['error'][] = array(
+                'element'   => $element,
+                'message'   => "Gib den Vornamen deiner Kontaktperson an",
+            );
+        // too long?
+        } else if(strlen($value) > self::$validationConfig['contact_max_chars']) {
+            $response['error'][] = array(
+                'element'   => $element,
+                'message'   => "Der Vorname deiner Kontaktperson ist zu lang an (maximal " . self::$validationConfig['contact_max_chars'] . " Zeichen).",
+            );
+        }
+		$postData[$element] = $value;
+		
+		
+		// check contact email
+		$element = 'group_contact_mail';
+		$value = intval(wp_strip_all_tags($args[$element]));
+		if(empty($value)) {
+            $response['error'][] = array(
+                'element'   => $element,
+                'message'   => "Gib die E-Mail-Adresse deiner Kontaktperson an",
+            );
+        // too long?
+        } else if(strlen($value) > self::$validationConfig['contact_max_chars']) {
+            $response['error'][] = array(
+                'element'   => $element,
+                'message'   => "Die E-Mail-Adresse deiner Kontaktperson ist zu lang an (maximal " . self::$validationConfig['contact_max_chars'] . " Zeichen).",
+            );
+        }
+		$postData[$element] = $value;
+		
+		
+		// check contact phone
+		$element = 'group_contact_phone';
+		$value = intval(wp_strip_all_tags($args[$element]));
+		if(empty($value)) {
+            $response['error'][] = array(
+                'element'   => $element,
+                'message'   => "Gib die Telefonnummer deiner Kontaktperson an",
+            );
+        // too long?
+        } else if(strlen($value) > self::$validationConfig['contact_max_chars']) {
+            $response['error'][] = array(
+                'element'   => $element,
+                'message'   => "Die Telefonnummer deiner Kontaktperson ist zu lang an (maximal " . self::$validationConfig['contact_max_chars'] . " Zeichen).",
+            );
+        }
+		$postData[$element] = $value;
+
+
+
+		// check publish
+        $element = "group_contact_publish";
+        $value = array_key_exists($element, $args);
 		$postData[$element] = $value;
 		
 		
@@ -490,7 +547,7 @@ class NewGroupForm {
 
         if( !isset($nonce) || wp_verify_nonce($nonce, self::$nonceName) != 1 ) {
             $response['securityError'] = array(
-                'message'  => '<div id="securityErrorMessage"><p>Sorry, deine Session ist abgelaufen ... </p><a href=".">Neue Idee Schreiben</a></div>',
+                'message'  => '<div id="securityErrorMessage"><p>Sorry, deine Session ist abgelaufen ... </p><a href=".">Neue Lokalgruppe erstellen</a></div>',
             );
         }
         

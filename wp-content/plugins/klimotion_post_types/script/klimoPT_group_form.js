@@ -26,7 +26,7 @@ jQuery(function($) { ideaform : {
 						minChars : 2,
 						startText : "Schule / etc.",
 						emptyText : "neues Ziel mit TAB",
-						asHtmlID : "idea_scopes"
+						asHtmlID : "group_scopes"
 					}
 				);
 				
