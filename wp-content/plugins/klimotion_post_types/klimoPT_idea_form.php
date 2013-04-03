@@ -1,6 +1,6 @@
 <?php
 /**
- * @package Klimotion_Group_Map
+ * @package Klimotion_Post_Types
  */
 
  
@@ -106,7 +106,7 @@ class NewIdeaForm {
 
         $data = $this->preRender();
         ?>
-        
+        select-boxen wie bei http://meinfernbus.de/
         // display hint if not logged in
         <?php if($data['isLoggedIn'] == false) : ?>
         <div class="entry-content">

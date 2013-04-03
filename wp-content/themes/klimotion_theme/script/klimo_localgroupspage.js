@@ -5,41 +5,43 @@
 jQuery(function($) { klimo_localgroupspage : {
 
 
-		function MapControl(wrapper) {
+		function MapControl(options) {
 			var me = this;
-			this.wrapper = wrapper
+			var defaults = {
+				mapID: '#groupmap',
+				map: 'lower_saxony_de'
+			}
+			this.opts = $.extend(defaults, options);
+			this.map = 0;
 		
 
 
+
 			this.__contruct = function() {
-				colors = {};
-				colors['1'] = '#A4D886';
-				colors['2'] = '#FCECA2';
-				vals = [];
-				for(var i=0,j=47; i<j; i++){
-					iStr = i.toString();
-				  	vals[iStr] = i;
-				};
-				console.log(vals);
-				$(wrapper).vectorMap({
-					map: "lower_saxony_de",
+				
+				// prepare map
+				var mapOpts = {
+					map: me.opts.map,
 					series: { 
-						regions: [
-						{
+						regions: [{
 							scale: ['#000000','#ffffff'],
 				            attribute: 'fill',
 				            normalizeFunction: 'linear',
-				            values: vals
-			          }]
+				            values: me.opts.mapVals
+			          	},]
 					},
-					onRegionClick: function(event, code){
-						alert(code); 
-					}
-				});
+					onRegionClick: me.onRegionClickHandler
+				}
+				// init map
+				me.map = $(me.opts.mapID).vectorMap(mapOpts);
 				
 			}
-			//jvectormaps style by marina
-			  
+			
+			
+			this.onRegionClickHandler = function(event, code){
+				console.log(code);
+				// TODO: send ajax
+			}
 			
 
 			// call constructor
@@ -49,7 +51,12 @@ jQuery(function($) { klimo_localgroupspage : {
 		
 
 		$(document).ready(function() {
-			var mapControl = new MapControl('#groupmap');
+			var mapControl = new MapControl({
+				mapID: '#groupmap',
+				mapVals: localgroupspage_config.mapVals,
+				ajaxConfig: localgroupspage_config.ajaxConfig,
+				map: 'lower_saxony_de'
+			});
 		});
 	}
 

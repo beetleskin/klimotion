@@ -1,6 +1,6 @@
 <?php
 /**
- * @package Klimotion_Group_Map
+ * @package Klimotion_Post_Types
  */
 
  
@@ -182,7 +182,7 @@ class NewGroupForm {
 		);
         
         // Print data to sourcecode
-        wp_localize_script('klimo_frontend_forms', 'groupform_config', $formData);
+        wp_localize_script('klimo_frontend_forms_config', 'groupform_config', $formData);
     }
 
 

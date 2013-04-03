@@ -23,20 +23,21 @@ get_header(); ?>
 			<?php endwhile; // end of the loop. ?>
 			
 			<?php
-				LocalGroupsPage::prepare_map();
-				LocalGroupsPage::render_map();
+				$lgPage = new LocalGroupsPage();
+				$lgPage->renderMap();
+				$lgPage->postRender();
 			?>
 			
 			<?php
-				LocalGroupsPage::local_groups_query();
+				$lgPage->local_groups_query();
 			?>
-			
+			<div id="article_wrap">
 			<?php while ( have_posts() ) : the_post(); ?>
 
 				<?php get_template_part( 'content' ); ?>
 
 			<?php endwhile; // end of the loop. ?>
-			
+			</div>
 
 			<?php
 				// After Content theme hook callback
