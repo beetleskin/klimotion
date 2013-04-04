@@ -240,7 +240,7 @@ class NewIdeaForm {
 
     public static function initAjax() {
     	self::$ioConfig['ajaxurl'] = admin_url('admin-ajax.php');
-		self::$ioConfig['submitAction'] = 'ideaform_submit-ajax.php';
+		self::$ioConfig['submitAction'] = 'ideaform_submit-ajax';
     	
 		// register form ajax
         add_action('wp_ajax_' . self::$ioConfig['submitAction'], 'NewIdeaForm::submitHandler');

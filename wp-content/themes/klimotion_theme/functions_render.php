@@ -15,8 +15,8 @@ class LocalGroupsPage {
 	
 	public static function initAjax() {
 		self::$ioConfig['ajaxurl'] = admin_url('admin-ajax.php');
-		self::$ioConfig['submitAction'] = 'localgroupspage_query.php';
-    	
+		self::$ioConfig['submitAction'] = 'localgroupspage_query';
+
 		// register ajax request
         add_action('wp_ajax_' . self::$ioConfig['submitAction'], 'LocalGroupsPage::ajaxGetGroups');
 	}
@@ -24,8 +24,8 @@ class LocalGroupsPage {
 	public static function ajaxGetGroups() {
 		
 		// check nonce
-		if(!self::securityCheck($_REQUEST, self::$nonceName)) {
-			$message = '<div id="securityErrorMessage"><p>Sorry, deine Session ist abgelaufen ... </p><a href="' . $redirect . '">Hier </a>gehts weiter</div>';
+		if(!self::securityCheck($_REQUEST, 'nonsense')) {
+			$message = '<div id="securityErrorMessage"><p>Sorry, deine Session ist abgelaufen ... </p><a href="' . get_home_url() . '">Hier </a>gehts weiter</div>';
 			$response['securityError'] = array(
                 'redirect' => get_home_url(),
                 'message'  => $message,
@@ -38,17 +38,21 @@ class LocalGroupsPage {
 		header("Content-Type: text/plain");
 		echo json_encode($_REQUEST);
 		die();
-		
 	}
 	
 	
-	private static function securityCheck(&$args, $nonce) {
-        if(key_exists($nonce, $args) && wp_verify_nonce($args[self::$nonceName], self::$nonceName) == 1) {
+	private static function securityCheck(&$args, $nonceKey) {
+        if(key_exists($nonceKey, $args) && wp_verify_nonce($args[$nonceKey], self::$nonceName) == 1) {
 			return true;
         }
 		
 		return false;
 	}
+	
+	
+	
+	
+	
 	
 	
 	public function postRender() {
@@ -64,7 +68,7 @@ class LocalGroupsPage {
 		
 		// print ajax config
         $ioConfig = self::$ioConfig;
-        $ioConfig[self::$nonceName] = wp_create_nonce (self::$nonceName);
+        $ioConfig['nonsense'] = wp_create_nonce (self::$nonceName);
 		$vals = array();
 		for ($i=0; $i < 47; $i++) { 
 			$vals[''.$i] = $i;
@@ -81,12 +85,15 @@ class LocalGroupsPage {
 	}
 	
 	
+	
+	
 	public function renderMap() {
 		?>
 			<div id="groupmap"></div>
 			
 		<?php
 	}
+	
 	
 	
 	public function local_groups_query($args = array()) {

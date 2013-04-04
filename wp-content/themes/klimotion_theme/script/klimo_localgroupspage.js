@@ -13,8 +13,8 @@ jQuery(function($) { klimo_localgroupspage : {
 			}
 			this.opts = $.extend(defaults, options);
 			this.map = 0;
+			
 		
-
 
 
 			this.__contruct = function() {
@@ -35,12 +35,43 @@ jQuery(function($) { klimo_localgroupspage : {
 				// init map
 				me.map = $(me.opts.mapID).vectorMap(mapOpts);
 				
+				
+				me.ajaxDefaults = {
+					type : "POST",
+					url : me.opts.ajaxConfig.ajaxurl,
+					dataType : "html",
+					beforeSend : me.beforeSendHandler,
+					success : me.successHandler,
+					complete : me.completeHandler
+				};
+			}
+			
+			
+			this.beforeSendHandler = function() {
+				console.log('beforeSendHandler');
+			}
+			
+			
+			this.successHandler = function(msg) {
+				console.log(msg);
+			}
+			
+			
+			this.completeHandler = function() {
+				console.log('completeHandler');
 			}
 			
 			
 			this.onRegionClickHandler = function(event, code){
-				console.log(code);
-				// TODO: send ajax
+				var ajaxOpts = $.extend(me.ajaxDefaults, {
+					data : {
+						nonsense :  me.opts.ajaxConfig.nonsense,
+						action :  me.opts.ajaxConfig.submitAction,
+						district : code,
+					}
+				});
+				
+				$.ajax(ajaxOpts);
 			}
 			
 
