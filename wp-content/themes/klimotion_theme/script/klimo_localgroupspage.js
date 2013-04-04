@@ -53,7 +53,8 @@ jQuery(function($) { klimo_localgroupspage : {
 			
 			
 			this.successHandler = function(msg) {
-				console.log(msg);
+				$('#article_wrap').html(msg);
+				console.log(msg)
 			}
 			
 			

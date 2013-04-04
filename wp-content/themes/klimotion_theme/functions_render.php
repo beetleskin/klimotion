@@ -9,7 +9,8 @@ class LocalGroupsPage {
 	
 	private static $ioConfig = array();
 	private static $nonceName = "klimoLocalGroupNonce";
-	private static $defaultQuery = array( 'post_type' => array('klimo_localGroups') );
+	private static $defaultQuery = array( 
+		'post_type' => array('klimo_localgroup') );
 	
 	
 	
@@ -34,6 +35,30 @@ class LocalGroupsPage {
 			echo json_encode($response);
 			die();
 		}
+
+		// prepare query
+		$district = $_REQUEST['district'];
+		$query = self::local_groups_query(
+			array(
+				'tax_query' => array(array(
+					'taxonomy' =>'klimo_districts',
+					'field' => 'slug',
+					'terms' => '_district_' . $district 
+				))
+			)
+		);
+		
+		// query groups
+		ob_start();
+        while (have_posts()) : the_post();
+            get_template_part('content');
+        endwhile;
+	
+	    $buffer = ob_get_contents();
+	    ob_end_clean();
+	
+	    echo $buffer;
+	    exit;
 		
 		header("Content-Type: text/plain");
 		echo json_encode($_REQUEST);
@@ -96,8 +121,8 @@ class LocalGroupsPage {
 	
 	
 	
-	public function local_groups_query($args = array()) {
-		$newQuery = query_posts( array_merge($args, self::$defaultQuery) );
+	public static function local_groups_query($args = array()) {
+		$newQuery = query_posts( array_merge(self::$defaultQuery, $args) );
 		return $newQuery;
 	}
 }

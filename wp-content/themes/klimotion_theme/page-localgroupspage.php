@@ -29,7 +29,7 @@ get_header(); ?>
 			?>
 			
 			<?php
-				$lgPage->local_groups_query();
+				LocalGroupsPage::local_groups_query();
 			?>
 			<div id="article_wrap">
 			<?php while ( have_posts() ) : the_post(); ?>
