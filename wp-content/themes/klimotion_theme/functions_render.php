@@ -17,12 +17,15 @@ class LocalGroupsPage {
 	public static function initAjax() {
 		self::$ioConfig['ajaxurl'] = admin_url('admin-ajax.php');
 		self::$ioConfig['submitAction'] = 'localgroupspage_query';
+		
 
 		// register ajax request
         add_action('wp_ajax_' . self::$ioConfig['submitAction'], 'LocalGroupsPage::ajaxGetGroups');
 	}
 	
 	public static function ajaxGetGroups() {
+		
+		$response = array();
 		
 		// check nonce
 		if(!self::securityCheck($_REQUEST, 'nonsense')) {
@@ -51,17 +54,23 @@ class LocalGroupsPage {
 		// query groups
 		ob_start();
         while (have_posts()) : the_post();
-            get_template_part('content');
+            get_template_part('content', 'klimo_localgroup');
         endwhile;
 	
-	    $buffer = ob_get_contents();
-	    ob_end_clean();
-	
-	    echo $buffer;
-	    exit;
+		$buffer = ob_get_contents();
+		ob_end_clean();
 		
+		
+		if(empty($buffer)) {
+			$termName = get_term_by( 'slug', '_district_' . $district, 'klimo_districts')->name;
+			$response['success'] = '<div id="noqueryresults">Für ' . $termName . ' ist keine Gruppe eingetragen.</div>';
+		} else {
+			$response['success'] = $buffer;
+		}
+	    
+	
 		header("Content-Type: text/plain");
-		echo json_encode($_REQUEST);
+		echo json_encode($response);
 		die();
 	}
 	

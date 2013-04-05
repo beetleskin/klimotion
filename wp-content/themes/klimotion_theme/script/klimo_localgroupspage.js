@@ -39,7 +39,7 @@ jQuery(function($) { klimo_localgroupspage : {
 				me.ajaxDefaults = {
 					type : "POST",
 					url : me.opts.ajaxConfig.ajaxurl,
-					dataType : "html",
+					dataType : "json",
 					beforeSend : me.beforeSendHandler,
 					success : me.successHandler,
 					complete : me.completeHandler
@@ -48,6 +48,10 @@ jQuery(function($) { klimo_localgroupspage : {
 			
 			
 			this.beforeSendHandler = function() {
+				if($('#article_wrap').is(":animated")) {
+					return false;	
+				}
+				
 				time = ($('#article_wrap').html().length == 0)? 1 : 500;
 				$('#article_wrap', me.form).animate({
 					opacity : 'toggle',
@@ -60,15 +64,29 @@ jQuery(function($) { klimo_localgroupspage : {
 			this.successHandler = function(msg) {
 				if($('#article_wrap').is(":animated")) {
 					$('#article_wrap').promise('fx').done(function() {
-						me.fadeInNewGroups(msg);
+						me.fadeInResponse(msg);
 					});
 				} else {
-					me.fadeInNewGroups(msg);
+					me.fadeInResponse(msg);
 				}
 			}
 			
 			
-			this.fadeInNewGroups = function(html) {
+			this.fadeInResponse = function(msg) {
+				console.log(msg)
+				var html = "";
+				// error handling
+				if(msg.error != null) {
+					html = msg.error;
+				} else if(msg.securityError != null) {
+					html = msg.securityError;
+				} else if(msg.success != null) {
+					html = msg.success;
+				} else {
+					html = msg;
+				}
+				
+				
 				$('#article_wrap').html(html);
 				$('#article_wrap').animate({
 					opacity : 'toggle',
@@ -83,6 +101,7 @@ jQuery(function($) { klimo_localgroupspage : {
 			
 			
 			this.onRegionClickHandler = function(event, code){
+				// TODO: check if we are sending right now, and return false
 				var ajaxOpts = $.extend(me.ajaxDefaults, {
 					data : {
 						nonsense :  me.opts.ajaxConfig.nonsense,

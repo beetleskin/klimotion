@@ -67,7 +67,7 @@ jQuery(function($) { ideaform : {
 				} else if(response.success != null) {
 					me.submitSuccessHandler(response);
 				} else {
-					alert("xxx this should never happen!")
+					console.log("this should never happen!")
 				}
 			}
 			
