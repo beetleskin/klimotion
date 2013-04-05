@@ -51,7 +51,7 @@ class NewIdeaForm {
 		
 		// groups:
 		$groups = get_posts( array( 
-			'post_type' 	=> array('klimo_localGroups'),
+			'post_type' 	=> array('klimo_localgroup'),
 			'post_status'	=> 'publish',
 			'numberposts' 	=> -1
 		));
@@ -59,6 +59,7 @@ class NewIdeaForm {
 		foreach ($groups as $group) {
 			$data['groups'][] = array("value" => $group->ID, "name" => $group->post_title);
 		}
+
 
 		// topics
 		$topics = get_terms("klimo_idea_topics", array(

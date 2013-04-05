@@ -31,7 +31,6 @@ jQuery(function($) { ideaform : {
 				);
 				
 				
-				
 				// declare ajaxForm
 				var formOptions = {
 					beforeSerialize : me.beforeSerialize,
