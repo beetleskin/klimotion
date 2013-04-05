@@ -48,13 +48,32 @@ jQuery(function($) { klimo_localgroupspage : {
 			
 			
 			this.beforeSendHandler = function() {
-				console.log('beforeSendHandler');
+				time = ($('#article_wrap').html().length == 0)? 1 : 500;
+				$('#article_wrap', me.form).animate({
+					opacity : 'toggle',
+					height : 'toggle'
+				}, time);
+				return true;
 			}
 			
 			
 			this.successHandler = function(msg) {
-				$('#article_wrap').html(msg);
-				console.log(msg)
+				if($('#article_wrap').is(":animated")) {
+					$('#article_wrap').promise('fx').done(function() {
+						me.fadeInNewGroups(msg);
+					});
+				} else {
+					me.fadeInNewGroups(msg);
+				}
+			}
+			
+			
+			this.fadeInNewGroups = function(html) {
+				$('#article_wrap').html(html);
+				$('#article_wrap').animate({
+					opacity : 'toggle',
+					height : 'toggle'
+				}, 500);
 			}
 			
 			
