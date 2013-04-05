@@ -13,6 +13,7 @@
 
 
 include_once('klimoPT_idea_form.php');
+include_once('klimoPT_group_form.php');
 
 
 /* front end action hooks */
@@ -40,6 +41,7 @@ function kpt_hook_init() {
 	
 	// register ajax callbacks
 	NewIdeaForm::initAjax();
+	NewGroupForm::initAjax();
 }
 
 
@@ -89,7 +91,9 @@ function kpt_hook_add_admin_style() {
 
 
 function kpt_hook_add_admin_script() {
-	wp_enqueue_script('kpt-admin-script', plugins_url('script/klimoPT_admin.js', __FILE__), array('jquery'));
+	// adaptivetableinput
+    wp_enqueue_script('adaptivetableinput', plugins_url('script/adaptiveTableInput.js', __FILE__), array('jquery'));
+	wp_enqueue_script('kpt-admin-script', plugins_url('script/klimoPT_admin.js', __FILE__), array('jquery', 'adaptivetableinput'));
 }
 
 
@@ -281,19 +285,27 @@ function kpt_add_localGroups()  {
         'map_meta_cap'  => true,
         'has_archive'   => false,
         'supports'      => array('title', 'author', 'thumbnail', 'custom-fields', 'comments'),
-        'taxonomies'    => array('klimo_localGroups_ZIPCode'),
+        'taxonomies'    => array('klimo_districts', 'klimo_scopes'),
     );
 
     
-    $post_taxonomy_args = array(
+    $post_taxonomy_args1 = array(
         "hierarchical"      => false,
         "label"             => "Landkreise",
         "singular_label"    => "Landkreis",
         "rewrite"           => true,
     );
+	
+	$post_taxonomy_args2 = array(
+        "hierarchical"      => false,
+        "label"             => "Wirkungskreise",
+        "singular_label"    => "Wirkungskreis",
+        "rewrite"           => true,
+    );
         
         
-    register_taxonomy("klimo_localGroups_states", array("klimo_localGroups"), $post_taxonomy_args);
+    register_taxonomy("klimo_districts", array("klimo_localGroups"), $post_taxonomy_args1);
+	register_taxonomy("klimo_scopes", array("klimo_localGroups"), $post_taxonomy_args2);
     register_post_type('klimo_localGroups', $post_type_args);
 }
 

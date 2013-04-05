@@ -4,7 +4,9 @@
  */
 
  
- 
+// TODO: Counter für Textfelder
+// TODO: Multiselect für Themen
+
 
 class NewIdeaForm {
 
@@ -17,9 +19,10 @@ class NewIdeaForm {
 	private static $nonceName = "klimoIdeaFormNonce";
 	private static $validationConfig = array(
         'title_max_chars'     	=> 100,
-        'title_min_chars'     	=> 20,
+        'title_min_chars'     	=> 3,
         'excerp_max_chars'    	=> 200,
         'image_size_max'		=> 5000000,
+        'aims_min'				=> 1,
     );
     
 
@@ -123,22 +126,22 @@ class NewIdeaForm {
 		        			
 		        			<div id="idea-titel">
 		        				<label>Titel</label>
-		       				 	<input type="text" id="idea_title" name="idea_title" placeholder="Gib deiner Idee einen Namen" maxlength="<?php echo self::$validationConfig['title_max_chars'] ?>">
+		        				<input type="text" id="idea_title" name="idea_title" placeholder="Gib deiner Idee einen Namen" maxlength="<?php echo self::$validationConfig['title_max_chars'] ?>">
 		        			</div>
 		        			
 		        			<div id="idea-group">
 		        				<label>Gruppe</label>
 		        				<select id="idea_group" name="idea_group">
-			        				<option value="-1" selected="selected">Keine Gruppe</option>
-			        				<?php foreach ( $data['groups'] as &$group ): ?>
-		                  			<option value="<?php echo $group['value']; ?>"><?php echo $group['name']; ?></option>
-		               				<?php endforeach; ?>
-			       				</select>
+						        	<option value="-1" selected="selected">Keine Gruppe</option>
+						        	<?php foreach ( $data['groups'] as &$group ): ?>
+					                    <option value="<?php echo $group['value']; ?>"><?php echo $group['name']; ?></option>
+					                <?php endforeach; ?>
+						        </select>
 		        			</div>	
 		      	  	
 		      	  			<div id="idea-short-description">
 		      	  				<label for="idea-label-short-description">Kurze Beschreibung</label>
-		      	  				<textarea id="idea_excerp" name="idea_excerp" placeholder="Textfeld begrenzt auf 200 Wörter" maxlength="<?php echo self::$validationConfig['excerp_max_chars'] ?>"></textarea>
+			      				<textarea id="idea_excerp" name="idea_excerp" placeholder="Textfeld begrenzt auf 200 Wörter" maxlength="<?php echo self::$validationConfig['excerp_max_chars'] ?>"></textarea>
 		      	  			</div>
 		      	  			
 		      	  			<div id_"idea-title-picture">
@@ -147,13 +150,30 @@ class NewIdeaForm {
 		      	  			</div>
 		      	  			
 		      	  			<div id_"idea-full-description">
-		      	  				<label for="idea-label-full-description"></label>
-		      	  				<textarea id="idea_description" name="idea_description" placeholder="Textfeld unbegrenzt"></textarea>
+		      	  				<label for="idea-label-full-description">Detaillierte Beschreibung</label>
+		      	  				<?php wp_editor("", 'idea_description', array(
+						        	'media_buttons' => false,
+						        	'textarea_name' => 'idea_description',
+						        	'tabindex'		=> 0,
+						        	'teeny'			=> true,
+									));
+								?>
 		      	  			</div>
 		      	  			
 		      	  			<div id="idea-upload-fildes">
 		      	  				<label for="idea-label-upload-fildes">Dateien Hinzufügen</label>
-		      	  				<input type="file" id="idea_file1" name="idea_file1">
+		      	  				<div id="idea_files">
+									<table>
+										<tbody>
+											<tr class="files_meta_pair">
+												<td><input type="text" maxlength="40" name="filetext_0" placeholder="Beschreibung"></td>
+												<td><input type="file" id="" name="idea_file_0"></td>
+												<td><a class="removelink" href="#" onclick="return false;">entfernen</a></td>
+											</tr>
+										</tbody>
+									</table>
+									<a class="addlink" href="#" onclick="return false;">hinzufügen</a>
+								</div>
 		      	  			</div>
 		      	  			
 		      	  			<div id="idea-collection-links">
@@ -168,7 +188,7 @@ class NewIdeaForm {
 											</tr>
 										</tbody>
 									</table>
-									<a id="addlink" href="#" onclick="return false;">hinzufügen</a>
+									<a class="addlink" href="#" onclick="return false;">hinzufügen</a>
 								</div>
 			        		</div>
 			      
@@ -183,11 +203,12 @@ class NewIdeaForm {
 			        		
 			        		<div id="idea-goals">
 			        			<label>Ziele</label>
-			        			<input type="text" id="idea_aims" name="idea_aims">
+			    			    <input type="text" id="idea_aims" name="idea_aims">
 			        		</div>
+			        		
 			        		<div class="idea_submit_container">
 			        			<button>
-			        			<a href="<?php echo $data['submitLink'] ?>" <?php echo $data['onClick'] ?> id="idea_submit">Abschicken</a>
+			       					 <a href="<?php echo $data['submitLink'] ?>" <?php echo $data['onClick'] ?> id="idea_submit">Abschicken</a>
 			        			</button>	
 			        		</div>
 				</div>	
@@ -203,8 +224,7 @@ class NewIdeaForm {
         $ioConfig[self::$nonceName] = wp_create_nonce  (self::$nonceName);
 		$formData = array(
 			'ajaxConfig' 	=> $ioConfig,
-			'as_groups'		=> $this->renderData['groups'],
-			'as_aims'		=> $this->renderData['aims'],
+			'as_aims'		=> (object)(array('items' => $this->renderData['aims'])),
 		);
         
         // Print data to sourcecode
@@ -215,15 +235,20 @@ class NewIdeaForm {
     function enqueue_scripts() {
     	// autosuggest
         wp_enqueue_script('autosuggest', plugins_url('script/autoSuggestv14/jquery.autoSuggest.packed.js', __FILE__), array('jquery'));
+		// autosuggest
+        wp_enqueue_script('adaptivetableinput', plugins_url('script/adaptiveTableInput.js', __FILE__), array('jquery'));
 		
     	// frontend forms script
-        wp_enqueue_script('klimo_frontend_forms', plugins_url('script/klimoPT_frontend_forms.js', __FILE__), array('jquery', 'jquery-form', 'autosuggest'));
+        wp_enqueue_script('klimo_frontend_forms', plugins_url('script/klimoPT_idea_form.js', __FILE__), array('jquery', 'jquery-form', 'autosuggest', 'adaptivetableinput'));
     }
     
     
     function enqueue_styles() {
     	// autosuggest style
         wp_enqueue_style('autosuggest', plugins_url('script/autoSuggestv14/autoSuggest.css', __FILE__));
+		// form styles
+		wp_enqueue_style('klimo_frontend_forms', plugins_url('css/klimoPT_forms.css', __FILE__));
+		
     }
 
 
@@ -323,20 +348,20 @@ class NewIdeaForm {
         }
 		
 		
+		
+		
 		// attach other files
-		if( !empty($_FILES['idea_file1']['name']) ) {
-            $attach_id = media_handle_upload('idea_file1', $postID, array('post_title' => "leTitle"));
-            /*if(!is_wp_error($attach_id)) {
-                update_post_meta( $postID, '_idea_file1', $attach_id );
-            } else {
-            	$errors[] = array(
-                    'element'   => 'idea_file1',
+		foreach ($postData['idea_files'] as $attachment) {
+			$attach_id = media_handle_upload($attachment['name'], $postID, array('post_title' => $attachment['description']));
+			if(is_wp_error($attach_id)) {
+				$errors[] = array(
+                    'element'   => 'idea_files',
                     'message'   => $attach_id->get_error_message(),
 				);
 				wp_delete_post($postID, true);
 				goto finish;
-            }*/
-        }
+            }
+		}
 		
 		
 		
@@ -406,7 +431,7 @@ class NewIdeaForm {
 		
 		// check group
 		$element = 'idea_group';
-		$value = intval(wp_strip_all_tags($args['idea_group']));
+		$value = intval(wp_strip_all_tags($args[$element]));
 		$postData[$element] = $value;
 		
 
@@ -431,11 +456,11 @@ class NewIdeaForm {
 		
 		// check topic
 		$element = 'idea_topic';
-		$value = intval(wp_strip_all_tags($args['idea_topic']));
+		$value = intval(wp_strip_all_tags($args[$element]));
 		$postData[$element] = $value;
 		
 		
-		// check aim
+		// check aims
 		$element = 'idea_aims';
 		$value = explode(",", wp_strip_all_tags($args['as_values_idea_aims']));
 		foreach ($value as &$aim) {
@@ -444,6 +469,12 @@ class NewIdeaForm {
 		}
 		$last = end($value);
 		if( empty($last) ) array_pop($value);
+		if( count($value) < self::$validationConfig['aims_min']) {
+            $response['error'][] = array(
+                'element'   => $element,
+                'message'   => "Gib bitte mindestens " . self::$validationConfig['aims_min'] . " Projektziel" . ((self::$validationConfig['aims_min'] == 1)? "e" : "") . " an",
+            );
+        }
 		$postData[$element] = $value;
 		
 		
@@ -464,16 +495,40 @@ class NewIdeaForm {
 		$postData[$element] = $value;
 		
 		
-		// check file
+		// check featured image
         $element = "idea_image";
-        if( key_exists($element, $files) && key_exists('size', $files[$element]) ) {
+        if( key_exists($element, $files) && !empty($files[$element]['name']) ) {
+        	$value = $files[$element];
             if( $files[$element]['size'] > self::$validationConfig['image_size_max'] ) {
                 $response['error'][] = array(
                     'element'   => $element,
                     'message'   => "Bilder dürfen nicht größer als " . (self::$validationConfig['image_size_max'] / 1000000) . " MB groß sein.",
                 );
+            } else {
+            	$postData[$element] = $value;
             }
         }
+		
+		
+		// check attachments
+		$element = 'idea_files';
+		$value = array();
+		for ($i=0; ;$i++) { 
+			$descrKey = 'filetext_' . $i;
+			$fileKey = 'idea_file_' . $i;
+			
+			// check (assumption: element names are ordered, starting from 0)
+			if(!array_key_exists ( $descrKey , $args ) || !array_key_exists ( $fileKey , $files ))
+				break;
+			if( (empty($files[$fileKey]['name'])) || (intval($files[$fileKey]['error'] != 0)) )
+				continue;
+			
+			$valText  = trim(wp_strip_all_tags($args[$descrKey]));
+			$fileValue = $files[$fileKey];
+			$fileValue['description'] = $valText;
+			$value[] = $fileValue;
+		}
+		$postData[$element] = $value;
 		
 		
 		return $response;

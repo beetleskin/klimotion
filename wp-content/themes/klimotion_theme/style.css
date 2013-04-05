@@ -103,3 +103,13 @@ footer.entry-meta .entry-bookmark{
   padding: 15px;
   padding: 1.5rem;
 }
+
+/*Menü --> horizontal Sub*/
+
+#menu-klimotion_first .sub-menu{
+	display: block;
+}
+
+#menu-klimotion_first .sub-menu li{
+	background: green;
+}

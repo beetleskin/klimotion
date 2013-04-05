@@ -2,96 +2,31 @@
  * @author Stefan Kaiser
  */
 
+
 jQuery(function($) { ideaform : {
 	
-	
-		function LinksControl(wrapper) {
-			// TODO: this class is a exact copy of the one in klimoPT_admin.js ... merge!
-			var me = this;
-			this.wrapper = wrapper;
-			this.noLinks = 0;
-			this.templateRow = 0;
-			this.textSelect = 'linktext_';
-			this.urlSelect = 'linkurl_'
-			
-
-
-			this.__contruct = function() {
-				me.noLinks = $('tr.links_meta_pair', me.wrapper).length;
-				me.templateRow = $('tr.links_meta_pair', me.wrapper).first().clone();
-				$('input', me.templateRow).val('');
-				
-				// remove-link-meta button
-				$('a.removelink', me.wrapper).click(me.removeLink);
-				
-				// add-link-meta-button
-				$('a#addlink', me.wrapper).click(me.addLink);
-			}
-			
-			
-			this.removeLink = function() {
-				row = $(this).closest('tr.links_meta_pair')
-				row.remove();
-				me.noLinks--;
-				me.renameIDs();
-			}
-			
-			
-			this.addLink = function() {
-				lastPair = $('tr.links_meta_pair', me.wrapper).last();
-				if( $('input', lastPair).last().val() == '') {
-					lastPair.fadeTo(400, 0.2).fadeTo(400, 1.0);
-				} else {
-					newPair = me.templateRow.clone();
-					$('input[name*=' + me.textSelect + ']', newPair).attr('name', me.textSelect + me.noLinks);
-					$('input[name*=' + me.urlSelect + ']', newPair).attr('name', me.urlSelect + me.noLinks);
-					$('a.removelink', newPair).click(me.removeLink);
-					$('tbody', me.wrapper).append(newPair);
-					me.noLinks++;
-				}
-			}
-			
-			
-			this.renameIDs = function() {
-				i = 0;
-				$('tr.links_meta_pair', me.wrapper).each(function(index, value) {
-  					$('input[name*=' + me.textSelect + ']', value).attr('name', me.textSelect + i);
-  					$('input[name*=' + me.urlSelect + ']', value).attr('name', me.urlSelect + i);
-  					i++;
-  				});
-  				me.noLinks = $('.links_meta_pair', me.wrapper).length;
-			}
-			
-			
-			
-			// call constructor
-			this.__contruct();
-		}
-
-		
-		function IdeaForm(wrapper) {
+		function GroupForm(wrapper) {
 			var me = this;
 			this.wrapper = $(wrapper);
 			this.form = $('form', me.wrapper);
-			this.submit = $('a#idea_submit', wrapper);
+			this.submit = $('a#group_submit', wrapper);
 			this.linksControl = null;
 
 
 			this.__contruct = function() {
-				me.config = ideaform_config;
-				me.linksControl = new LinksControl($("#idea_links", wrapper));
+				me.config = groupform_config;
 				
 				
-				// aims autosuggest
-				$('input#idea_aims', me.wrapper).autoSuggest(
-					me.config.as_aims, 
+				// district autosuggest
+				$('input#group_scopes', me.wrapper).autoSuggest(
+					me.config.as_scopes.items, 
 					{
 						selectedItemProp : "name",
 						searchObjProps : "name",
-						minChars : 1,
-						startText : "Ziele ...",
+						minChars : 2,
+						startText : "Schule / etc.",
 						emptyText : "neues Ziel mit TAB",
-						asHtmlID : "idea_aims"
+						asHtmlID : "group_scopes"
 					}
 				);
 				
@@ -106,7 +41,7 @@ jQuery(function($) { ideaform : {
 					dataType : "json",
 					data : {
 						'action' : me.config.ajaxConfig.submitAction,
-						'klimoIdeaFormNonce' : me.config.ajaxConfig.klimoIdeaFormNonce
+						'klimoGroupFormNonce' : me.config.ajaxConfig.klimoIdeaFormNonce
 					},
 
 				};
@@ -234,7 +169,7 @@ jQuery(function($) { ideaform : {
 		
 
 		$(document).ready(function() {
-			var ideaForm = new IdeaForm('#ideaform_wrap');
+			var groupForm = new GroupForm('#groupform_wrap');
 		});
 	}
 
