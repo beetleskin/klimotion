@@ -36,7 +36,7 @@ jQuery(function($) { ideaform : {
 				
 				// declare ajaxForm
 				var formOptions = {
-					beforeSubmit : me.beforeSubmit,
+					beforeSerialize : me.beforeSerialize,
 					success : me.successHandler,
 					error : me.transmissionErrorHandler,
 					url : me.config.ajaxConfig.ajaxurl,
@@ -55,7 +55,8 @@ jQuery(function($) { ideaform : {
 				});
 			}
 			
-			this.beforeSubmit = function(formData, jqForm, options) {
+			this.beforeSerialize = function(formData, jqForm, options) {
+				tinyMCE.get("ideadescription").save();
 			}
 			
 			this.successHandler = function(response, statusText, xhr, $form) {

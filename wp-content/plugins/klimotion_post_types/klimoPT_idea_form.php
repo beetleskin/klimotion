@@ -1,6 +1,6 @@
 <?php
 /**
- * @package Klimotion_Group_Map
+ * @package Klimotion_Post_Types
  */
 
  
@@ -105,10 +105,10 @@ class NewIdeaForm {
     function render() {
 
         $data = $this->preRender();
-        ?>
-        
+        ?>        
         
         <?php if($data['isLoggedIn'] == false) : //TODO: display hint if not logged in?>
+
         <div class="entry-content">
 		<?php while ( have_posts() ) : the_post(); ?>
 			<?php get_template_part( 'content', 'page' ); ?>
@@ -138,7 +138,7 @@ class NewIdeaForm {
 					                <?php endforeach; ?>
 						        </select>
 		        			</div>	
-		      	  	
+
 		      	  			<div id="idea-short-description">
 		      	  				<label for="idea-label-short-description">Kurze Beschreibung</label>
 			      				<textarea id="idea_excerp" name="idea_excerp" placeholder="Textfeld begrenzt auf 200 Wörter" maxlength="<?php echo self::$validationConfig['excerp_max_chars'] ?>"></textarea>
@@ -211,7 +211,8 @@ class NewIdeaForm {
 			       					 <a href="<?php echo $data['submitLink'] ?>" <?php echo $data['onClick'] ?> id="idea_submit">Abschicken</a>
 			        			</button>	
 			        		</div>
-				</div>	
+			       	 </fieldset>
+				 </div>	
         	</form>
        </div>
 	<?php
@@ -254,7 +255,7 @@ class NewIdeaForm {
 
     public static function initAjax() {
     	self::$ioConfig['ajaxurl'] = admin_url('admin-ajax.php');
-		self::$ioConfig['submitAction'] = 'ideaform_submit-ajax.php';
+		self::$ioConfig['submitAction'] = 'ideaform_submit-ajax';
     	
 		// register form ajax
         add_action('wp_ajax_' . self::$ioConfig['submitAction'], 'NewIdeaForm::submitHandler');
@@ -317,9 +318,7 @@ class NewIdeaForm {
 		
 		// attach local group meta
 		$group_meta_slug = '_group';
-		if($idea_group_id == -1) {
-			delete_post_meta($postID, $group_meta_slug);
-		} else {
+		if($idea_group_id != -1) {
 			update_post_meta($postID, $group_meta_slug, $idea_group_id);
 		}
 		
@@ -450,7 +449,7 @@ class NewIdeaForm {
 		
 		// check description
         $element = "idea_description";
-        $value = trim(wp_strip_all_tags($args[$element]));
+        $value = $args[$element];
 		$postData[$element] = $value;
 		
 		
@@ -472,7 +471,7 @@ class NewIdeaForm {
 		if( count($value) < self::$validationConfig['aims_min']) {
             $response['error'][] = array(
                 'element'   => $element,
-                'message'   => "Gib bitte mindestens " . self::$validationConfig['aims_min'] . " Projektziel" . ((self::$validationConfig['aims_min'] == 1)? "e" : "") . " an",
+                'message'   => "Gib bitte mindestens " . self::$validationConfig['aims_min'] . " Projektziel" . ((self::$validationConfig['aims_min'] > 1)? "e" : "") . " an",
             );
         }
 		$postData[$element] = $value;

@@ -1,6 +1,6 @@
 <?php
 /**
- * @package Klimotion_Group_Map
+ * @package Klimotion_Post_Types
  */
 
  
@@ -132,10 +132,10 @@ class NewGroupForm {
 						<input type="text" id="group_zipcode" name="group_zipcode"  placeholder="Postleitzahl">
 						
 						<label><?php echo __("Wirkungskreis") ?></label>
-						<input type="text" id="group_scopes" name="group_scopes" placeholder="Schule / etc.">
+						<input type="text" id="group_scopes" name="group_scopes">
 	
 						<label><?php echo __("Kurzvorstellung") ?></label>
-				        <?php wp_editor("", 'group_description', array(
+				        <?php wp_editor("", 'groupdescription', array(
 				        	'media_buttons' => false,
 				        	'textarea_name' => 'group_description',
 				        	'tabindex'		=> 0
@@ -182,7 +182,7 @@ class NewGroupForm {
 		);
         
         // Print data to sourcecode
-        wp_localize_script('klimo_frontend_forms', 'groupform_config', $formData);
+        wp_localize_script('klimo_frontend_forms_config', 'groupform_config', $formData);
     }
 
 
@@ -207,7 +207,7 @@ class NewGroupForm {
 
     public static function initAjax() {
     	self::$ioConfig['ajaxurl'] = admin_url('admin-ajax.php');
-		self::$ioConfig['submitAction'] = 'groupform_submit-ajax.php';
+		self::$ioConfig['submitAction'] = 'groupform_submit-ajax';
     	
 		// register form ajax
         add_action('wp_ajax_' . self::$ioConfig['submitAction'], 'NewGroupForm::submitHandler');
@@ -231,32 +231,24 @@ class NewGroupForm {
 		}
 		
 		
-		
 		// add post
-		// collect values
+		// collect post values
 		$errors = array();
-        $idea_title = $postData['idea_title'];
-		$idea_group_id = $postData['idea_group'];
-		$idea_excerp = $postData['idea_excerp'];
-		$idea_description = $postData['idea_description'];
-		$idea_topic_id = $postData['idea_topic'];
-		$idea_aim_ids = $postData['idea_aims'];
-		$idea_links = $postData['idea_links'];
-		// $idea_file1 = wp_strip_all_tags($postData['']);
-		// $idea_image = wp_strip_all_tags($postData['']);
-		
+        $group_name = $postData['group_name'];
+		$group_description = $postData['group_description'];
+		$group_district_id = $postData['group_district'];
+		$group_scopes = $postData['group_scopes'];
 		
 		
 		$post_args = array(
             'ping_status'   => 'open',
             'post_status'   => 'pending',
-            'post_type'     => 'klimo_idea',
-            'post_title'    => $idea_title,
-            'post_content'  => $idea_description,
-            'post_excerpt'  => $idea_excerp,
+            'post_type'     => 'klimo_localgroup',
+            'post_title'    => $group_name,
+            'post_content'  => $group_description,
             'tax_input'		=> array(
-            	'klimo_idea_topics' => array(intval($idea_topic_id)),
-            	'klimo_idea_aims' => $idea_aim_ids,
+            	'klimo_districts' => array(intval($group_district_id)),
+            	'klimo_scopes' => $group_scopes,
 			),
         );
 		
@@ -268,58 +260,33 @@ class NewGroupForm {
             die();
         }
 		
-		// attach local group meta
-		$group_meta_slug = '_group';
-		if($idea_group_id == -1) {
-			delete_post_meta($postID, $group_meta_slug);
-		} else {
-			update_post_meta($postID, $group_meta_slug, $idea_group_id);
+		
+		// attach city
+		$city_meta_slug = "_city";
+		if(!empty($postData['group_city'])){
+			update_post_meta($postID, $city_meta_slug, $postData['group_city']);
 		}
 		
 		
-		// attach link meta
-		$idea_links_meta_slug = '_links';
-		if(!empty($idea_links)){
-			update_post_meta($postID, $idea_links_meta_slug, $idea_links);
-		} 
-		
-		
-		// attach features image
-		if( !empty($_FILES['idea_image']['name']) ) {
-            $attach_id = media_handle_upload( 'idea_image', $postID );
-            if(!is_wp_error($attach_id)) {
-                // update_post_meta( $postID, '_thumbnail_id', $attach_id );
-				set_post_thumbnail($postID, $attach_id);
-            } else {
-                $errors[] = array(
-                    'element'   => 'idea_image',
-                    'message'   => $attach_id->get_error_message(),
-				);
-				wp_delete_post($postID, true);
-				goto finish;
-            }
-        }
-		
-		
-		
-		
-		// attach other files
-		foreach ($postData['idea_files'] as $attachment) {
-			$attach_id = media_handle_upload($attachment['name'], $postID, array('post_title' => $attachment['description']));
-			if(is_wp_error($attach_id)) {
-				$errors[] = array(
-                    'element'   => 'idea_files',
-                    'message'   => $attach_id->get_error_message(),
-				);
-				wp_delete_post($postID, true);
-				goto finish;
-            }
+		// attach zip code
+		$city_meta_slug = "_zip";
+		if(!empty($postData['group_zipcode'])){
+			update_post_meta($postID, $city_meta_slug, $postData['group_zipcode']);
 		}
-		
-		
-		
-		
-		
+
+
+		// attach contact person
+		$contact_meta_slug = "_contact";
+		$contactData = array(
+			'name'		=> $postData['group_contact_name'],
+			'surname'	=> $postData['group_contact_surname'],
+			'mail'		=> $postData['group_contact_mail'],
+			'phone'		=> $postData['group_contact_phone'],
+			'publish'	=> $postData['group_contact_publish']
+		);
+		update_post_meta($postID, $contact_meta_slug, $contactData);
+
+
 		// return
 		finish: {
 			$response = array();
@@ -365,7 +332,7 @@ class NewGroupForm {
         } else {
             $matchingPosts = get_posts(array(
                 'name' => $value,
-                'post_type' => 'klimo_localGroups',
+                'post_type' => 'klimo_localgroup',
                 'post_status' => 'publish',
                 'posts_per_page' => 1,)
             );
@@ -382,9 +349,15 @@ class NewGroupForm {
 		$postData[$element] = $value;
 		
 		
+		// check district
+		$element = 'group_district';
+		$value = intval(wp_strip_all_tags($args[$element]));
+		$postData[$element] = $value;
+		
+		
 		// check city
 		$element = 'group_city';
-		$value = intval(wp_strip_all_tags($args[$element]));
+		$value = wp_strip_all_tags($args[$element]);
 		if(empty($value)) {
             $response['error'][] = array(
                 'element'   => $element,
@@ -402,7 +375,7 @@ class NewGroupForm {
 		
 		// check zip code
 		$element = 'group_zipcode';
-		$value = intval(wp_strip_all_tags($args[$element]));
+		$value = wp_strip_all_tags($args[$element]);
 		if(strlen($value) != 5) {
             $response['error'][] = array(
                 'element'   => $element,
@@ -424,7 +397,7 @@ class NewGroupForm {
 		if( count($value) < self::$validationConfig['scope_min']) {
             $response['error'][] = array(
                 'element'   => $element,
-                'message'   => "Gib bitte mindestens " . self::$validationConfig['scope_min'] . " Wirkungsbereich" . ((self::$validationConfig['scope_min'] == 1)? "e" : "") . " an",
+                'message'   => "Gib bitte mindestens " . self::$validationConfig['scope_min'] . " Wirkungsbereich" . ((self::$validationConfig['scope_min'] > 1)? "e" : "") . " an.",
             );
         }
 		$postData[$element] = $value;
@@ -432,7 +405,7 @@ class NewGroupForm {
 		
 		// check description
 		$element = 'group_description';
-		$value = intval(wp_strip_all_tags($args[$element]));
+		$value = $args[$element];
         if(strlen($value) > self::$validationConfig['description_max_chars']) {
             $response['error'][] = array(
                 'element'   => $element,
@@ -460,7 +433,7 @@ class NewGroupForm {
 		if(empty($value)) {
             $response['error'][] = array(
                 'element'   => $element,
-                'message'   => "Gib den Nachnamen deiner Kontaktperson an",
+                'message'   => "Gib den Nachnamen deiner Kontaktperson an.",
             );
         // too long?
         } else if(strlen($value) > self::$validationConfig['contact_max_chars']) {
@@ -478,7 +451,7 @@ class NewGroupForm {
 		if(empty($value)) {
             $response['error'][] = array(
                 'element'   => $element,
-                'message'   => "Gib den Vornamen deiner Kontaktperson an",
+                'message'   => "Gib den Vornamen deiner Kontaktperson an.",
             );
         // too long?
         } else if(strlen($value) > self::$validationConfig['contact_max_chars']) {
@@ -496,7 +469,7 @@ class NewGroupForm {
 		if(empty($value)) {
             $response['error'][] = array(
                 'element'   => $element,
-                'message'   => "Gib die E-Mail-Adresse deiner Kontaktperson an",
+                'message'   => "Gib die E-Mail-Adresse deiner Kontaktperson an.",
             );
         // too long?
         } else if(strlen($value) > self::$validationConfig['contact_max_chars']) {
@@ -514,7 +487,7 @@ class NewGroupForm {
 		if(empty($value)) {
             $response['error'][] = array(
                 'element'   => $element,
-                'message'   => "Gib die Telefonnummer deiner Kontaktperson an",
+                'message'   => "Gib die Telefonnummer deiner Kontaktperson an.",
             );
         // too long?
         } else if(strlen($value) > self::$validationConfig['contact_max_chars']) {
@@ -559,9 +532,9 @@ class NewGroupForm {
 		$postPermaLink = get_post_permalink($postID, false);
         
         $html = '<div id="submitSuccessMessage">';
-        $html .= '<p>Deine Idee wurde erfoglreich abgeschickt und wird von uns geprüft.</p>';
-        $html .= '<div class="redirect thePost"><a href="' . $postPermaLink . '">Idee ansehen</a></div>';
-        $html .= '<div class="redirect newIdea"><a href=".">Neue Idee Schreiben</a></div>';
+        $html .= '<p>Deine Lokalgruppe wurde erfoglreich abgeschickt und wird von uns geprüft.</p>';
+        $html .= '<div class="redirect thePost"><a href="' . $postPermaLink . '">Lokalgruppe ansehen</a></div>';
+        $html .= '<div class="redirect newGroup"><a href=".">Neue Lokalgruppe erstellen</a></div>';
         $html .= '</div>';
         
         return $html;
