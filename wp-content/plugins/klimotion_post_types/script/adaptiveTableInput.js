@@ -4,20 +4,23 @@
 
 (function( $ ) {
 	$.fn.adaptiveTableInput = function( options ) {
+		// TODO: decent variable storage
+		// TODO: max rows feedback/handling
+		
+		
 		
 		// settings
 		var defaults = {
 			'trSelector' : '',
 			'tplNames' : [],
 			'maxRows' : 5,
-			'addSelector' : 'a.addlink',
-			'removeSelector' : 'a.removelink'
+			'addSelector' : 'a.addbutton',
+			'removeSelector' : 'a.removebutton'
 		};
 		var opts = $.extend(defaults, options);
 		
 		
 		
-		// TODO: decent variable storage
 		return this.each( function() {
 			
 			var $this = this;
@@ -27,7 +30,7 @@
 			// gather inputs per row
 			if(opts.tplNames.length == 0) {
 				var tplNames = [];
-				$('tr:first input', this).each(function() {
+				$('tbody tr:first input', this).each(function() {
 					name = $(this).attr('name');
 					tplNames.push(name.substring(0, name.length - 1));
 				});
@@ -35,8 +38,8 @@
 			}
 			
 			
-			$this.noLinks = $('tr' + opts.trSelector, this).length;
-			$this.templateRow = $('tr' + opts.trSelector, this).first().clone();
+			$this.noLinks = $('tbody tr' + opts.trSelector, this).length;
+			$this.templateRow = $('tbody tr' + opts.trSelector, this).first().clone();
 			$('input', $this.templateRow).val('');
 			
 			// events
@@ -47,7 +50,7 @@
 			
 			
 			function removeLink() {
-				var row = $(this).closest('tr' + opts.trSelector);
+				var row = $(this).closest('tbody tr' + opts.trSelector);
 				row.remove();
 				$this.noLinks--;
 				renameIDs();
@@ -59,7 +62,7 @@
 				
 				
 			function addLink() {
-				var lastPair = $('tr' + opts.trSelector, $this).last();
+				var lastPair = $('tbody tr' + opts.trSelector, $this).last();
 				if( $('input', lastPair).last().val() == '') {
 					lastPair.fadeTo(400, 0.2).fadeTo(400, 1.0);
 				} else {
@@ -69,7 +72,7 @@
 						$('input[name*=' + opts.tplNames[i] + ']', newPair).attr('name', opts.tplNames[i] + $this.noLinks);
 					};
 				
-					$('a.removelink', newPair).click(removeLink);
+					$(opts.removeSelector, newPair).click(removeLink);
 					$('tbody', $this).append(newPair);
 					$this.noLinks++;
 					

@@ -182,7 +182,7 @@ class NewGroupForm {
 		);
         
         // Print data to sourcecode
-        wp_localize_script('klimo_frontend_forms_config', 'groupform_config', $formData);
+        wp_localize_script('klimo_groupform', 'groupform_config', $formData);
     }
 
 
@@ -193,7 +193,7 @@ class NewGroupForm {
         wp_enqueue_script('adaptivetableinput', plugins_url('script/adaptiveTableInput.js', __FILE__), array('jquery'));
 		
     	// frontend forms script
-        wp_enqueue_script('klimo_frontend_forms', plugins_url('script/klimoPT_group_form.js', __FILE__), array('jquery', 'jquery-form', 'autosuggest', 'adaptivetableinput'));
+        wp_enqueue_script('klimo_groupform', plugins_url('script/klimoPT.groupform.js', __FILE__), array('jquery', 'jquery-form', 'autosuggest', 'adaptivetableinput'));
     }
     
     

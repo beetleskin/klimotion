@@ -17,16 +17,10 @@ include_once('klimoPT_admin.php');
 include_once('klimoPT_frontend.php');
 
 
-/* front end action hooks */
-register_activation_hook( __FILE__, 'my_rewrite_flush' );
-
-
-
-function my_rewrite_flush() {
-    flush_rewrite_rules();
-}
-
-
+/* data action hooks */
+register_activation_hook(__FILE__, 'kpt_activate');
+register_uninstall_hook(__FILE__, 'kpt_uninstall');
+add_action('init', 'kpt_data_init');
 
 
 ?>

@@ -44,7 +44,7 @@ function kpt_hook_metabox_idea_group($post) {
 	}
 	
 	// get local groups
-	$groupQueryArgs = array( 'post_type' => 'klimo_localgroups', 'suppress_filters' => true, 'numberposts' => -1);
+	$groupQueryArgs = array( 'post_type' => 'klimo_localgroup', 'suppress_filters' => true, 'numberposts' => -1);
 	$groups = get_posts( $groupQueryArgs );
 	
 	
@@ -86,11 +86,11 @@ function kpt_hook_metabox_idea_links($post) {
 		echo '<tr class="links_meta_pair">';
 		echo '<td><input type="text" maxlength="40" name="_linktext_' . $i . '" value="' . $link['text']  . '"></td>';
 		echo '<td><input type="text" name="_linkurl_' . $i . '" value="' . $link['url']  . '"></td>';
-		echo '<td><a class="removelink" href="#" onclick="return false;">entfernen</a></td></tr>';
+		echo '<td><a class="removebutton" href="#" onclick="return false;">entfernen</a></td></tr>';
 	}
 	
 	echo '</tbody></table>';
-	echo '<a id="addlink" href="#" onclick="return false;">hinzufügen</a>';
+	echo '<a class="addbutton" href="#" onclick="return false;">hinzufügen</a>';
 }
 
 
@@ -212,6 +212,7 @@ function kpt_hook_save_post_idea($post_id, $post) {
 			break;
 		$valText  = trim(wp_strip_all_tags($_POST[$keyText]));
 		$valUrl  = trim(wp_strip_all_tags($_POST[$keyUrl]));
+		$valUrl = preg_match('/^(https?|ftps?|mailto|news|gopher|file):/is', $valUrl) ? $valUrl : 'http://' . $valUrl;
 		
 		if(strlen($valUrl))
 			$new_links[] = array('text' => $valText, 'url' => $valUrl);
