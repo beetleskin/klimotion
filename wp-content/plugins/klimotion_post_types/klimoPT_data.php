@@ -5,7 +5,7 @@
 
 
 /* data action hooks */
-register_activation_hook(__FILE__, "kpt_create_districtss");
+register_activation_hook(__FILE__, "kpt_create_districts");
 register_uninstall_hook(__FILE__, "kpt_delete_districtss");
 add_action('init', 'kpt_data_init');
 
@@ -18,7 +18,7 @@ function kpt_data_init() {
 }
 
 
-function kpt_create_districtss() {
+function kpt_create_districts() {
 	require_once('lower_saxony_list.php');
 	foreach ($lower_saxony_districts as $id => $name) {
 		wp_insert_term($name, 'klimo_districts', array('slug' => '_district_' . $id));
