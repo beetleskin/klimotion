@@ -106,10 +106,33 @@ footer.entry-meta .entry-bookmark{
 
 /*Menü --> horizontal Sub*/
 
-#menu-klimotion_first .sub-menu{
+#menu-klimotion_first .current-menu-item .sub-menu{
+	background: red;
 	display: block;
 }
 
-#menu-klimotion_first .sub-menu li{
+#menu-klimotion_first .menu-item:hover{
 	background: green;
 }
+
+
+/*block submenu while current menu ancestor is selected*/
+#menu-klimotion_first .current-menu-ancestor .sub-menu{
+	display: block;
+}
+
+#menu-klimotion_first .current-menu-ancestor,
+#menu-klimotion_first .current-menu-item,
+#menu-klimotion_first .current-menu-item:hover,
+#menu-klimotion_first .current-menu-ancestor:hover,
+#menu-klimotion_first .sub-menu .current-menu-item{
+	background:yellow;
+}
+
+#menu-klimotion_first li a{
+	text-shadow: none;
+}
+
+
+
+
