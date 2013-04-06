@@ -3,7 +3,12 @@
 
 /* front end action hooks */
 add_action('init', 'LocalGroupsPage::initAjax');
+add_action('init', 'klimo_render_init');
 
+function klimo_render_init() {
+	wp_enqueue_style('thickbox');
+	wp_enqueue_script('thickbox');
+}
 
 class LocalGroupsPage {
 	
