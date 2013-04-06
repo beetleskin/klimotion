@@ -254,7 +254,7 @@ class NewGroupForm {
 			self::ajaxRespond($securityVeto);
 			die();
 		} else if( !empty($validationVeto)) {
-			self::ajaxRespond($_REQUEST);
+			self::ajaxRespond($validationVeto);
 			die();
 		}
 		
