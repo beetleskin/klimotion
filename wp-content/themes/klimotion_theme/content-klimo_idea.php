@@ -6,56 +6,71 @@
  */
 ?>
 
+<?php
+	$args = array();
+    $args['group_meta'] = get_post_meta($post->ID, '_group', true);
+	$args['group_meta'] = get_post($args['group_meta']);
+	$args['attachments_meta'] = get_posts( array(
+        'post_type' => 'attachment',
+        'posts_per_page' => -1,
+        'post_parent' => $post->ID,
+        'exclude'     => get_post_thumbnail_id()
+    ));
+	$args['links_meta'] = get_post_meta($post->ID, '_links', true);
+?>
+
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-	<?php get_template_part( 'post', 'lead' ); ?>
-
-		<div class="idea-picture">
-			
-	    <div class="entry-inner">
+    <div class="entry-inner">
+    	
 		<?php get_template_part( 'post', 'header' ); ?>
-		<div class="idea-author">
-			<p>Name des Eintragenden</p>
-		<div class="idea-group">
-			<p>initierende Gruppe</p>
+		// TODO: Thickbox;
+		
+		<div class="entry-idea-group">
+			<p>Gruppe:
+				<a href="<?php echo get_permalink($args['group_meta']->ID); ?>">
+					<?php echo $args['group_meta']->post_title; ?>
+				</a>
+			</p>
+		</div><!-- .entry-idea-group -->
 			
-		<div class="idea-goals">
-			<?php $goals= array(
-				'C02 einsparen',
-				'Wasser einsparen',
-				'Öffentlichkeit gewinnen',
-			)?>
-			<?php foreach ( $goals as &$goal): ?>
-		          <div class=""><a href="#"><?php echo $goal?></a></div>
-		    <?php endforeach; ?>
+		<div class="entry-idea-aims">
+			Ziele: 
+			<?php the_terms($post->ID, "klimo_idea_aims", "", " | "); ?>
+		</div><!-- .entry-idea-aims -->
+		
+		<div class="entry-idea-topics">
+			Themen: 
+			<?php the_terms($post->ID, "klimo_idea_topics", "", " | "); ?>
+		</div><!-- .entry-idea-topics -->
 
-		<div class="idea-content-excerpt">
-			<p>Umsetzung: Bäume ausreißen macht Spaß und schützt die Umwelt ... NICHT! Deshalb laden wir euch alles ein unso!</p>
+		<div class="entry-idea-excerpt">
+			<?php the_excerpt() ?>
+		</div><!-- .entry-idea-excerpt -->
+		
 		<div class="entry-content">
 			<?php the_content(); ?>
-		<div class="idea-attachment">
-			
-			<?php $pdfs= array(
-				'Lustige Anleitung'	=>	'http://www.adobe.com/enterprise/accessibility/pdfs/acro6_pg_ue.pdf',
-				'Hurz'	=> 'http://www.wdr.de/tv/quarks/global/pdf/liebe.pdf',
-			)?>
-			<?php foreach ( $pdfs as $pdf => $pdfurl): ?>
-		          <div class=""><a href="<?php echo $pdfurl?>"><?php echo $pdf?></a></div>
-		    <?php endforeach; ?>
-
-		<div class="idea-link">
-			
-			<?php $files= array(
-				'messagetoio'	=>	'http://message-to-rio.de/',
-				'ähnliches projekt'	=>	'http://www.global-youth-life.org/',
-				'ne'	=>	'http://www.google.de',
-			)?>
-			<?php foreach ( $files as $file => $url): ?>
-		         <div class=""><a href="<?php echo $url?>"><?php echo $file?></a></div>
-		    <?php endforeach; ?>
-		    
-		</div>
-			<?php wp_link_pages( array( 'before' => '<div class="page-links">' . __( '<span>Pages:</span>', 'cazuela' ), 'after' => '</div>' ) ); ?>
 		</div><!-- .entry-content -->
+		
+		<div class="entry-idea-attachments">
+			<?php foreach ( $args['attachments_meta'] as $no => $attachment): ?>
+		          <div class="idea-attachment">
+		          	<a href="<?php echo wp_get_attachment_url($attachment->ID); ?>" target="_blank" <?php echo ((strpos($attachment->post_mime_type, "image") !== false)? 'class="image-attachment"' : '') ?>>
+		          		<?php echo (empty($attachment->post_title)? "Datei " . $no : $attachment->post_title) ?>
+		          	</a>
+		          </div><!-- .idea-attachment -->
+		    <?php endforeach; ?>
+		</div><!-- .entry-idea-attachments -->
+
+		<div class="entry-idea-links">
+			<?php foreach ( $args['links_meta'] as $linkl): ?>
+		         <div class="idea-link">
+		         	<a href="<?php echo $linkl['url']; ?>" target="_blank">
+						<?php echo (empty($linkl['text'])? $linkl['url'] : $linkl['text']); ?>
+					</a>
+		         </div><!-- .idea-link -->
+		    <?php endforeach; ?>
+		</div><!-- .entry-idea-links -->
+		
 	</div><!-- .entry-inner -->
 
 	<?php get_template_part( 'post', 'footer' ); ?>

@@ -4,13 +4,6 @@
  */
 
 
-/* data action hooks */
-register_activation_hook(__FILE__, "kpt_create_districts");
-register_uninstall_hook(__FILE__, "kpt_delete_districtss");
-add_action('init', 'kpt_data_init');
-
-
-
 function kpt_data_init() {
 	// add post types
 	kpt_add_idea();
@@ -18,15 +11,21 @@ function kpt_data_init() {
 }
 
 
-function kpt_create_districts() {
-	require_once('lower_saxony_list.php');
+function kpt_activate() {
+	
+	kpt_data_init();
+	flush_rewrite_rules();
+	
+	// populate district taxonomy
+	include_once('lower_saxony_list.php');
 	foreach ($lower_saxony_districts as $id => $name) {
 		wp_insert_term($name, 'klimo_districts', array('slug' => '_district_' . $id));
 	}
 }
 
 
-function kpt_delete_districts() {
+function kpt_uninstall() {
+	// delete districts
 	$districtTerms = get_terms('klimo_districts', array('name__linke' => '_district_'));
 	foreach ($districtTerms as $term) {
 		wp_delete_term($term->term_id);
@@ -79,9 +78,9 @@ function kpt_add_idea()  {
     );
         
         
-    register_taxonomy("klimo_idea_topics", array("klimo_idea"), $post_taxonomy1_args);
-	register_taxonomy("klimo_idea_aims", array("klimo_idea"), $post_taxonomy2_args);
     register_post_type('klimo_idea', $post_type_args);
+	register_taxonomy("klimo_idea_topics", array("klimo_idea"), $post_taxonomy1_args);
+	register_taxonomy("klimo_idea_aims", array("klimo_idea"), $post_taxonomy2_args);
 }
 
 
@@ -130,8 +129,8 @@ function kpt_add_localGroup()  {
     );
         
         
-    register_taxonomy("klimo_districts", array("klimo_localgroup"), $post_taxonomy_args1);
-	register_taxonomy("klimo_scopes", array("klimo_localgroup"), $post_taxonomy_args2);
     register_post_type('klimo_localgroup', $post_type_args);
+	register_taxonomy("klimo_districts", array("klimo_localgroup"), $post_taxonomy_args1);
+	register_taxonomy("klimo_scopes", array("klimo_localgroup"), $post_taxonomy_args2);
 }
 ?>

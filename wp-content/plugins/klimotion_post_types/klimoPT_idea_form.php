@@ -120,102 +120,100 @@ class NewIdeaForm {
         
         <div id="ideaform_wrap">   	
 		    <form action="<?php echo $this->form_action ?>" id="<?php echo $this->form_id ?>" class="<?php echo $data['nopriv'] ?>" method="<?php echo $this->form_method ?>">
-		        <div class="wrap">   
-		        	<h1>Idee-Formular</h1>
-		        	<div id="errormessage"></div>
-		        		<fieldset form="neue_idee">   
-		        			
-		        			<div id="idea-titel">
-		        				<label>Titel</label>
-		        				<input type="text" id="idea_title" name="idea_title" placeholder="Gib deiner Idee einen Namen" maxlength="<?php echo self::$validationConfig['title_max_chars'] ?>">
-		        			</div>
-		        			
-		        			<div id="idea-group">
-		        				<label>Gruppe</label>
-		        				<select id="idea_group" name="idea_group">
-						        	<option value="-1" selected="selected">Keine Gruppe</option>
-						        	<?php foreach ( $data['groups'] as &$group ): ?>
-					                    <option value="<?php echo $group['value']; ?>"><?php echo $group['name']; ?></option>
-					                <?php endforeach; ?>
-						        </select>
-		        			</div>	
+	        	<h1>Idee-Formular</h1>
+	        	<div id="errormessage"></div>
+        		<fieldset form="neue_idee">   
+        			
+        			<div class="form-field-wrap">
+        				<label for="idea_title">Titel</label>
+        				<input type="text" id="idea_title" name="idea_title" placeholder="Gib deiner Idee einen Namen" maxlength="<?php echo self::$validationConfig['title_max_chars'] ?>">
+        			</div><!-- .form-field-wrap -->
+        			
+        			<div class="form-field-wrap">
+        				<label for="idea_group">Gruppe</label>
+        				<select id="idea_group" name="idea_group">
+				        	<option value="-1" selected="selected">Keine Gruppe</option>
+				        	<?php foreach ( $data['groups'] as &$group ): ?>
+			                    <option value="<?php echo $group['value']; ?>"><?php echo $group['name']; ?></option>
+			                <?php endforeach; ?>
+				        </select>
+        			</div>	<!-- .form-field-wrap -->
 
-		      	  			<div id="idea-short-description">
-		      	  				<label for="idea-label-short-description">Kurze Beschreibung</label>
-			      				<textarea id="idea_excerp" name="idea_excerp" placeholder="Textfeld begrenzt auf 200 Wörter" maxlength="<?php echo self::$validationConfig['excerp_max_chars'] ?>"></textarea>
-		      	  			</div>
-		      	  			
-		      	  			<div id_"idea-title-picture">
-		      	  				<label for="idea-label-title-picture">Titelbild</label>
-		      	  				<input type="file" id="idea_image" name="idea_image" accept="image/*">
-		      	  			</div>
-		      	  			
-		      	  			<div id_"idea-full-description">
-		      	  				<label for="idea-label-full-description">Detaillierte Beschreibung</label>
-		      	  				<?php wp_editor("", 'idea_description', array(
-						        	'media_buttons' => false,
-						        	'textarea_name' => 'idea_description',
-						        	'tabindex'		=> 0,
-						        	'teeny'			=> true,
-									));
-								?>
-		      	  			</div>
-		      	  			
-		      	  			<div id="idea-upload-fildes">
-		      	  				<label for="idea-label-upload-fildes">Dateien Hinzufügen</label>
-		      	  				<div id="idea_files">
-									<table>
-										<tbody>
-											<tr class="files_meta_pair">
-												<td><input type="text" maxlength="40" name="filetext_0" placeholder="Beschreibung"></td>
-												<td><input type="file" id="" name="idea_file_0"></td>
-												<td><a class="removelink" href="#" onclick="return false;">entfernen</a></td>
-											</tr>
-										</tbody>
-									</table>
-									<a class="addlink" href="#" onclick="return false;">hinzufügen</a>
-								</div>
-		      	  			</div>
-		      	  			
-		      	  			<div id="idea-collection-links">
-		      	  				<label>Weiterführende Links</label>
-			      	  			<div id="idea_links">
-									<table>
-										<tbody>
-											<tr class="links_meta_pair">
-												<td><input type="url" maxlength="40" name="linktext_0" placeholder="Beschreibung"></td>
-												<td><input type="url" name="linkurl_0" placeholder="Link"></td>
-												<td><a class="removelink" href="#" onclick="return false;">entfernen</a></td>
-											</tr>
-										</tbody>
-									</table>
-									<a class="addlink" href="#" onclick="return false;">hinzufügen</a>
-								</div>
-			        		</div>
-			      
-			        		<div id="idea-topics">
-			        			<label>Thema</label>
-			        			<select id="idea_topic" name="idea_topic">
-						        	<?php foreach ( $data['topics'] as &$topic ): ?>
-					                    <option value="<?php echo $topic['value'] ?>"><?php echo $topic['name'] ?></option>
-					                <?php endforeach; ?>
-						        </select>
-			        		</div>
-			        		
-			        		<div id="idea-goals">
-			        			<label>Ziele</label>
-			    			    <input type="text" id="idea_aims" name="idea_aims">
-			        		</div>
-			        		
-			        		<div class="idea_submit_container">
-			        			<button>
-			       					 <a href="<?php echo $data['submitLink'] ?>" <?php echo $data['onClick'] ?> id="idea_submit">Abschicken</a>
-			        			</button>	
-			        		</div>
-			       	 </fieldset>
-				 </div>	
+      	  			<div class="form-field-wrap">
+      	  				<label for="idea_excerp">Kurze Beschreibung</label>
+	      				<textarea id="idea_excerp" name="idea_excerp" placeholder="Textfeld begrenzt auf 200 Wörter" rows="4" maxlength="<?php echo self::$validationConfig['excerp_max_chars'] ?>"></textarea>
+      	  			</div><!-- .form-field-wrap -->
+      	  			
+      	  			<div class="form-field-wrap">
+      	  				<label for="idea_image">Titelbild</label>
+      	  				<input type="file" id="idea_image" name="idea_image" accept="image/*">
+      	  			</div><!-- .form-field-wrap -->
+      	  			
+      	  			<div class="form-field-wrap">
+      	  				<label for="ideadescription">Detaillierte Beschreibung</label>
+      	  				<?php wp_editor("", 'ideadescription', array(
+				        	'media_buttons' => false,
+				        	'textarea_name' => 'ideadescription',
+				        	'tabindex'		=> 0,
+				        	'teeny'			=> true,
+							));
+						?>
+      	  			</div><!-- .form-field-wrap -->
+      	  			
+      	  			<div class="form-field-wrap">
+      	  				<label for="idea_files">Dateien Hinzufügen</label>
+      	  				<div id="idea_files" class="adaptive-table-input">
+							<table>
+								<tbody>
+									<tr class="files_meta_pair">
+										<td><input type="text" maxlength="40" name="filetext_0" placeholder="Beschreibung"></td>
+										<td><input type="file" id="" name="idea_file_0"></td>
+										<td><a class="removebutton" href="#" onclick="return false;">entfernen</a></td>
+									</tr>
+								</tbody>
+							</table>
+							<a class="addbutton" href="#" onclick="return false;">hinzufügen</a>
+						</div>
+      	  			</div><!-- .form-field-wrap -->
+      	  			
+      	  			<div class="form-field-wrap">
+      	  				<label for="idea_links">Weiterführende Links</label>
+	      	  			<div id="idea_links" class="adaptive-table-input">
+							<table>
+								<tbody>
+									<tr class="links_meta_pair">
+										<td><input type="url" maxlength="40" name="linktext_0" placeholder="Beschreibung"></td>
+										<td><input type="url" name="linkurl_0" placeholder="Link"></td>
+										<td><a class="removebutton" href="#" onclick="return false;">entfernen</a></td>
+									</tr>
+								</tbody>
+							</table>
+							<a class="addbutton" href="#" onclick="return false;">hinzufügen</a>
+						</div>
+	        		</div><!-- .form-field-wrap -->
+	      
+	        		<div class="form-field-wrap">
+	        			<label for="idea_topic">Thema</label>
+	        			<select id="idea_topic" name="idea_topic">
+				        	<?php foreach ( $data['topics'] as &$topic ): ?>
+			                    <option value="<?php echo $topic['value'] ?>"><?php echo $topic['name'] ?></option>
+			                <?php endforeach; ?>
+				        </select>
+	        		</div><!-- .form-field-wrap -->
+	        		
+	        		<div class="form-field">
+	        			<label for="idea_aims">Ziele</label>
+	    			    <input type="text" id="idea_aims" name="idea_aims">
+	        		</div>
+	        		
+	        		<div class="form-field-wrap">
+	        			<button>
+	       					 <a href="<?php echo $data['submitLink'] ?>" <?php echo $data['onClick'] ?> id="idea_submit">Abschicken</a>
+	        			</button>	
+	        		</div><!-- .form-field-wrap -->
+	       	 	</fieldset>
         	</form>
-       </div>
+       </div><!-- .ideaform_wrap -->
 	<?php
 	}
 
@@ -230,7 +228,7 @@ class NewIdeaForm {
 		);
         
         // Print data to sourcecode
-        wp_localize_script('klimo_frontend_forms', 'ideaform_config', $formData);
+        wp_localize_script('klimo_ideaform', 'ideaform_config', $formData);
     }
 
 
@@ -241,7 +239,7 @@ class NewIdeaForm {
         wp_enqueue_script('adaptivetableinput', plugins_url('script/adaptiveTableInput.js', __FILE__), array('jquery'));
 		
     	// frontend forms script
-        wp_enqueue_script('klimo_frontend_forms', plugins_url('script/klimoPT_idea_form.js', __FILE__), array('jquery', 'jquery-form', 'autosuggest', 'adaptivetableinput'));
+        wp_enqueue_script('klimo_ideaform', plugins_url('script/klimoPT.ideaform.js', __FILE__), array('jquery', 'jquery-form', 'autosuggest', 'adaptivetableinput'));
     }
     
     
@@ -287,12 +285,10 @@ class NewIdeaForm {
         $idea_title = $postData['idea_title'];
 		$idea_group_id = $postData['idea_group'];
 		$idea_excerp = $postData['idea_excerp'];
-		$idea_description = $postData['idea_description'];
+		$idea_description = $postData['ideadescription'];
 		$idea_topic_id = $postData['idea_topic'];
 		$idea_aim_ids = $postData['idea_aims'];
 		$idea_links = $postData['idea_links'];
-		// $idea_file1 = wp_strip_all_tags($postData['']);
-		// $idea_image = wp_strip_all_tags($postData['']);
 		
 		
 		
@@ -331,8 +327,8 @@ class NewIdeaForm {
 		} 
 		
 		
-		// attach features image
-		if( !empty($_FILES['idea_image']['name']) ) {
+		// attach featured image
+		if( !empty($postData['idea_image']['name']) ) {
             $attach_id = media_handle_upload( 'idea_image', $postID );
             if(!is_wp_error($attach_id)) {
                 // update_post_meta( $postID, '_thumbnail_id', $attach_id );
@@ -351,12 +347,14 @@ class NewIdeaForm {
 		
 		
 		// attach other files
-		foreach ($postData['idea_files'] as $attachment) {
-			$attach_id = media_handle_upload($attachment['name'], $postID, array('post_title' => $attachment['description']));
+		foreach ($postData['idea_files'] as $key => $attachment) {
+			$attach_id = media_handle_upload($key, $postID, array('post_title' => $attachment['description']));
 			if(is_wp_error($attach_id)) {
 				$errors[] = array(
                     'element'   => 'idea_files',
                     'message'   => $attach_id->get_error_message(),
+                    'files'		=> $_FILES,
+                    'myfiles'	=> $postData['idea_files']
 				);
 				wp_delete_post($postID, true);
 				goto finish;
@@ -449,7 +447,7 @@ class NewIdeaForm {
 		
 		
 		// check description
-        $element = "idea_description";
+        $element = "ideadescription";
         $value = $args[$element];
 		$postData[$element] = $value;
 		
@@ -484,10 +482,11 @@ class NewIdeaForm {
 		for ($i=0; ;$i++) { 
 			$keyText = 'linktext_' . $i;
 			$keyUrl = 'linkurl_' . $i;
-			if(!array_key_exists ( $keyText , $args ) || !array_key_exists ( $keyUrl , $postData ))
+			if(!array_key_exists ( $keyText , $args ) || !array_key_exists ( $keyUrl , $args ))
 				break;
 			$valText  = trim(wp_strip_all_tags($args[$keyText]));
 			$valUrl  = trim(wp_strip_all_tags($args[$keyUrl]));
+			$valUrl = preg_match('/^(https?|ftps?|mailto|news|gopher|file):/is', $valUrl) ? $valUrl : 'http://' . $valUrl;
 			
 			if(strlen($valUrl))
 				$value[] = array('text' => $valText, 'url' => $valUrl);
@@ -526,7 +525,7 @@ class NewIdeaForm {
 			$valText  = trim(wp_strip_all_tags($args[$descrKey]));
 			$fileValue = $files[$fileKey];
 			$fileValue['description'] = $valText;
-			$value[] = $fileValue;
+			$value[$fileKey] = $fileValue;
 		}
 		$postData[$element] = $value;
 		

@@ -16,7 +16,7 @@ class NewGroupForm {
     private static $ioConfig = array();
 	private static $nonceName = "klimoGroupFormNonce";
 	private static $validationConfig = array(
-        'name_max_chars'     	=> 100,
+        'name_max_chars'     	=> 200,
         'name_min_chars'     	=> 3,
         'city_max_chars'		=> 200,
         'zipcode_chars'			=> 5,
@@ -24,6 +24,7 @@ class NewGroupForm {
         'description_max_chars' => 5000,
         'homepage_max_chars'	=> 300,
         'contact_max_chars'		=> 200,
+        'image_size_max'		=> 5000000,
     );
     
 
@@ -105,69 +106,96 @@ class NewGroupForm {
 		<?php while ( have_posts() ) : the_post(); ?>
 			<?php get_template_part( 'content', 'page' ); ?>
 		<?php endwhile; // end of the loop. ?>
-
         </div>
         <?php endif; ?>
         
         
         <div id="groupform_wrap">   	
 		    <form action="<?php echo $this->form_action ?>" id="<?php echo $this->form_id ?>" class="<?php echo $data['nopriv'] ?>" method="<?php echo $this->form_method ?>">
-		        <div class="wrap">   
-		        	<h1><?php echo __("Gruppe-Formular") ?></h1>
-		        	<div id="errormessage"></div>
-		        
-		        	<fieldset>
-			      	  	<label><?php echo __("Name der Lokalgruppe") ?></label>
+	        	<h1><?php echo __("Gruppe-Formular") ?></h1>
+	        	<div id="errormessage"></div>
+	        
+	        	<fieldset>
+	        		<div class="form-field-wrap">
+			      	  	<label for="group_name"><?php echo __("Name der Lokalgruppe") ?></label>
 			        	<input type="text" id="group_name" name="group_name" placeholder="Name" maxlength="<?php echo self::$validationConfig['name_max_chars'] ?>">
-			        
-				        <label><?php echo __("Landkreis") ?></label>
+		        	</div><!-- .form-field-wrap -->
+		        
+		        	<div class="form-field-wrap">
+				        <label for="group_district"><?php echo __("Landkreis") ?></label>
 				        <select id="group_district" name="group_district">
 				        	<?php foreach ( $data['districts'] as &$district ): ?>
 			                    <option value="<?php echo $district['value']; ?>"><?php echo $district['name']; ?></option>
 			                <?php endforeach; ?>
 				        </select>
-				        
-				        <label><?php echo __("Ort") ?></label>
+			        </div><!-- .form-field-wrap -->
+			        
+			        <div class="form-field-wrap">
+				        <label for="group_city"><?php echo __("Ort") ?></label>
 						<input type="text" id="group_city" name="group_city"  placeholder="Ort">
 						<input type="text" id="group_zipcode" name="group_zipcode"  placeholder="Postleitzahl">
-						
-						<label><?php echo __("Wirkungskreis") ?></label>
+					</div><!-- .form-field-wrap -->
+					
+					<div class="form-field-wrap">
+						<label for="group_scopes"><?php echo __("Wirkungskreis") ?></label>
 						<input type="text" id="group_scopes" name="group_scopes">
-	
-						<label><?php echo __("Kurzvorstellung") ?></label>
+					</div><!-- .form-field-wrap -->
+					
+					<div class="form-field-wrap">
+						<label for="groupdescription"><?php echo __("Kurzvorstellung") ?></label>
 				        <?php wp_editor("", 'groupdescription', array(
 				        	'media_buttons' => false,
 				        	'textarea_name' => 'group_description',
 				        	'tabindex'		=> 0
 							));
 						?>
-				        
-				        <label><?php echo __("Homepage") ?></label>
-				        <input type="url" id="group_homepage" name="group_homepage" placeholder="www.deineseite.de">
-			        </fieldset>
+					</div><!-- .form-field-wrap -->
+					
+					<div class="form-field-wrap">
+  	  					<label for="group_image">Logo</label>
+  	  					<input type="file" id="group_image" name="group_image" accept="image/*">
+  	  				</div><!-- .form-field-wrap -->
 			        
-			        
-			        <fieldset>
-				        <h1><?php echo __("Ansprechpartner") ?></h1>
-	
-						<label><?php echo __("Name") ?></label>
+			        <div class="form-field-wrap">
+			        	<label for="group_homepage"><?php echo __("Homepage") ?></label>
+			        	<input type="url" id="group_homepage" name="group_homepage" placeholder="www.deineseite.de">
+			        </div><!-- .form-field-wrap -->
+		        </fieldset>
+		        
+		        
+		        <fieldset>
+			        <h1><?php echo __("Ansprechpartner") ?></h1>
+					<div class="form-field-wrap">
+						<label for="group_contact_name"><?php echo __("Name") ?></label>
 						<input type="text" id="group_contact_name" name="group_contact_name"  placeholder="Name">
-						
-						<label><?php echo __("Vorname") ?></label>
+					</div><!-- .form-field-wrap -->
+					
+					<div class="form-field-wrap">
+						<label for="group_contact_surname"><?php echo __("Vorname") ?></label>
 						<input type="text" id="group_contact_surname" name="group_contact_surname"  placeholder="Vorname">
-						
-						<label><?php echo __("E-Mail") ?></label>
+					</div><!-- .form-field-wrap -->
+					
+					<div class="form-field-wrap">
+						<label for="group_contact_mail"><?php echo __("E-Mail") ?></label>
 						<input type="email" id="group_contact_mail" name="group_contact_mail"  placeholder="E-Mail">
-						
-						<label><?php echo __("Telefon") ?></label>
+					</div><!-- .form-field-wrap -->
+					
+					<div class="form-field-wrap">
+						<label for="group_contact_phone"><?php echo __("Telefon") ?></label>
 						<input type="email" id="group_contact_phone" name="group_contact_phone"  placeholder="Telefon">
-						<input type="checkbox" id="group_contact_publish" name="group_contact_publish" value="group_contact_publish" checked="checked"><?php echo __("öffentlich") ?>
-					</fieldset>
+					</div><!-- .form-field-wrap -->
+					
+					<div class="form-field-wrap">
+						<label for="group_contact_publish"><?php echo __("öffentlich") ?></label>
+						<input type="checkbox" id="group_contact_publish" name="group_contact_publish" value="group_contact_publish" checked="checked">
+					</div><!-- .form-field-wrap -->
+				</fieldset>
 
-			        <div class="group_submit_container"><a href="<?php echo $data['submitLink'] ?>" <?php echo $data['onClick'] ?> id="group_submit">Abschicken</a></div>
-				</div>	
+		        <div class="group_submit_container">
+		        	<a href="<?php echo $data['submitLink'] ?>" <?php echo $data['onClick'] ?> id="group_submit">Abschicken</a>
+		        </div>
         	</form>
-       </div>
+       </div><!-- .groupform_wrap -->
 	<?php
 	}
 
@@ -182,7 +210,7 @@ class NewGroupForm {
 		);
         
         // Print data to sourcecode
-        wp_localize_script('klimo_frontend_forms_config', 'groupform_config', $formData);
+        wp_localize_script('klimo_groupform', 'groupform_config', $formData);
     }
 
 
@@ -193,7 +221,7 @@ class NewGroupForm {
         wp_enqueue_script('adaptivetableinput', plugins_url('script/adaptiveTableInput.js', __FILE__), array('jquery'));
 		
     	// frontend forms script
-        wp_enqueue_script('klimo_frontend_forms', plugins_url('script/klimoPT_group_form.js', __FILE__), array('jquery', 'jquery-form', 'autosuggest', 'adaptivetableinput'));
+        wp_enqueue_script('klimo_groupform', plugins_url('script/klimoPT.groupform.js', __FILE__), array('jquery', 'jquery-form', 'autosuggest', 'adaptivetableinput'));
     }
     
     
@@ -226,7 +254,7 @@ class NewGroupForm {
 			self::ajaxRespond($securityVeto);
 			die();
 		} else if( !empty($validationVeto)) {
-			self::ajaxRespond($validationVeto);
+			self::ajaxRespond($_REQUEST);
 			die();
 		}
 		
@@ -274,6 +302,13 @@ class NewGroupForm {
 			update_post_meta($postID, $city_meta_slug, $postData['group_zipcode']);
 		}
 
+		
+		// attach zip code
+		$homepage_meta_slug = "_homepage";
+		if(!empty($postData['group_homepage'])){
+			update_post_meta($postID, $homepage_meta_slug, $postData['group_homepage']);
+		}
+
 
 		// attach contact person
 		$contact_meta_slug = "_contact";
@@ -285,6 +320,23 @@ class NewGroupForm {
 			'publish'	=> $postData['group_contact_publish']
 		);
 		update_post_meta($postID, $contact_meta_slug, $contactData);
+		
+		
+		// attach featured image
+		if( !empty($postData['group_image']['name']) ) {
+            $attach_id = media_handle_upload( 'group_image', $postID );
+            if(!is_wp_error($attach_id)) {
+                // update_post_meta( $postID, '_thumbnail_id', $attach_id );
+				set_post_thumbnail($postID, $attach_id);
+            } else {
+                $errors[] = array(
+                    'element'   => 'group_image',
+                    'message'   => $attach_id->get_error_message(),
+				);
+				wp_delete_post($postID, true);
+				goto finish;
+            }
+        }
 
 
 		// return
@@ -323,10 +375,10 @@ class NewGroupForm {
                 'message'   => "Gib einen Namen für deine Lokalgruppe an (mindestens " . self::$validationConfig['name_min_chars'] . " Zeichen).",
             );
         // too long?
-        } else if(strlen($value) > self::$validationConfig['name_min_chars']) {
+        } else if(strlen($value) > self::$validationConfig['name_max_chars']) {
             $response['error'][] = array(
                 'element'   => $element,
-                'message'   => "Der Name darf maximal " . self::$validationConfig['name_max_chars'] . " Zeichen lang sein.",
+                'message'   => "Der Gruppenname darf maximal " . self::$validationConfig['name_max_chars'] . " Zeichen lang sein.",
             );
         // check if post is already there
         } else {
@@ -424,12 +476,13 @@ class NewGroupForm {
                 'message'   => "Die URL deiner Lokalgruppe ist zu lang (maximal " . self::$validationConfig['homepage_max_chars'] . " Zeichen).",
             );
         }
+		$value = preg_match('/^(https?|ftps?|mailto|news|gopher|file):/is', $value) ? $value : 'http://' . $value;
 		$postData[$element] = $value;
 		
 
 		// check contact name
 		$element = 'group_contact_name';
-		$value = intval(wp_strip_all_tags($args[$element]));
+		$value = trim(wp_strip_all_tags($args[$element]));
 		if(empty($value)) {
             $response['error'][] = array(
                 'element'   => $element,
@@ -447,7 +500,7 @@ class NewGroupForm {
 		
 		// check contact surname
 		$element = 'group_contact_surname';
-		$value = intval(wp_strip_all_tags($args[$element]));
+		$value = trim(wp_strip_all_tags($args[$element]));
 		if(empty($value)) {
             $response['error'][] = array(
                 'element'   => $element,
@@ -465,7 +518,7 @@ class NewGroupForm {
 		
 		// check contact email
 		$element = 'group_contact_mail';
-		$value = intval(wp_strip_all_tags($args[$element]));
+		$value = trim(wp_strip_all_tags($args[$element]));
 		if(empty($value)) {
             $response['error'][] = array(
                 'element'   => $element,
@@ -483,7 +536,7 @@ class NewGroupForm {
 		
 		// check contact phone
 		$element = 'group_contact_phone';
-		$value = intval(wp_strip_all_tags($args[$element]));
+		$value = trim(wp_strip_all_tags($args[$element]));
 		if(empty($value)) {
             $response['error'][] = array(
                 'element'   => $element,
@@ -504,6 +557,22 @@ class NewGroupForm {
         $element = "group_contact_publish";
         $value = array_key_exists($element, $args);
 		$postData[$element] = $value;
+		
+		
+		
+		// check featured image
+        $element = "group_image";
+        if( key_exists($element, $files) && !empty($files[$element]['name']) ) {
+        	$value = $files[$element];
+            if( $files[$element]['size'] > self::$validationConfig['image_size_max'] ) {
+                $response['error'][] = array(
+                    'element'   => $element,
+                    'message'   => "Bilder dürfen nicht größer als " . (self::$validationConfig['image_size_max'] / 1000000) . " MB groß sein.",
+                );
+            } else {
+            	$postData[$element] = $value;
+            }
+        }
 		
 		
 		return $response;

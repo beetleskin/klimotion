@@ -44,7 +44,7 @@ function kpt_hook_metabox_idea_group($post) {
 	}
 	
 	// get local groups
-	$groupQueryArgs = array( 'post_type' => 'klimo_localgroups', 'suppress_filters' => true, 'numberposts' => -1);
+	$groupQueryArgs = array( 'post_type' => 'klimo_localgroup', 'suppress_filters' => true, 'numberposts' => -1);
 	$groups = get_posts( $groupQueryArgs );
 	
 	
@@ -86,11 +86,11 @@ function kpt_hook_metabox_idea_links($post) {
 		echo '<tr class="links_meta_pair">';
 		echo '<td><input type="text" maxlength="40" name="_linktext_' . $i . '" value="' . $link['text']  . '"></td>';
 		echo '<td><input type="text" name="_linkurl_' . $i . '" value="' . $link['url']  . '"></td>';
-		echo '<td><a class="removelink" href="#" onclick="return false;">entfernen</a></td></tr>';
+		echo '<td><a class="removebutton" href="#" onclick="return false;">entfernen</a></td></tr>';
 	}
 	
 	echo '</tbody></table>';
-	echo '<a id="addlink" href="#" onclick="return false;">hinzufügen</a>';
+	echo '<a class="addbutton" href="#" onclick="return false;">hinzufügen</a>';
 }
 
 
@@ -129,14 +129,19 @@ function kpt_hook_metabox_contact($post) {
 function kpt_hook_metabox_group_meta($post) {
 	// get current _city meta
 	$city_meta_slug = '_city';
-    $city_meta = get_post_meta($post->ID, $city_meta_slug, TRUE);
+    $city_meta = get_post_meta($post->ID, $city_meta_slug, true);
 	$zipcode_meta_slug = '_zip';
-    $zipcode_meta = get_post_meta($post->ID, $zipcode_meta_slug, TRUE);
+    $zipcode_meta = get_post_meta($post->ID, $zipcode_meta_slug, true);
+    $homepage_meta_slug = '_homepage';
+    $homepage_meta = get_post_meta($post->ID, $homepage_meta_slug, true);
 	
 	// create html
 	echo '<input type="hidden" name="groupmeta_nonce" id="groupmeta" value="' . wp_create_nonce( plugin_basename(__FILE__) ) . '" />';
 	echo '<table><tbody>';
 	echo '<tr>';
+	echo '<td><label>' . __("Homepage") . '</label></td>';
+	echo '<td><input type="text" id="meta-group_homepage" name="meta-group_homepage" placeholder="Homepage" value="' . $homepage_meta . '"></td></tr>';
+	echo '</tr><tr>';
 	echo '<td><label>' . __("Ort") . '</label></td>';
 	echo '<td><input type="text" id="meta-group_city" name="meta-group_city" placeholder="Ort" value="' . $city_meta . '"></td></tr>';
 	echo '</tr><tr>';
@@ -157,15 +162,18 @@ function kpt_hook_save_post_group($post_id, $post) {
 		return;
 	
 	
+	// save homepage
+	$new_homepage = $_POST['meta-group_homepage'];
+	$new_homepage = preg_match('/^(https?|ftps?|mailto|news|gopher|file):/is', $new_homepage) ? $new_homepage : 'http://' . $new_homepage;
+	update_post_meta($post->ID, '_homepage', $new_homepage);
+	
 	// save city
 	$new_city = $_POST['meta-group_city'];
-	$city_meta_slug = '_city';
-	update_post_meta($post->ID, $city_meta_slug, $new_city);
+	update_post_meta($post->ID, '_city', $new_city);
 	
 	// save zip code
 	$new_zipcode = $_POST['meta-group_zipcode'];
-	$zipcode_meta_slug = '_zip';
-	update_post_meta($post->ID, $zipcode_meta_slug, $new_zipcode);
+	update_post_meta($post->ID, '_zip', $new_zipcode);
 	
 	// save contact
 	$new_contactData = array(
@@ -173,7 +181,7 @@ function kpt_hook_save_post_group($post_id, $post) {
 		'surname'	=> $_POST['meta-group_contact_surname'],
 		'mail'		=> $_POST['meta-group_contact_mail'],
 		'phone'		=> $_POST['meta-group_contact_phone'],
-		'publish'	=> array_key_exists('meta-group_contact_publish', $_POST),
+		'publish'	=> (bool)array_key_exists('meta-group_contact_publish', $_POST),
 	);
 	$contact_meta_slug = '_contact';
 	update_post_meta($post->ID, $contact_meta_slug, $new_contactData);
@@ -212,6 +220,7 @@ function kpt_hook_save_post_idea($post_id, $post) {
 			break;
 		$valText  = trim(wp_strip_all_tags($_POST[$keyText]));
 		$valUrl  = trim(wp_strip_all_tags($_POST[$keyUrl]));
+		$valUrl = preg_match('/^(https?|ftps?|mailto|news|gopher|file):/is', $valUrl) ? $valUrl : 'http://' . $valUrl;
 		
 		if(strlen($valUrl))
 			$new_links[] = array('text' => $valText, 'url' => $valUrl);

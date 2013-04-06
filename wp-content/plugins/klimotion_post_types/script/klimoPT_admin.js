@@ -8,7 +8,7 @@ jQuery(function($) {
 		
 
 		$(document).ready(function() {
-			$("#idea-post-meta-links").adaptiveTableInput({ trSelector: '.files_meta_pair', maxRows: 10});
+			$("#idea-post-meta-links").adaptiveTableInput({ trSelector: '.links_meta_pair', maxRows: 10});
 		});
 		
 		
