@@ -12,6 +12,11 @@ Text Domain: klimotion_theme
 /* -------------------------------------------------------------- */
 
 /* Top-Menu */
+.entry-lead {
+	display: inline;
+    height: auto;
+    padding-bottom: 2%;
+}
 
 .entry-title,
 .comments-title{
@@ -19,17 +24,19 @@ Text Domain: klimotion_theme
 	font-size: 2.4rem;	
 }
 
-.entry-header .entry-thumbnail {
-	display: inline;
-    height: auto;
-    padding-bottom: 2%;
-}
-
-.entry-header .entry-thumbnail img,
-.entry-header .entry-thumbnail a img {
+.entry-lead img {
   	width: 17%;
  	height: auto;
   	float: left;
+}
+
+.entry-lead a img {
+  	width: 17%;
+ 	height: auto;
+  	float: left;
+}
+
+.entry-content {
 }
 
 footer.entry-meta {
