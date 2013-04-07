@@ -313,18 +313,18 @@ class NewIdeaForm {
             die();
         }
 		
-		// attach local group meta
-		$group_meta_slug = '_group';
-		if($idea_group_id != -1) {
-			update_post_meta($postID, $group_meta_slug, $idea_group_id);
-		}
-		
-		
+
 		// attach link meta
 		$idea_links_meta_slug = '_links';
 		if(!empty($idea_links)){
 			update_post_meta($postID, $idea_links_meta_slug, $idea_links);
 		} 
+		
+		
+		// create idea-group relation
+		if($idea_group_id != -1) {
+			kpt_insert_idea_group_relation($postID, $idea_group_id, true);
+		}
 		
 		
 		// attach featured image
@@ -486,10 +486,10 @@ class NewIdeaForm {
 				break;
 			$valText  = trim(wp_strip_all_tags($args[$keyText]));
 			$valUrl  = trim(wp_strip_all_tags($args[$keyUrl]));
-			$valUrl = preg_match('/^(https?|ftps?|mailto|news|gopher|file):/is', $valUrl) ? $valUrl : 'http://' . $valUrl;
-			
-			if(strlen($valUrl))
+			if(strlen($valUrl)) {
+				$valUrl = preg_match('/^(https?|ftps?|mailto|news|gopher|file):/is', $valUrl) ? $valUrl : 'http://' . $valUrl;
 				$value[] = array('text' => $valText, 'url' => $valUrl);
+			}
 		}
 		$postData[$element] = $value;
 		

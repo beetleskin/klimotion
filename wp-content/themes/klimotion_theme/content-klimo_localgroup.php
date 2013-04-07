@@ -12,13 +12,15 @@
 	$args['homepage_meta'] = get_post_meta($post->ID, '_homepage', true);
 	$args['city_meta'] = get_post_meta($post->ID, '_city', true);
 	$args['zip_meta'] = get_post_meta($post->ID, '_zip', true);
+	$args['ideas_meta'] = kpt_get_ideas_by_localgroup($post->ID);
+	
 ?>
 
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
     <div class="entry-inner">
     	
 		<?php get_template_part( 'post', 'header' ); ?>
-		// TODO: Thickbox;
+
 			
 		<div class="entry-group-district">
 			Landkreis: 
@@ -28,6 +30,18 @@
 		<div class="entry-content">
 			<?php the_content(); ?>
 		</div><!-- .entry-content -->
+		
+		<?php if( !empty($args['ideas_meta']) ): ?>
+		<div class="entry-group-ideas">
+			Ideen:
+			<ul>
+				<?php foreach ( $args['ideas_meta'] as &$idea): ?>
+		         	<a href="<?php echo get_permalink($idea->ID); ?>"><?php echo $idea->post_title; ?></a>
+		    <?php endforeach; ?>
+			</ul>
+		</div><!-- .entry-group-ideas -->
+		<?php endif ?>
+		
 		
 		<?php if( !empty($args['homepage_meta']) ): ?>
 		<div class="entry-group-homepage">

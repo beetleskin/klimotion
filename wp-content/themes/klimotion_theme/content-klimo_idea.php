@@ -8,8 +8,6 @@
 
 <?php
 	$args = array();
-    $args['group_meta'] = get_post_meta($post->ID, '_group', true);
-	$args['group_meta'] = get_post($args['group_meta']);
 	$args['attachments_meta'] = get_posts( array(
         'post_type' => 'attachment',
         'posts_per_page' => -1,
@@ -17,21 +15,42 @@
         'exclude'     => get_post_thumbnail_id()
     ));
 	$args['links_meta'] = get_post_meta($post->ID, '_links', true);
+	$args['group_meta'] = kpt_get_localgroups_by_idea($post->ID);
+	$args['initiator_meta'] = array();
+	foreach ($args['group_meta'] as $i => $group) {
+		if($group->initiated) {
+			$args['initiator_meta'] = $group;
+			unset($args['group_meta'][$i]);
+			break;
+		}
+	}
 ?>
 
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
     <div class="entry-inner">
     	
 		<?php get_template_part( 'post', 'header' ); ?>
-		// TODO: Thickbox;
+		// TODO: Box/Klarmachen: WAS kan ich hier eigentlich machen? ähnlich github, noch stärker
 		
+		
+		<?php if( !empty($args['initiator_meta']) ): ?>
+		<div class="entry-idea-initiator">
+			Initiator:
+			<a href="<?php echo get_permalink($args['initiator_meta']->ID); ?>"><?php echo $args['initiator_meta']->post_title; ?></a>
+		</div><!-- .entry-idea-initiator -->
+		<?php endif ?>
+		
+		
+		<?php if( !empty($args['group_meta']) ): ?>
 		<div class="entry-idea-group">
-			<p>Gruppe:
-				<a href="<?php echo get_permalink($args['group_meta']->ID); ?>">
-					<?php echo $args['group_meta']->post_title; ?>
-				</a>
-			</p>
+			Beteiligte Gruppen:
+			<ul>
+				<?php foreach ( $args['group_meta'] as &$group): ?>
+		         	<a href="<?php echo get_permalink($group->ID); ?>"><?php echo $group->post_title; ?></a>
+		    <?php endforeach; ?>
+			</ul>
 		</div><!-- .entry-idea-group -->
+		<?php endif ?>
 			
 		<div class="entry-idea-aims">
 			Ziele: 
@@ -42,7 +61,7 @@
 			Themen: 
 			<?php the_terms($post->ID, "klimo_idea_topics", "", " | "); ?>
 		</div><!-- .entry-idea-topics -->
-
+		
 		<div class="entry-idea-excerpt">
 			<?php the_excerpt() ?>
 		</div><!-- .entry-idea-excerpt -->

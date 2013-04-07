@@ -2,6 +2,7 @@
 /**
  * @package Klimotion_Post_Types
  */
+define("KPT_dbtable_post_idea_relations", "klimo_post_relations");
 
 
 function kpt_data_init() {
@@ -10,26 +11,134 @@ function kpt_data_init() {
 	kpt_add_localGroup();
 }
 
+function kpt_delete_idea_group_relation($idea_id, $group_id) {
+	global $wpdb;
+	$table_name = KPT_dbtable_post_idea_relations;
+	$query = "DELETE FROM $table_name WHERE $table_name.localgroup = $group_id AND idea = $idea_id;";
+	return $wpdb->query($query);
+}
+
+function kpt_insert_idea_group_relation($idea_id, $group_id, $initiated=false, $uid=-1) {
+	global $wpdb;
+	$table_name = KPT_dbtable_post_idea_relations;
+	if($uid == -1)
+		$uid = get_current_user_id();
+	$response = $wpdb->insert(KPT_dbtable_post_idea_relations, array(
+		'localgroup' 	=> $group_id,
+		'idea' 			=> $idea_id,
+		'uid'			=> $uid,
+		'initiated'		=> $initiated,
+	));
+}
+
+function kpt_get_ideas_by_localgroup($group_id, $get_posts=false) {
+	global $wpdb;
+	$table_name = KPT_dbtable_post_idea_relations;
+	$query = "
+		SELECT $table_name.idea AS ID, $table_name.initiated, $wpdb->posts.post_title
+		FROM $table_name
+		INNER JOIN $wpdb->posts
+		ON $table_name.idea = $wpdb->posts.ID
+		WHERE $table_name.localgroup = $group_id";
+	$relations = $wpdb->get_results($query);
+	
+	if( !$get_posts ) {
+		return $relations;
+	} else {
+		$result = array();
+		foreach ($relations as $rel) {
+			$idea_post = get_post($rel->ID);
+			$idea_post->initiated = (bool)$rel->initiated;
+			$result[] = $idea_post;
+		}
+		return $result;
+	}
+}
+
+
+function kpt_get_localgroups_by_idea($idea_id, $get_posts=false) {
+	global $wpdb;
+	$table_name = KPT_dbtable_post_idea_relations;
+	$query = "
+		SELECT $table_name.localgroup AS ID, $table_name.initiated, $wpdb->posts.post_title
+		FROM $table_name
+		INNER JOIN $wpdb->posts
+		ON $table_name.localgroup = $wpdb->posts.ID
+		WHERE $table_name.idea = $idea_id";
+	$relations = $wpdb->get_results($query);
+	
+	
+	if( !$get_posts ) {
+		return $relations;
+	} else {
+		$result = array();
+		foreach ($relations as $rel) {
+			$group_post = get_post($rel->ID);
+			$group_post->initiated = (bool)$rel->initiated;
+			$result[] = $group_post;
+		}
+		return $result;
+	}
+}
+
+
+function kpt_get_all_posts_by_type($post_type, $fields=array('ID')) {
+	global $wpdb;
+	
+	if(empty($fields))
+		$fields = '*';
+	else {
+		$fields = implode($fields, ",");
+	}
+	$query = "SELECT $fields FROM $wpdb->posts WHERE post_type = '$post_type';";
+	return $wpdb->get_results($query);
+}
+
 
 function kpt_activate() {
+	require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+	require_once('lower_saxony_list.php');
+	
 	
 	kpt_data_init();
 	flush_rewrite_rules();
 	
 	// populate district taxonomy
-	include_once('lower_saxony_list.php');
 	foreach ($lower_saxony_districts as $id => $name) {
 		wp_insert_term($name, 'klimo_districts', array('slug' => '_district_' . $id));
 	}
+	
+	
+	// create databases
+	global $wpdb;
+    $sql = "CREATE TABLE IF NOT EXISTS " . KPT_dbtable_post_idea_relations . " (
+		localgroup bigint(20) unsigned NOT NULL default 0,
+		idea bigint(20) unsigned NOT NULL default 0,
+		uid bigint(20) unsigned NOT NULL default 0,
+		initiated bit NOT NULL default 0,
+		created TIMESTAMP DEFAULT NOW(),
+		CONSTRAINT uc UNIQUE (localgroup, idea)
+    );";
+    dbDelta( $sql );
 }
 
 
 function kpt_uninstall() {
+	require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+	
+	
 	// delete districts
 	$districtTerms = get_terms('klimo_districts', array('name__linke' => '_district_'));
 	foreach ($districtTerms as $term) {
 		wp_delete_term($term->term_id);
 	}
+	
+	
+	// delete databases
+	global $wpdb;
+	$sql = "DROP TABLE IF EXISTS " . KPT_dbtable_post_idea_relations . ";";
+	
+	dbDelta( $sql );
 }	
 
 

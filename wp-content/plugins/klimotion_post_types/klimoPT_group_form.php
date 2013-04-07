@@ -476,7 +476,9 @@ class NewGroupForm {
                 'message'   => "Die URL deiner Lokalgruppe ist zu lang (maximal " . self::$validationConfig['homepage_max_chars'] . " Zeichen).",
             );
         }
-		$value = preg_match('/^(https?|ftps?|mailto|news|gopher|file):/is', $value) ? $value : 'http://' . $value;
+		if(strlen($valUrl)) {
+			$value = preg_match('/^(https?|ftps?|mailto|news|gopher|file):/is', $value) ? $value : 'http://' . $value;
+		}
 		$postData[$element] = $value;
 		
 
