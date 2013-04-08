@@ -110,21 +110,28 @@ footer.entry-meta .entry-bookmark{
 	position: relative;
 }
 
-#menu-klimotion_first .sub-menu{
-	top: 41px;
-	width: 100%
-}
-
-#menu-klimotion_first .current-menu-item .sub-menu{
+#menu-klimotion_first .sub-menu {
+	width: 100%;
+	box-sizing:border-box;
+    -moz-box-sizing:border-box;
+    -webkit-box-sizing:border-box;
 	border-top: 2px;
 	border-bottom: 2px;
 	border-style:solid;
 	border-color: #1e497d;
-	display: block;
+	padding-left: 11px;
+}
+
+#menu-klimotion_first .current-menu-item .sub-menu {
+	display: block !important;
 }
 
 #menu-klimotion_first .menu-item:hover{
-	border-bottom: 6px;
+	box-sizing:border-box;
+    -moz-box-sizing:border-box;
+    -webkit-box-sizing:border-box;
+    margin-bottom: 0px;
+	border-bottom: 7px;
 	border-style:solid;
 	border-color: #f0f0f0;
 	background: #f6f6f6;
@@ -142,9 +149,6 @@ footer.entry-meta .entry-bookmark{
 #menu-klimotion_first .current-menu-item:hover ul.sub-menu,
 #menu-klimotion_first .current-menu-ancestor:hover ul.sub-menu,
 #menu-klimotion_first .sub-menu .current-menu-item ul.sub-menu {
-	border-top: 2px !important;
-	border-bottom: 2px;
-	border-style:solid !important;
 	border-color: #1e497d !important;
 	background: #fff !important;
 }
@@ -154,10 +158,14 @@ footer.entry-meta .entry-bookmark{
 #menu-klimotion_first .current-menu-item:hover,
 #menu-klimotion_first .current-menu-ancestor:hover,
 #menu-klimotion_first .sub-menu .current-menu-item{
-	border-bottom: 6px !important;
+	box-sizing:border-box;
+    -moz-box-sizing:border-box;
+    -webkit-box-sizing:border-box;
+	border-bottom: 7px !important;
 	border-style:solid !important;
 	border-color: #1e497d !important;
 	background: #fff !important;
+	margin-bottom: 0px !important; 
 }
 
 #menu-klimotion_first .current-menu-ancestor a,
@@ -177,21 +185,25 @@ footer.entry-meta .entry-bookmark{
 #menu-klimotion_first > li > a{
 	text-shadow: none;
 	margin: 0px 15px 0px 15px;
+	padding: 7px;
 }
 
 #menu-klimotion_first > li{
 	margin-right: 0px;
 	float: left;
+	margin-bottom: 6px;
 }
-
 #menu-klimotion_first .sub-menu > li{
 	float: left;
 	border-top: 0px;
 	z-index: 2;
+	margin-bottom: 6px;
 }
 
 #menu-klimotion_first .sub-menu > li > a{
 	width: auto;
+	padding-top: 7px;
+	padding-bottom: 7px;
 }
 
 #main-nav > li .sub-menu {
@@ -244,4 +256,13 @@ padding: 0.75em 1em;
 background: #fff;
 border: 0px solid #f0f0f0;
 border-top: none;
+}
+
+/*no arrows*/
+.scheme-white .main-navigation > ul > .menu-parent-item > a:before {
+	visibility: hidden;
+}
+
+#menu-klimotion_first ul{
+	top: 36px;
 }
