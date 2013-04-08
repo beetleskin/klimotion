@@ -219,6 +219,8 @@ class NewGroupForm {
         wp_enqueue_script('autosuggest', plugins_url('script/autoSuggestv14/jquery.autoSuggest.packed.js', __FILE__), array('jquery'));
 		// autosuggest
         wp_enqueue_script('adaptivetableinput', plugins_url('script/adaptiveTableInput.js', __FILE__), array('jquery'));
+		// multiselect
+		wp_enqueue_script('jquery.ui.multiselect', plugins_url('script/jquery.ui.multiselect/src/jquery.multiselect.min.js', __FILE__), array('jquery-ui-core', 'jquery-ui-widget'));
 		
     	// frontend forms script
         wp_enqueue_script('klimo_groupform', plugins_url('script/klimoPT.groupform.js', __FILE__), array('jquery', 'jquery-form', 'autosuggest', 'adaptivetableinput'));
@@ -226,6 +228,8 @@ class NewGroupForm {
     
     
     function enqueue_styles() {
+    	// jquery ui theme
+    	wp_enqueue_style('jquery.ui.theme','http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/themes/smoothness/jquery-ui.css', false);
     	// autosuggest style
         wp_enqueue_style('autosuggest', plugins_url('script/autoSuggestv14/autoSuggest.css', __FILE__));
 		// form styles
@@ -476,7 +480,9 @@ class NewGroupForm {
                 'message'   => "Die URL deiner Lokalgruppe ist zu lang (maximal " . self::$validationConfig['homepage_max_chars'] . " Zeichen).",
             );
         }
-		$value = preg_match('/^(https?|ftps?|mailto|news|gopher|file):/is', $value) ? $value : 'http://' . $value;
+		if(strlen($valUrl)) {
+			$value = preg_match('/^(https?|ftps?|mailto|news|gopher|file):/is', $value) ? $value : 'http://' . $value;
+		}
 		$postData[$element] = $value;
 		
 

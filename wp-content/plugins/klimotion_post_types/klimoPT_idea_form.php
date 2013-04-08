@@ -237,6 +237,8 @@ class NewIdeaForm {
         wp_enqueue_script('autosuggest', plugins_url('script/autoSuggestv14/jquery.autoSuggest.packed.js', __FILE__), array('jquery'));
 		// autosuggest
         wp_enqueue_script('adaptivetableinput', plugins_url('script/adaptiveTableInput.js', __FILE__), array('jquery'));
+		// multiselect
+		wp_enqueue_script('jquery.ui.multiselect', plugins_url('script/jquery.ui.multiselect/src/jquery.multiselect.min.js', __FILE__), array('jquery-ui-core', 'jquery-ui-widget'));
 		
     	// frontend forms script
         wp_enqueue_script('klimo_ideaform', plugins_url('script/klimoPT.ideaform.js', __FILE__), array('jquery', 'jquery-form', 'autosuggest', 'adaptivetableinput'));
@@ -246,6 +248,9 @@ class NewIdeaForm {
     function enqueue_styles() {
     	// autosuggest style
         wp_enqueue_style('autosuggest', plugins_url('script/autoSuggestv14/autoSuggest.css', __FILE__));
+		// jquery ui theme
+    	wp_enqueue_style('jquery.ui.theme','http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/themes/smoothness/jquery-ui.css', false);
+		
 		// form styles
 		wp_enqueue_style('klimo_frontend_forms', plugins_url('css/klimoPT_forms.css', __FILE__));
 		
@@ -313,18 +318,18 @@ class NewIdeaForm {
             die();
         }
 		
-		// attach local group meta
-		$group_meta_slug = '_group';
-		if($idea_group_id != -1) {
-			update_post_meta($postID, $group_meta_slug, $idea_group_id);
-		}
-		
-		
+
 		// attach link meta
 		$idea_links_meta_slug = '_links';
 		if(!empty($idea_links)){
 			update_post_meta($postID, $idea_links_meta_slug, $idea_links);
 		} 
+		
+		
+		// create idea-group relation
+		if($idea_group_id != -1) {
+			kpt_insert_idea_group_relation($postID, $idea_group_id, true);
+		}
 		
 		
 		// attach featured image
@@ -486,10 +491,10 @@ class NewIdeaForm {
 				break;
 			$valText  = trim(wp_strip_all_tags($args[$keyText]));
 			$valUrl  = trim(wp_strip_all_tags($args[$keyUrl]));
-			$valUrl = preg_match('/^(https?|ftps?|mailto|news|gopher|file):/is', $valUrl) ? $valUrl : 'http://' . $valUrl;
-			
-			if(strlen($valUrl))
+			if(strlen($valUrl)) {
+				$valUrl = preg_match('/^(https?|ftps?|mailto|news|gopher|file):/is', $valUrl) ? $valUrl : 'http://' . $valUrl;
 				$value[] = array('text' => $valText, 'url' => $valUrl);
+			}
 		}
 		$postData[$element] = $value;
 		

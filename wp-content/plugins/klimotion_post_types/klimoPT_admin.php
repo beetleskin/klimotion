@@ -15,12 +15,17 @@ add_action('admin_init',  'kpt_hook_add_admin_script');
  
 function kpt_hook_add_admin_style() {
 	wp_enqueue_style('kpt-admin-style', plugins_url('css/klimoPT_admin.css', __FILE__) );
+	wp_enqueue_style('jquery.ui.theme','http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/themes/smoothness/jquery-ui.css', false);
+	wp_enqueue_style('jquery.ui.multiselect', plugins_url('script/jquery.ui.multiselect/jquery.multiselect.css', __FILE__) );
 }
 
 
 function kpt_hook_add_admin_script() {
 	// adaptivetableinput
     wp_enqueue_script('adaptivetableinput', plugins_url('script/adaptiveTableInput.js', __FILE__), array('jquery'));
+	// multiselect
+	wp_enqueue_script('jquery.ui.multiselect', plugins_url('script/jquery.ui.multiselect/src/jquery.multiselect.min.js', __FILE__), array('jquery-ui-core', 'jquery-ui-widget'));
+	// kpt admin script
 	wp_enqueue_script('kpt-admin-script', plugins_url('script/klimoPT_admin.js', __FILE__), array('jquery', 'adaptivetableinput'));
 }
 
@@ -28,35 +33,30 @@ function kpt_hook_add_admin_script() {
 function kpt_hook_metaboxes() {
 	// idea
 	add_meta_box('idea-post-meta-links', 'Links',  'kpt_hook_metabox_idea_links', 'klimo_idea', 'normal', 'default');
-	add_meta_box('idea-post-meta-group', 'Gruppe',  'kpt_hook_metabox_idea_group', 'klimo_idea', 'side', 'default');
+	add_meta_box('idea-post-meta-group', 'Gruppe',  'kpt_hook_metabox_idea_groups', 'klimo_idea', 'side', 'default');
 	// group
 	add_meta_box('group-post-meta', 'Meta',  'kpt_hook_metabox_group_meta', 'klimo_localgroup', 'side', 'default');
 	add_meta_box('group-post-meta-contact', __('Kontakt'),  'kpt_hook_metabox_contact', 'klimo_localgroup', 'normal', 'default');
 }
 
 
-function kpt_hook_metabox_idea_group($post) {
-	// get current _links meta
-	$idea_group_meta_slug = '_group';
-    $group_meta = get_post_meta($post->ID, $idea_group_meta_slug, TRUE);
-	if(!$group_meta) {
-		$group_meta = -1;
+function kpt_hook_metabox_idea_groups($post) {
+	
+	$groups_selected_list = kpt_get_localgroups_by_idea($post->ID, false);
+	$groups_selected_IDs = array();
+	foreach ($groups_selected_list as $group) {
+		$groups_selected_IDs[] = $group->ID;
 	}
+	$groups_all = kpt_get_all_posts_by_type('klimo_localgroup', array('ID', 'post_title'));
 	
-	// get local groups
-	$groupQueryArgs = array( 'post_type' => 'klimo_localgroup', 'suppress_filters' => true, 'numberposts' => -1);
-	$groups = get_posts( $groupQueryArgs );
-	
-	
-	// render select dropdown
+	// render multiselect dropdown
 	echo '<input type="hidden" name="groupmeta_nonce" id="groupmeta" value="' . wp_create_nonce( plugin_basename(__FILE__) ) . '" />';
-	echo '<select name="meta-group" id="meta-group">';
-	echo '<option value="-1" ' . (($group_meta == -1)? 'selected="selected"' : '') . '>keine Gruppe</option>';
-	foreach ($groups as $group) {
-		echo '<option value="' . $group->ID . '" ' . (($group_meta == $group->ID)? 'selected="selected"' : '') . '>' . $group->post_title . '</option>';
+	echo '<select name="meta-group[]" id="meta-group" multiple="multiple">';
+	foreach ($groups_all as $group) {
+		echo '<option value="' . $group->ID . '" ' . (in_array($group->ID, $groups_selected_IDs)? 'selected="selected"' : '') . '>' . $group->post_title . '</option>';
 	}
 	
-	echo '</select>';	
+	echo '</select>';
 }
 
 
@@ -201,14 +201,18 @@ function kpt_hook_save_post_idea($post_id, $post) {
 	
 	
 	
-	// save local group
-	$new_group_id = $_POST['meta-group'];
-	$group_meta_slug = '_group';
-	if($new_group_id == -1) {
-		delete_post_meta($post->ID, $group_meta_slug);
-	} else {
-		update_post_meta($post->ID, $group_meta_slug, $new_group_id);
+	// save local groups
+	$old_groups = kpt_get_localgroups_by_idea($post->ID);
+	$new_group_ids = array_key_exists('meta-group', $_POST)? $_POST['meta-group'] : array();
+	foreach ($old_groups as $old_group) {
+		if(! in_array($old_group->ID, $new_group_ids)) {
+			kpt_delete_idea_group_relation($post->ID, $old_group->ID);
+		}
 	}
+	foreach ($new_group_ids as $group_id) {
+		kpt_insert_idea_group_relation($post->ID, $group_id);
+	}
+	
 	
 	
 	// save links
@@ -220,10 +224,11 @@ function kpt_hook_save_post_idea($post_id, $post) {
 			break;
 		$valText  = trim(wp_strip_all_tags($_POST[$keyText]));
 		$valUrl  = trim(wp_strip_all_tags($_POST[$keyUrl]));
-		$valUrl = preg_match('/^(https?|ftps?|mailto|news|gopher|file):/is', $valUrl) ? $valUrl : 'http://' . $valUrl;
 		
-		if(strlen($valUrl))
+		if(strlen($valUrl)) {
+			$valUrl = preg_match('/^(https?|ftps?|mailto|news|gopher|file):/is', $valUrl) ? $valUrl : 'http://' . $valUrl;
 			$new_links[] = array('text' => $valText, 'url' => $valUrl);
+		}
 	}
 
 	// update post link meta

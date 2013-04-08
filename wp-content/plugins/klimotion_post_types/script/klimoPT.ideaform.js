@@ -33,6 +33,15 @@ jQuery(function($) { ideaform : {
 				);
 				
 				
+				// district multiselect
+				$('select#idea_group').multiselect({
+					multiple: false,
+					selectedList: 1,
+					header: false,
+					noneSelectedText: "Wähle einen Landkreis",
+					
+				});
+				
 				
 				// declare ajaxForm
 				var formOptions = {

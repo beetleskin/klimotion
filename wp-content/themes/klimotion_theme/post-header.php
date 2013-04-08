@@ -6,7 +6,6 @@
  * @since Cazuela 1.0
  */
 ?>
-
 <header class="entry-header">
 	<?php if (has_post_thumbnail() ): ?>
 		<div class="entry-thumbnail">

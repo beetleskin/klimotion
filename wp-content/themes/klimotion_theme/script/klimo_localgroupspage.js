@@ -24,7 +24,7 @@ jQuery(function($) { klimo_localgroupspage : {
 					map: me.opts.map,
 					series: { 
 						regions: [{
-							scale: ['#000000','#ffffff'],
+							scale: ['#FFFFFF','#FFFB00', 'FF9D00', 'FF4800', 'FF482B' ,'C90000'],
 				            attribute: 'fill',
 				            normalizeFunction: 'linear',
 				            values: me.opts.mapVals
