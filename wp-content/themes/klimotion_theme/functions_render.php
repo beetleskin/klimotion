@@ -100,23 +100,35 @@ class LocalGroupsPage {
 		wp_enqueue_script('jvectormap_losaxony', get_stylesheet_directory_uri() . '/script/jquery-jvectormap-1.2.2/lower_saxony_map.js', array('jquery'));
 		wp_enqueue_script('klimo_localgroupspage', get_stylesheet_directory_uri() . '/script/klimo_localgroupspage.js', array('jquery', 'jvectormap', 'jvectormap_losaxony'));
 		
-		
 		// add group map styles
 		wp_enqueue_style('jvectormap', get_stylesheet_directory_uri() . '/script/jquery-jvectormap-1.2.2/jquery-jvectormap-1.2.2.css');
 		wp_enqueue_style('klimo_localgroupspage', get_stylesheet_directory_uri() . '/css/localgroupspage.css');
 		
+		// generate map data
+		$klimo_districts = get_categories(array(
+			'type' 			=> 'klimo_localgroups',
+			'hide_empty' 	=> 0,
+			'hierarchical'	=> 0,
+			'taxonomy'		=> 'klimo_districts',
+		));
+		$district_population = array();
+		foreach ($klimo_districts as $district) {
+			if( strpos( $district->slug, '_district_') === false )
+				continue;
+			$id = str_replace("_district_", '', $district->slug);
+			$district_population[''.$id] = $district->count;
+		}
+		
+		
 		// print ajax config
         $ioConfig = self::$ioConfig;
         $ioConfig['nonsense'] = wp_create_nonce (self::$nonceName);
-		$vals = array();
-		for ($i=0; $i < 47; $i++) { 
-			$vals[''.$i] = $i;
-		}
+		
 		
 		$data = array(
 			'ajaxConfig'	=> $ioConfig,
 			'map'			=> 'lower_saxony_de',
-			'mapVals'		=> $vals,
+			'mapVals'		=> $district_population,
 		);
         
         // Print data to sourcecode
