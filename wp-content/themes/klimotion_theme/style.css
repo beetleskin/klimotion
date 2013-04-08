@@ -11,8 +11,8 @@ Text Domain: klimotion_theme
 @import url("../cazuela/style.css");
 /* -------------------------------------------------------------- */
 
-/* Top-Menu */
-.entry-lead {
+/* Post Header */
+.entry-thumbnail {
 	display: inline;
     height: auto;
     padding-bottom: 2%;
@@ -24,19 +24,10 @@ Text Domain: klimotion_theme
 	font-size: 2.4rem;	
 }
 
-.entry-lead img {
+.entry-thumbnail img {
   	width: 17%;
  	height: auto;
   	float: left;
-}
-
-.entry-lead a img {
-  	width: 17%;
- 	height: auto;
-  	float: left;
-}
-
-.entry-content {
 }
 
 footer.entry-meta {
@@ -44,27 +35,14 @@ footer.entry-meta {
 	padding: 1rem 2rem;
 }
 
-footer.entry-meta .entry-bookmark{
-	display: none;
-}
-
-.entry-meta .entry-cats-tags{
-	display: inline;
-}
-
 .hentry .entry-inner,
 .not-found .entry-inner,
-.entry-lead img{
+.entry-thumbnail img{
   padding: 20px 20px 0;
   padding: 2rem 2rem 0;
 }
 
-.nav-previous a,
-.nav-next a{
-	display: none; 
-}
-
-.wrap{
+.wrap {
 	  margin-bottom: 30px;
 	  margin-bottom: 3rem;
 	  background: #fff;
