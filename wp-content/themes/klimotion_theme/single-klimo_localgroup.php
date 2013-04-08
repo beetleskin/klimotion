@@ -20,7 +20,7 @@ get_header(); ?>
 
 				<?php thsp_content_nav( 'nav-above' ); ?>
 
-				<?php get_template_part( 'content', 'klimo_localgroup' ); ?>
+				<?php get_template_part( 'content', 'single-klimo_localgroup' ); ?>
 
 				<?php thsp_content_nav( 'nav-below' ); ?>
 

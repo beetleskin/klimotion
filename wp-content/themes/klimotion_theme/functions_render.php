@@ -59,7 +59,7 @@ class LocalGroupsPage {
 		// query groups
 		ob_start();
         while (have_posts()) : the_post();
-            get_template_part('content', 'klimo_localgroup');
+            get_template_part('content');
         endwhile;
 	
 		$buffer = ob_get_contents();
