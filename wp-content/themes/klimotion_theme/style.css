@@ -24,10 +24,11 @@ Text Domain: klimotion_theme
 	font-size: 2.4rem;	
 }
 
-.entry-thumbnail img {
+.entry-thumbnail a img {
   	width: 17%;
  	height: auto;
   	float: left;
+  	padding: 0px 15px 2px 0px;
 }
 
 footer.entry-meta {
