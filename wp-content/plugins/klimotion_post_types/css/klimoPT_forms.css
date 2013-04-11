@@ -4,6 +4,10 @@
  */
 
 form#ideaform  {
-	background-color: green;
+	background-color: #fff;
 }
 
+form#ideaform h1,
+form#groupform h1 {
+	font-size: 24px;
+}
