@@ -7,24 +7,3 @@ form#ideaform  {
 	background-color: green;
 }
 
-form#groupform label,
-form#groupform input,
-form#groupform select {
-	width: 100%;
-}
-
-.ideaform_wrap,
-.neue-idee{
-	width: 100%;
-}
-fieldset{
-	width:100%;
-}
-
-fieldset div{
-	margin: 2%;
-}
-
-fieldset label{
-	min-width: 20%;
-}

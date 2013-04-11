@@ -24,6 +24,8 @@
 			break;
 		}
 	}
+	
+	d($args['links_meta']);
 ?>
 
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
@@ -80,6 +82,7 @@
 		    <?php endforeach; ?>
 		</div><!-- .entry-idea-attachments -->
 
+		<?php if( !empty($args['links_meta']) ): ?>
 		<div class="entry-idea-links">
 			<?php foreach ( $args['links_meta'] as $linkl): ?>
 		         <div class="idea-link">
@@ -89,6 +92,7 @@
 		         </div><!-- .idea-link -->
 		    <?php endforeach; ?>
 		</div><!-- .entry-idea-links -->
+		<?php endif ?>
 		
 	</div><!-- .entry-inner -->
 
