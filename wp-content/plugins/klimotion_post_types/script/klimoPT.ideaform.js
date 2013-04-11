@@ -39,7 +39,6 @@ jQuery(function($) { ideaform : {
 					selectedList: 1,
 					header: false,
 					noneSelectedText: "Wähle einen Landkreis",
-					
 				});
 				
 				
