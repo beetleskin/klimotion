@@ -228,10 +228,13 @@ class NewGroupForm {
     
     
     function enqueue_styles() {
+    	// multiselect style
+		wp_enqueue_style('jquery.ui.multiselect', plugins_url('script/jquery.ui.multiselect/jquery.multiselect.css', __FILE__) );
     	// jquery ui theme
     	wp_enqueue_style('jquery.ui.theme','http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/themes/smoothness/jquery-ui.css', false);
     	// autosuggest style
         wp_enqueue_style('autosuggest', plugins_url('script/autoSuggestv14/autoSuggest.css', __FILE__));
+		
 		// form styles
 		wp_enqueue_style('klimo_frontend_forms', plugins_url('css/klimoPT_forms.css', __FILE__));
     }
