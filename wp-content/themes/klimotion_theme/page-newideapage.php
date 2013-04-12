@@ -22,6 +22,7 @@ get_header(); ?>
 			?>
 
 			<?php
+			//hierhin?
 				// render form
 				$form = new NewIdeaForm();
 			    $form->render();

@@ -3,11 +3,103 @@
  * Version: 1.1
  */
 
+/*idea formular styles*/
 form#ideaform  {
-	background-color: #fff;
+	-webkit-border-top-right-radius: 20px;
+	-webkit-border-bottom-left-radius: 20px;
+	-moz-border-radius-topright: 20px;
+	-moz-border-radius-bottomleft: 20px;
+	border-top-right-radius: 20px;
+	border-bottom-left-radius: 20px;
+	padding: 20px;
 }
 
 form#ideaform h1,
 form#groupform h1 {
 	font-size: 24px;
+	color: #1e497d;
+	padding-bottom: 10px;
+}
+
+fieldset div label {
+	display: block;
+	color: #1e497d;
+}
+
+fieldset div {
+	margin-bottom: 25px;
+}
+/*
+form#ideaform fieldset div.form-field-wrap .ui-multiselect,
+form#ideaform fieldset div.form-field-wrap #idea_title {
+	width: 40% !important;	
+}
+
+form#ideaform fieldset div.form-field-wrap #idea_excerp,
+form#ideaform fieldset div.form-field-wrap #wp-ideadescription-wrap,
+form#ideaform fieldset div.form-field-wrap #idea_files,
+form#ideaform fieldset div.form-field-wrap #idea_links{
+	width: 90%;
+}*/
+
+form#ideaform fieldset div.form-field-wrap label[for=ideadescription]{
+	height: 2px;
+}
+
+form#ideaform fieldset div.form-field-wrap #idea_files td{
+	padding-right: 10px;
+}
+
+form#ideaform fieldset div.form-field-wrap button .ui-icon{
+	margin-top: 1%;
+}
+form#ideaform fieldset div#idea_image_input{
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	background: #fff;
+	padding: 5px 5px 5px 0px;
+	width: 90%;
+}
+form#ideaform fieldset input{
+	padding-left: 5px;
+}
+
+form#ideaform fieldset div.form-field-wrap #idea_image{
+	line-height: 10%;
+}
+
+.wp-editor-container {
+	background: #fff;
+	border: 0px;
+}
+
+.wp-editor-tools {
+	margin: 0px;
+	padding: 0 10px 0 0 !important;
+}
+
+form#ideaform fieldset div.form-field-wrap #qt_ideadescription_toolbar input{
+	padding: 3px;
+}
+
+form#ideaform fieldset{
+	border: solid 2px #1e497d;
+}
+
+/*group formular styles*/
+
+div#groupform_wrap{
+	-webkit-border-top-right-radius: 20px;
+	-webkit-border-bottom-left-radius: 20px;
+	-moz-border-radius-topright: 20px;
+	-moz-border-radius-bottomleft: 20px;
+	border-top-right-radius: 20px;
+	border-bottom-left-radius: 20px;
+	background: #018b01;
+	padding: 20px;
+}
+
+form#groupform_wrap #qt_groupdescription_toolbar input{
+	padding: 0px;
 }

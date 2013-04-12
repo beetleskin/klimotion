@@ -111,9 +111,9 @@ class NewIdeaForm {
         <?php if($data['isLoggedIn'] == false) : //TODO: display hint if not logged in?>
 
         <div class="entry-content">
-		<?php while ( have_posts() ) : the_post(); ?>
+		<?php if ( have_posts() ) : the_post(); ?>
 			<?php get_template_part( 'content', 'page' ); ?>
-		<?php endwhile; // end of the loop. ?>
+		<?php endif; // end of the loop. ?>
         </div>
         <?php endif; ?>
         
@@ -122,15 +122,14 @@ class NewIdeaForm {
 		    <form action="<?php echo $this->form_action ?>" id="<?php echo $this->form_id ?>" class="<?php echo $data['nopriv'] ?>" method="<?php echo $this->form_method ?>">
 	        	<h1>Idee-Formular</h1>
 	        	<div id="errormessage"></div>
-        		<fieldset form="neue_idee">   
-        			
+        		<fieldset form="neue_idee1">   
+        			<legend>Kurzbeschreibung</legend>
         			<div class="form-field-wrap">
-        				<label for="idea_title">Titel</label>
+        				<label for="idea_title">Titel *</label>
         				<input type="text" id="idea_title" name="idea_title" placeholder="Gib deiner Idee einen Namen" maxlength="<?php echo self::$validationConfig['title_max_chars'] ?>">
         			</div><!-- .form-field-wrap -->
-        			
         			<div class="form-field-wrap">
-        				<label for="idea_group">Gruppe</label>
+        				<label for="idea_group">Gruppe *</label>
         				<select id="idea_group" name="idea_group">
 				        	<option value="-1" selected="selected">Keine Gruppe</option>
 				        	<?php foreach ( $data['groups'] as &$group ): ?>
@@ -140,15 +139,36 @@ class NewIdeaForm {
         			</div>	<!-- .form-field-wrap -->
 
       	  			<div class="form-field-wrap">
-      	  				<label for="idea_excerp">Kurze Beschreibung</label>
+      	  				<label for="idea_excerp">Kurze Beschreibung *</label>
 	      				<textarea id="idea_excerp" name="idea_excerp" placeholder="Textfeld begrenzt auf 200 Wörter" rows="4" maxlength="<?php echo self::$validationConfig['excerp_max_chars'] ?>"></textarea>
       	  			</div><!-- .form-field-wrap -->
       	  			
       	  			<div class="form-field-wrap">
       	  				<label for="idea_image">Titelbild</label>
-      	  				<input type="file" id="idea_image" name="idea_image" accept="image/*">
+      	  				<div id="idea_image_input">
+      	  					<input type="file" id="idea_image" name="idea_image" accept="image/*">
+      	  				</div>
       	  			</div><!-- .form-field-wrap -->
-      	  			
+      	  		</fieldset>
+      	  		<fieldset form="neue_idee2">
+      	  			<legend>Einordnung</legend>
+      	  			<div class="form-field-wrap">
+	        			<label for="idea_topic">Thema *</label>
+	        			<select id="idea_topic" name="idea_topic">
+				        	<?php foreach ( $data['topics'] as &$topic ): ?>
+			                    <option value="<?php echo $topic['value'] ?>"><?php echo $topic['name'] ?></option>
+			                <?php endforeach; ?>
+				        </select>
+	        		</div><!-- .form-field-wrap -->
+	        		
+	        		<div class="form-field">
+	        			<label for="idea_aims">Ziele *</label>
+	    			    <input type="text" id="idea_aims" name="idea_aims">
+	        		</div>
+	     
+	        	</fieldset>
+      	  		<fieldset form="neue_idee3"> 
+      	  			<legend>Details und Herangehensweise</legend>
       	  			<div class="form-field-wrap">
       	  				<label for="ideadescription">Detaillierte Beschreibung</label>
       	  				<?php wp_editor("", 'ideadescription', array(
@@ -191,27 +211,12 @@ class NewIdeaForm {
 							<a class="addbutton" href="#" onclick="return false;">hinzufügen</a>
 						</div>
 	        		</div><!-- .form-field-wrap -->
-	      
-	        		<div class="form-field-wrap">
-	        			<label for="idea_topic">Thema</label>
-	        			<select id="idea_topic" name="idea_topic">
-				        	<?php foreach ( $data['topics'] as &$topic ): ?>
-			                    <option value="<?php echo $topic['value'] ?>"><?php echo $topic['name'] ?></option>
-			                <?php endforeach; ?>
-				        </select>
-	        		</div><!-- .form-field-wrap -->
-	        		
-	        		<div class="form-field">
-	        			<label for="idea_aims">Ziele</label>
-	    			    <input type="text" id="idea_aims" name="idea_aims">
-	        		</div>
-	        		
-	        		<div class="form-field-wrap">
+	      		</fieldset>
+	      		<div class="form-field-wrap">
 	        			<button>
 	       					 <a href="<?php echo $data['submitLink'] ?>" <?php echo $data['onClick'] ?> id="idea_submit">Abschicken</a>
 	        			</button>	
 	        		</div><!-- .form-field-wrap -->
-	       	 	</fieldset>
         	</form>
        </div><!-- .ideaform_wrap -->
 	<?php
