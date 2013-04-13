@@ -25,7 +25,6 @@
 		}
 	}
 	
-	d($args['links_meta']);
 ?>
 
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
