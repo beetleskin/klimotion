@@ -28,6 +28,7 @@ form#groupform h1 {
 fieldset div label {
 	display: block;
 	color: #3e3e3e;
+	font-weight: bold;
 }
 
 fieldset div {
@@ -43,10 +44,11 @@ fieldset legend {
 	padding: 0px 10px 0px 10px;
 	font-size:18px;
 	color: #1e497d;
+	font-weight: bold;
 }
 
 form#ideaform fieldset div.form-field-wrap label[for=ideadescription]{
-	height: 2px;
+	height: 0px;
 }
 
 form#ideaform fieldset div.form-field-wrap #idea_files td{
@@ -62,12 +64,28 @@ form#ideaform fieldset div.form-field-wrap #idea_image{
 }
 
 .wp-editor-container {
-	background: red;
+	background: #fff;
 	size: 10px;
 }
 
 .wp-editor-tools {
 	margin: 0px;
+}
+
+.form-field-wrap  #idea_files table tr,
+.form-field-wrap  #idea_links table tr{
+	width:	100%;
+}
+
+.form-field-wrap #idea_files table input[type="file"],
+.form-field-wrap  #idea_links table input[type="file"]{
+	width: 100%;
+	line-height: 10%;
+}
+
+.form-field-wrap  #idea_files table td,
+.form-field-wrap  #idea_links table td{
+	width: 40%;
 }
 
 form#ideaform fieldset{
@@ -92,6 +110,18 @@ ul.as-selections{
 	-webkit-box-shadow: inset 0 0px 0px #fff !important;
 	-moz-box-shadow: inset 0 0px 0px #fff !important;
 	border-top-width: 1px !important;
+	border-color: #ccc;
+}
+button, 
+html input[type="button"],  
+input[type="button"], 
+input[type="reset"], 
+input[type="submit"],
+button:hover, 
+html input[type="button"]:hover, 
+input[type="reset"]:hover, 
+input[type="submit"]:hover {
+	padding: 0.5em 0.5em 0.5em 0.5em !important;
 }
 
 
