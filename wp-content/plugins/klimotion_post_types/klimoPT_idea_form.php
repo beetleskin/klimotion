@@ -176,6 +176,7 @@ class NewIdeaForm {
 				        	'textarea_name' => 'ideadescription',
 				        	'tabindex'		=> 0,
 				        	'teeny'			=> true,
+				        	'textarea_rows'	=> 8,
 							));
 						?>
       	  			</div><!-- .form-field-wrap -->
