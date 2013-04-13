@@ -214,7 +214,7 @@ class NewIdeaForm {
 	        		</div><!-- .form-field-wrap -->
 	      		</fieldset>
 	      		<div class="form-field-wrap">
-	        			<button>
+	        			<button form_id="idea_send">
 	       					 <a href="<?php echo $data['submitLink'] ?>" <?php echo $data['onClick'] ?> id="idea_submit">Abschicken</a>
 	        			</button>	
 	        		</div><!-- .form-field-wrap -->
