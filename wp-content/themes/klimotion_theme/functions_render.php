@@ -25,7 +25,7 @@ class LocalGroupsPage {
 		
 
 		// register ajax request
-        add_action('wp_ajax_' . self::$ioConfig['submitAction'], 'LocalGroupsPage::ajaxGetGroups');
+        add_action('wp_ajax_nopriv_' . self::$ioConfig['submitAction'], 'LocalGroupsPage::ajaxGetGroups');
 	}
 	
 	public static function ajaxGetGroups() {

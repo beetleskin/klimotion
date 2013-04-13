@@ -336,16 +336,20 @@ class NewIdeaForm {
 		// attach featured image
 		if( !empty($postData['idea_image']['name']) ) {
             $attach_id = media_handle_upload( 'idea_image', $postID );
+			
             if(!is_wp_error($attach_id)) {
-                // update_post_meta( $postID, '_thumbnail_id', $attach_id );
 				set_post_thumbnail($postID, $attach_id);
             } else {
+            	// TODO: delete attached image
                 $errors[] = array(
                     'element'   => 'idea_image',
                     'message'   => $attach_id->get_error_message(),
 				);
 				wp_delete_post($postID, true);
-				goto finish;
+				self::ajaxRespond(array(
+					'error'	=> $errors,
+				));
+				die();
             }
         }
 		
@@ -355,7 +359,9 @@ class NewIdeaForm {
 		// attach other files
 		foreach ($postData['idea_files'] as $key => $attachment) {
 			$attach_id = media_handle_upload($key, $postID, array('post_title' => $attachment['description']));
+			
 			if(is_wp_error($attach_id)) {
+				// TODO: delete attached files
 				$errors[] = array(
                     'element'   => 'idea_files',
                     'message'   => $attach_id->get_error_message(),
@@ -363,27 +369,23 @@ class NewIdeaForm {
                     'myfiles'	=> $postData['idea_files']
 				);
 				wp_delete_post($postID, true);
-				goto finish;
+				self::ajaxRespond(array(
+					'error'	=> $errors,
+				));
+				die();
             }
 		}
 		
 		
 		
 		
-		
 		// return
-		finish: {
-			$response = array();
-	        if(empty($errors)) {
-	            $response['success'] = self::createSuccessMessage($postID);
-	        } else {
-	            $response['error'] = $errors;
-	        }
-		}
-		
-            
-			
-			
+		$response = array();
+	    if(empty($errors)) {
+	        $response['success'] = self::createSuccessMessage($postID);
+	    } else {
+	        $response['error'] = $errors;
+	    }
 
         self::ajaxRespond($response);
         die();
