@@ -398,7 +398,7 @@ class NewIdeaForm {
 		
 		// check title
         $element = "idea_title";
-        $value = trim(wp_strip_all_tags($args[$element]));
+        $value = sanitize_title($args[$element], true);
         // too short?
         if(strlen($value) < self::$validationConfig['title_min_chars']) {
             $response['error'][] = array(
@@ -434,13 +434,13 @@ class NewIdeaForm {
 		
 		// check group
 		$element = 'idea_group';
-		$value = intval(wp_strip_all_tags($args[$element]));
+		$value = intval(wp_strip_all_tags($args[$element], true));
 		$postData[$element] = $value;
 		
 
 		// check excerp
 		$element = 'idea_excerp';
-		$value = trim(wp_strip_all_tags($args[$element]));
+		$value = sanitize_text_field($args[$element]);
 		// too long?
 		if(strlen($value) > self::$validationConfig['excerp_max_chars']) {
             $response['error'][] = array(
@@ -489,8 +489,8 @@ class NewIdeaForm {
 			$keyUrl = 'linkurl_' . $i;
 			if(!array_key_exists ( $keyText , $args ) || !array_key_exists ( $keyUrl , $args ))
 				break;
-			$valText  = trim(wp_strip_all_tags($args[$keyText]));
-			$valUrl  = trim(wp_strip_all_tags($args[$keyUrl]));
+			$valText  = wp_strip_all_tags($args[$keyText], true);
+			$valUrl  = sanitize_url($args[$keyUrl]);
 			if(strlen($valUrl)) {
 				$valUrl = preg_match('/^(https?|ftps?|mailto|news|gopher|file):/is', $valUrl) ? $valUrl : 'http://' . $valUrl;
 				$value[] = array('text' => $valText, 'url' => $valUrl);
