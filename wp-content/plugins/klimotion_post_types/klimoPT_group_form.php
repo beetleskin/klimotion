@@ -24,7 +24,7 @@ class NewGroupForm {
         'description_max_chars' => 5000,
         'homepage_max_chars'	=> 300,
         'contact_max_chars'		=> 200,
-        'image_size_max'		=> 5000000,
+        'fiel_size_max'		=> 5000000,
     );
     
 
@@ -111,8 +111,8 @@ class NewGroupForm {
         
         
         <div id="groupform_wrap">   	
-		    <form action="<?php echo $this->form_action ?>" id="<?php echo $this->form_id ?>" class="<?php echo $data['nopriv'] ?>" method="<?php echo $this->form_method ?>">
-	        	<h1><?php echo __("Formular für das Anlegen einer neuen Lokalgruppe:") ?></h1>
+		    <form action="<?php echo $this->form_action ?>" id="<?php echo $this->form_id ?>" class="<?php echo $data['nopriv'] ?>" method="<?php echo $this->form_method ?>" novalidate>
+	        	<h1><?php echo __("Gruppe-Formular") ?></h1>
 	        	<div id="errormessage"></div>
 	        
 	        	<fieldset form="<?php echo $this->form_id ?>"> 
@@ -209,6 +209,7 @@ class NewGroupForm {
     	// add security check
         $ioConfig = self::$ioConfig;
         $ioConfig[self::$nonceName] = wp_create_nonce  (self::$nonceName);
+		$ioConfig['file_size_max'] = self::$validationConfig['fiel_size_max'];
 		$formData = array(
 			'ajaxConfig' 	=> $ioConfig,
 			'as_scopes'		=> (object)(array('items' => $this->renderData['scopes'])),
@@ -369,10 +370,6 @@ class NewGroupForm {
 
         self::ajaxRespond($response);
         die();
-    }
-
-
-    public static function myHandleUploadError($file, $message) {
     }
 
 
@@ -580,10 +577,10 @@ class NewGroupForm {
         $element = "group_image";
         if( key_exists($element, $files) && !empty($files[$element]['name']) ) {
         	$value = $files[$element];
-            if( $files[$element]['size'] > self::$validationConfig['image_size_max'] ) {
+            if( $files[$element]['size'] > self::$validationConfig['fiel_size_max'] ) {
                 $response['error'][] = array(
                     'element'   => $element,
-                    'message'   => "Bilder dürfen nicht größer als " . (self::$validationConfig['image_size_max'] / 1000000) . " MB groß sein.",
+                    'message'   => "Bilder dürfen nicht größer als " . (self::$validationConfig['fiel_size_max'] / 1000000) . " MB groß sein.",
                 );
             } else {
             	$postData[$element] = $value;

@@ -9,7 +9,7 @@ jQuery(function($) { ideaform : {
 			var me = this;
 			this.wrapper = $(wrapper);
 			this.form = $('form', me.wrapper);
-			this.submit = $('a#group_submit', wrapper);
+			this.submit = $('button#group_submit', wrapper);
 			this.linksControl = null;
 
 
@@ -63,7 +63,26 @@ jQuery(function($) { ideaform : {
 			}
 			
 			this.beforeSerialize = function(formData, jqForm, options) {
+				var isFormValid = true;
+				
+				// save rich editor content to textfield
 				tinyMCE.get("groupdescription").save();
+				
+				// validate file size
+				$('input[type="file"]', me.wrapper).each(function() {
+					var f = this.files[0];
+					if( f != undefined && f.size > me.config.ajaxConfig.file_size_max) {
+						me.errorHandler([{
+							element: this, 
+							message: "<p>Bilder dürfen nicht größer als " + (me.config.ajaxConfig.file_size_max / 1000000) + " MB groß sein.</p>",
+						}]);
+						isFormValid = false;
+						return false;
+					}
+				});
+				
+				return isFormValid;
+				
 			}
 			
 			this.successHandler = function(response, statusText, xhr, $form) {

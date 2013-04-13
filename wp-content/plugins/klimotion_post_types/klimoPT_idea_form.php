@@ -18,7 +18,7 @@ class NewIdeaForm {
         'title_max_chars'     	=> 100,
         'title_min_chars'     	=> 3,
         'excerp_max_chars'    	=> 200,
-        'image_size_max'		=> 5000000,
+        'file_size_max'			=> 5000000,
         'aims_min'				=> 1,
     );
     
@@ -111,7 +111,7 @@ class NewIdeaForm {
         
         <?php echo phpinfo() ?>
         <div id="ideaform_wrap">   	
-		    <form action="<?php echo $this->form_action ?>" id="<?php echo $this->form_id ?>" class="<?php echo $data['nopriv'] ?>" method="<?php echo $this->form_method ?>">
+		    <form action="<?php echo $this->form_action ?>" id="<?php echo $this->form_id ?>" class="<?php echo $data['nopriv'] ?>" method="<?php echo $this->form_method ?>" novalidate>
 	        	<h1>Formular für neue Ideen:</h1>
 	        	<div id="errormessage"></div>
         		<fieldset form="<?php echo $this->form_id ?>">   
@@ -206,8 +206,9 @@ class NewIdeaForm {
 	        		</div><!-- .form-field-wrap -->
 	      		</fieldset>
 	      		<div class="form-field-wrap">
-	        			<button form="<?php echo $this->form_id ?>" id="idea_submit">Abschicken</button>	
-	        		</div><!-- .form-field-wrap -->
+        			<button form="<?php echo $this->form_id ?>" id="idea_submit">Abschicken</button>	
+        		</div><!-- .form-field-wrap -->
+        		<input id="maxfilesize" type="hidden" name="MAX_FILE_SIZE" value="<?php echo self::$validationConfig['file_size_max'] ; ?>" />
         	</form>
        </div><!-- .ideaform_wrap -->
 	<?php
@@ -218,6 +219,7 @@ class NewIdeaForm {
     	// add security check
         $ioConfig = self::$ioConfig;
         $ioConfig[self::$nonceName] = wp_create_nonce  (self::$nonceName);
+		$ioConfig['file_size_max'] = self::$validationConfig['file_size_max'];
 		$formData = array(
 			'ajaxConfig' 	=> $ioConfig,
 			'as_aims'		=> (object)(array('items' => $this->renderData['aims'])),
@@ -267,7 +269,6 @@ class NewIdeaForm {
 
 
     public static function submitHandler() {
-    	
 		$postData = array();
 		
 		
@@ -503,10 +504,10 @@ class NewIdeaForm {
         $element = "idea_image";
         if( key_exists($element, $files) && !empty($files[$element]['name']) ) {
         	$value = $files[$element];
-            if( $files[$element]['size'] > self::$validationConfig['image_size_max'] ) {
+            if( $files[$element]['size'] > self::$validationConfig['file_size_max'] ) {
                 $response['error'][] = array(
                     'element'   => $element,
-                    'message'   => "Bilder dürfen nicht größer als " . (self::$validationConfig['image_size_max'] / 1000000) . " MB groß sein.",
+                    'message'   => "Bilder dürfen nicht größer als " . (self::$validationConfig['file_size_max'] / 1000000) . " MB groß sein.",
                 );
             } else {
             	$postData[$element] = $value;
