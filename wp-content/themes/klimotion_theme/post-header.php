@@ -21,7 +21,7 @@
 		<a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
 	</h1>
 	
-	<?php if ( is_singular() ): ?>
+	<?php if ( is_singular() && !is_page()): ?>
 		<div class="entry-meta">
 			<?php thsp_posted_on(); ?>
 		</div><!-- .entry-meta -->

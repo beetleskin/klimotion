@@ -85,7 +85,7 @@ function kpt_hook_metabox_idea_links($post) {
 	foreach ($links_meta as $i => $link) {
 		echo '<tr class="links_meta_pair">';
 		echo '<td><input type="text" maxlength="40" name="_linktext_' . $i . '" value="' . $link['text']  . '"></td>';
-		echo '<td><input type="text" name="_linkurl_' . $i . '" value="' . $link['url']  . '"></td>';
+		echo '<td><input type="url" name="_linkurl_' . $i . '" value="' . $link['url']  . '"></td>';
 		echo '<td><a class="removebutton" href="#" onclick="return false;">entfernen</a></td></tr>';
 	}
 	
