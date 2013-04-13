@@ -5,12 +5,6 @@
 
 /*idea formular styles*/
 form#ideaform  {
-	-webkit-border-top-right-radius: 20px;
-	-webkit-border-bottom-left-radius: 20px;
-	-moz-border-radius-topright: 20px;
-	-moz-border-radius-bottomleft: 20px;
-	border-top-right-radius: 20px;
-	border-bottom-left-radius: 20px;
 	padding: 20px;
 }
 
@@ -19,10 +13,15 @@ form#ideaform #ideaform_wrap{
 }
 
 form#ideaform h1,
-form#groupform h1 {
-	font-size: 24px;
+form#groupform h1{
+	font-size: 1.2em;
+}
+
+form#ideaform h1{
 	color: #1e497d;
-	padding-bottom: 10px;
+}
+form#groupform h1{
+	color: #018a01;
 }
 
 fieldset div label {
@@ -42,12 +41,20 @@ fieldset div:last-of-type{
 
 fieldset legend {
 	padding: 0px 10px 0px 10px;
-	font-size:18px;
-	color: #1e497d;
+	font-size:1.0em;
 	font-weight: bold;
 }
 
-form#ideaform fieldset div.form-field-wrap label[for=ideadescription]{
+form#ideaform fieldset legend {
+	color: #1e497d;
+}
+
+form#groupform fieldset legend {
+	color: #018a01;
+}
+
+form#ideaform fieldset div.form-field-wrap label[for=ideadescription],
+form#groupform fieldset div.form-field-wrap label[for=groupdescription]{
 	height: 0px;
 }
 
@@ -57,10 +64,6 @@ form#ideaform fieldset div.form-field-wrap #idea_files td{
 
 form#ideaform fieldset div.form-field-wrap button .ui-icon{
 	margin-top: 1%;
-}
-
-form#ideaform fieldset div.form-field-wrap #idea_image{
-	line-height: 10%;
 }
 
 .wp-editor-container {
@@ -77,6 +80,11 @@ form#ideaform fieldset div.form-field-wrap #idea_image{
 	width:	100%;
 }
 
+form#ideaform fieldset div.form-field-wrap #idea_image,
+form#groupform fieldset div.form-field-wrap input[type=file]{
+	line-height: 10%;
+}
+
 .form-field-wrap #idea_files table input[type="file"],
 .form-field-wrap  #idea_links table input[type="file"]{
 	width: 100%;
@@ -88,14 +96,20 @@ form#ideaform fieldset div.form-field-wrap #idea_image{
 	width: 40%;
 }
 
-form#ideaform fieldset{
-	width: 95%;
+fieldset{
 	-webkit-border-radius: 10px;
 	-moz-border-radius: 10px;
 	border-radius: 10px;
-	border: solid 4px #1e497d;
+	border: solid 4px;
 	margin-bottom: 20px;
 	padding: 20px;
+}
+form#groupform fieldset{
+	border-color: #018a01;
+}
+
+form#ideaform fieldset{
+	border-color: #1e497d;
 }
 
 fieldset #idea_title{
@@ -127,15 +141,12 @@ input[type="submit"]:hover {
 
 /*group formular styles*/
 
-div#groupform_wrap{
-	-webkit-border-top-right-radius: 20px;
-	-webkit-border-bottom-left-radius: 20px;
-	-moz-border-radius-topright: 20px;
-	-moz-border-radius-bottomleft: 20px;
-	border-top-right-radius: 20px;
-	border-bottom-left-radius: 20px;
-	background: #018b01;
-	padding: 20px;
+label[for=group_contact_publish]{
+	display: inline;
 }
 
-
+.form-field-wrap input[type="checkbox"]{
+	float: left;
+	margin-top: 7px;
+	margin-right: 5px;
+}

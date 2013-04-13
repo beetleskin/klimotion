@@ -21,14 +21,19 @@ get_header(); ?>
 				thsp_hook_before_content();
 			?>
 
-			<?php
-			//hierhin?
-				// render form
-				$form = new NewIdeaForm();
-			    $form->render();
-				$form->postRender();
-			?>
-			
+			<div class="entry-inner">
+				<?php if ( have_posts() ) : the_post(); ?>
+					<?php get_template_part( 'content', 'page' ); ?>
+				<?php endif; // end of the loop. ?>
+				
+				<?php
+					// render form
+					$form = new NewIdeaForm();
+				    $form->render();
+					$form->postRender();
+				?>
+				 
+			 </div><!-- .entry-content -->
 			<?php
 				// After Content theme hook callback
 				thsp_hook_after_content();

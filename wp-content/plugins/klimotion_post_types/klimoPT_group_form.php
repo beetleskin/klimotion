@@ -115,32 +115,23 @@ class NewGroupForm {
 	        	<h1><?php echo __("Gruppe-Formular") ?></h1>
 	        	<div id="errormessage"></div>
 	        
-	        	<fieldset>
+	        	<fieldset form="new_group1"> 
+      	  			<legend>Infos zur Lokalgruppe</legend>
 	        		<div class="form-field-wrap">
 			      	  	<label for="group_name"><?php echo __("Name der Lokalgruppe") ?></label>
 			        	<input type="text" id="group_name" name="group_name" placeholder="Name" maxlength="<?php echo self::$validationConfig['name_max_chars'] ?>">
 		        	</div><!-- .form-field-wrap -->
-		        
-		        	<div class="form-field-wrap">
-				        <label for="group_district"><?php echo __("Landkreis") ?></label>
-				        <select id="group_district" name="group_district">
-				        	<?php foreach ( $data['districts'] as &$district ): ?>
-			                    <option value="<?php echo $district['value']; ?>"><?php echo $district['name']; ?></option>
-			                <?php endforeach; ?>
-				        </select>
-			        </div><!-- .form-field-wrap -->
 			        
-			        <div class="form-field-wrap">
-				        <label for="group_city"><?php echo __("Ort") ?></label>
-						<input type="text" id="group_city" name="group_city"  placeholder="Ort">
-						<input type="text" id="group_zipcode" name="group_zipcode"  placeholder="Postleitzahl">
-					</div><!-- .form-field-wrap -->
-					
 					<div class="form-field-wrap">
 						<label for="group_scopes"><?php echo __("Wirkungskreis") ?></label>
 						<input type="text" id="group_scopes" name="group_scopes">
 					</div><!-- .form-field-wrap -->
 					
+					<div class="form-field-wrap">
+  	  					<label for="group_image">Logo</label>
+  	  					<input type="file" id="group_image" name="group_image" accept="image/*">
+  	  				</div><!-- .form-field-wrap -->
+  	  				
 					<div class="form-field-wrap">
 						<label for="groupdescription"><?php echo __("Kurzvorstellung") ?></label>
 				        <?php wp_editor("", 'groupdescription', array(
@@ -150,21 +141,37 @@ class NewGroupForm {
 							));
 						?>
 					</div><!-- .form-field-wrap -->
-					
-					<div class="form-field-wrap">
-  	  					<label for="group_image">Logo</label>
-  	  					<input type="file" id="group_image" name="group_image" accept="image/*">
-  	  				</div><!-- .form-field-wrap -->
-			        
-			        <div class="form-field-wrap">
+		        </fieldset>
+		        
+		        <fieldset form="new_group2"> 
+      	  			<legend>Homepage</legend>
+      	  			
+      	  			<div class="form-field-wrap">
 			        	<label for="group_homepage"><?php echo __("Homepage") ?></label>
 			        	<input type="url" id="group_homepage" name="group_homepage" placeholder="www.deineseite.de">
 			        </div><!-- .form-field-wrap -->
+      	  		</fieldset>
+		        
+		        <fieldset form="new_group3"> 
+      	  			<legend>Ortsangaben</legend>
+      	  			<div class="form-field-wrap">
+				        <label for="group_district"><?php echo __("Landkreis") ?></label>
+				        <select id="group_district" name="group_district">
+				        	<?php foreach ( $data['districts'] as &$district ): ?>
+			                    <option value="<?php echo $district['value']; ?>"><?php echo $district['name']; ?></option>
+			                <?php endforeach; ?>
+				        </select>
+			        </div><!-- .form-field-wrap -->
+			         <div class="form-field-wrap">
+				        <label for="group_city"><?php echo __("Ort") ?></label>
+						<input type="text" id="group_city" name="group_city"  placeholder="Ort">
+						<input type="text" id="group_zipcode" name="group_zipcode"  placeholder="Postleitzahl">
+					</div><!-- .form-field-wrap -->
 		        </fieldset>
 		        
-		        
-		        <fieldset>
-			        <h1><?php echo __("Ansprechpartner") ?></h1>
+		        <fieldset form="new_group4"> 
+      	  			<legend>Ansprechpartner</legend>
+      
 					<div class="form-field-wrap">
 						<label for="group_contact_name"><?php echo __("Name") ?></label>
 						<input type="text" id="group_contact_name" name="group_contact_name"  placeholder="Name">
@@ -186,7 +193,7 @@ class NewGroupForm {
 					</div><!-- .form-field-wrap -->
 					
 					<div class="form-field-wrap">
-						<label for="group_contact_publish"><?php echo __("öffentlich") ?></label>
+						<label for="group_contact_publish"><?php echo __("öffentlich (Informationen zum Ansprechpartner für alle sichtbar)") ?></label>
 						<input type="checkbox" id="group_contact_publish" name="group_contact_publish" value="group_contact_publish" checked="checked">
 					</div><!-- .form-field-wrap -->
 				</fieldset>

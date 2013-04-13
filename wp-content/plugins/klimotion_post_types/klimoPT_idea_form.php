@@ -108,21 +108,16 @@ class NewIdeaForm {
         $data = $this->preRender();
         ?>        
         
-        <?php if($data['isLoggedIn'] == false) : //TODO: display hint if not logged in?>
-
-        <div class="entry-content">
-		<?php if ( have_posts() ) : the_post(); ?>
-			<?php get_template_part( 'content', 'page' ); ?>
-		<?php endif; // end of the loop. ?>
-        </div>
+        <?php if($data['isLoggedIn'] == false) : //TODO: display hint if not logged in ?>
+        	
         <?php endif; ?>
         
         
         <div id="ideaform_wrap">   	
 		    <form action="<?php echo $this->form_action ?>" id="<?php echo $this->form_id ?>" class="<?php echo $data['nopriv'] ?>" method="<?php echo $this->form_method ?>">
-	        	<h1>Idee-Formular</h1>
+	        	<h1>Formular für neue Ideen:</h1>
 	        	<div id="errormessage"></div>
-        		<fieldset form="neue_idee1">   
+        		<fieldset form="<?php echo $this->form_id ?>">   
         			<legend>Kurzbeschreibung</legend>
         			<div class="form-field-wrap">
         				<label for="idea_title">Titel *</label>
@@ -150,7 +145,7 @@ class NewIdeaForm {
       	  				</div>
       	  			</div><!-- .form-field-wrap -->
       	  		</fieldset>
-      	  		<fieldset form="neue_idee2">
+      	  		<fieldset form="<?php echo $this->form_id ?>">
       	  			<legend>Einordnung</legend>
       	  			<div class="form-field-wrap">
 	        			<label for="idea_topic">Thema *</label>
@@ -167,7 +162,7 @@ class NewIdeaForm {
 	        		</div>
 	     
 	        	</fieldset>
-      	  		<fieldset form="neue_idee3"> 
+      	  		<fieldset form="<?php echo $this->form_id ?>"> 
       	  			<legend>Details und Herangehensweise</legend>
       	  			<div class="form-field-wrap">
       	  				<label for="ideadescription">Detaillierte Beschreibung</label>
@@ -214,9 +209,7 @@ class NewIdeaForm {
 	        		</div><!-- .form-field-wrap -->
 	      		</fieldset>
 	      		<div class="form-field-wrap">
-	        			<button form_id="idea_send">
-	       					 <a href="<?php echo $data['submitLink'] ?>" <?php echo $data['onClick'] ?> id="idea_submit">Abschicken</a>
-	        			</button>	
+	        			<button form="<?php echo $this->form_id ?>" id="idea_submit">Abschicken</button>	
 	        		</div><!-- .form-field-wrap -->
         	</form>
        </div><!-- .ideaform_wrap -->

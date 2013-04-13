@@ -222,12 +222,12 @@ border-bottom: 0px solid #1f1f1f;
 #commentform .wpcf7-submit, 
 .wpcf7-form #submit, 
 .wpcf7-form .wpcf7-submit {
-border: none;
-box-shadow: none;
-font-weight: bold;
-color: #222;
-text-shadow: none;
-padding: 0.75em 1em;
+	border: none;
+	box-shadow: none;
+	font-weight: bold;
+	color: #222;
+	text-shadow: none;
+	padding: 0.75em 1em;
 }
 
 .scheme-white .main-navigation .sub-menu li, 
@@ -244,4 +244,29 @@ border-top: none;
 
 #menu-klimotion_first ul{
 	top: 36px;
+}
+
+.entry-inner{
+	background: #fff;
+	box-shadow: 0 0 2px #d9d9d9;
+	box-shadow: 0 0 2px rgba(0, 0, 0, 0.30);
+	word-wrap: break-word;
+	-webkit-hyphens: auto;
+	-moz-hyphens: auto;
+	-ms-hyphens: auto;
+	hyphens: auto;
+}
+
+
+.entry-inner article div,
+.entry-inner article{
+	 background: none;
+	 box-shadow: 0 0 0px #d9d9d9;
+	 box-shadow: 0 0 0px rgba(0, 0, 0, 0.30);
+	 word-wrap: break-word;
+}
+
+.entry-inner article{
+	margin-bottom: 0px;
+	 border-bottom: solid 1px #EEEEEE;
 }
