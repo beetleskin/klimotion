@@ -115,15 +115,15 @@ class NewGroupForm {
 	        	<h1><?php echo __("Gruppe-Formular") ?></h1>
 	        	<div id="errormessage"></div>
 	        
-	        	<fieldset form="new_group1"> 
+	        	<fieldset form="<?php echo $this->form_id ?>"> 
       	  			<legend>Infos zur Lokalgruppe</legend>
 	        		<div class="form-field-wrap">
-			      	  	<label for="group_name"><?php echo __("Name der Lokalgruppe") ?></label>
+			      	  	<label for="group_name"><?php echo __("Name der Lokalgruppe") ?> *</label>
 			        	<input type="text" id="group_name" name="group_name" placeholder="Name" maxlength="<?php echo self::$validationConfig['name_max_chars'] ?>">
 		        	</div><!-- .form-field-wrap -->
 			        
 					<div class="form-field-wrap">
-						<label for="group_scopes"><?php echo __("Wirkungskreis") ?></label>
+						<label for="group_scopes"><?php echo __("Wirkungskreis") ?> *</label>
 						<input type="text" id="group_scopes" name="group_scopes">
 					</div><!-- .form-field-wrap -->
 					
@@ -133,7 +133,7 @@ class NewGroupForm {
   	  				</div><!-- .form-field-wrap -->
   	  				
 					<div class="form-field-wrap">
-						<label for="groupdescription"><?php echo __("Kurzvorstellung") ?></label>
+						<label for="groupdescription"><?php echo __("Kurzvorstellung") ?> *</label>
 				        <?php wp_editor("", 'groupdescription', array(
 				        	'media_buttons' => false,
 				        	'textarea_name' => 'group_description',
@@ -143,19 +143,10 @@ class NewGroupForm {
 					</div><!-- .form-field-wrap -->
 		        </fieldset>
 		        
-		        <fieldset form="new_group2"> 
-      	  			<legend>Homepage</legend>
-      	  			
-      	  			<div class="form-field-wrap">
-			        	<label for="group_homepage"><?php echo __("Homepage") ?></label>
-			        	<input type="url" id="group_homepage" name="group_homepage" placeholder="www.deineseite.de">
-			        </div><!-- .form-field-wrap -->
-      	  		</fieldset>
-		        
-		        <fieldset form="new_group3"> 
+		        <fieldset form="<?php echo $this->form_id ?>"> 
       	  			<legend>Ortsangaben</legend>
       	  			<div class="form-field-wrap">
-				        <label for="group_district"><?php echo __("Landkreis") ?></label>
+				        <label for="group_district"><?php echo __("Landkreis") ?> *</label>
 				        <select id="group_district" name="group_district">
 				        	<?php foreach ( $data['districts'] as &$district ): ?>
 			                    <option value="<?php echo $district['value']; ?>"><?php echo $district['name']; ?></option>
@@ -163,13 +154,22 @@ class NewGroupForm {
 				        </select>
 			        </div><!-- .form-field-wrap -->
 			         <div class="form-field-wrap">
-				        <label for="group_city"><?php echo __("Ort") ?></label>
+				        <label for="group_city"><?php echo __("Ort") ?> *</label>
 						<input type="text" id="group_city" name="group_city"  placeholder="Ort">
 						<input type="text" id="group_zipcode" name="group_zipcode"  placeholder="Postleitzahl">
 					</div><!-- .form-field-wrap -->
 		        </fieldset>
 		        
-		        <fieldset form="new_group4"> 
+		         <fieldset form="<?php echo $this->form_id ?>"> 
+      	  			<legend>Homepage</legend>
+      	  			
+      	  			<div class="form-field-wrap">
+			        	<label for="group_homepage"><?php echo __("URL") ?></label>
+			        	<input type="url" id="group_homepage" name="group_homepage" placeholder="www.deineseite.de">
+			        </div><!-- .form-field-wrap -->
+      	  		</fieldset>
+		        
+		        <fieldset form="<?php echo $this->form_id ?>"> 
       	  			<legend>Ansprechpartner</legend>
       
 					<div class="form-field-wrap">
@@ -198,9 +198,7 @@ class NewGroupForm {
 					</div><!-- .form-field-wrap -->
 				</fieldset>
 
-		        <div class="group_submit_container">
-		        	<a href="<?php echo $data['submitLink'] ?>" <?php echo $data['onClick'] ?> id="group_submit">Abschicken</a>
-		        </div>
+				<button form="<?php echo $this->form_id ?>" id="group_submit">Abschicken</button>
         	</form>
        </div><!-- .groupform_wrap -->
 	<?php
