@@ -3,11 +3,109 @@
  * Version: 1.1
  */
 
+/*idea formular styles*/
 form#ideaform  {
-	background-color: #fff;
+	-webkit-border-top-right-radius: 20px;
+	-webkit-border-bottom-left-radius: 20px;
+	-moz-border-radius-topright: 20px;
+	-moz-border-radius-bottomleft: 20px;
+	border-top-right-radius: 20px;
+	border-bottom-left-radius: 20px;
+	padding: 20px;
+}
+
+form#ideaform #ideaform_wrap{
+	width: 100%;
 }
 
 form#ideaform h1,
 form#groupform h1 {
 	font-size: 24px;
+	color: #1e497d;
+	padding-bottom: 10px;
 }
+
+fieldset div label {
+	display: block;
+	color: #3e3e3e;
+}
+
+fieldset div {
+	margin-bottom: 25px;
+
+}
+
+fieldset div:last-of-type{
+	margin-bottom: 0px;
+}
+
+fieldset legend {
+	padding: 0px 10px 0px 10px;
+	font-size:18px;
+	color: #1e497d;
+}
+
+form#ideaform fieldset div.form-field-wrap label[for=ideadescription]{
+	height: 2px;
+}
+
+form#ideaform fieldset div.form-field-wrap #idea_files td{
+	padding-right: 10px;
+}
+
+form#ideaform fieldset div.form-field-wrap button .ui-icon{
+	margin-top: 1%;
+}
+
+form#ideaform fieldset div.form-field-wrap #idea_image{
+	line-height: 10%;
+}
+
+.wp-editor-container {
+	background: red;
+	size: 10px;
+}
+
+.wp-editor-tools {
+	margin: 0px;
+}
+
+form#ideaform fieldset{
+	width: 95%;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+	border: solid 4px #1e497d;
+	margin-bottom: 20px;
+	padding: 20px;
+}
+
+fieldset #idea_title{
+	width: 39%;
+}
+
+ul.as-selections{
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	box-shadow: inset 0 0px 0px #fff !important;
+	-webkit-box-shadow: inset 0 0px 0px #fff !important;
+	-moz-box-shadow: inset 0 0px 0px #fff !important;
+	border-top-width: 1px !important;
+}
+
+
+/*group formular styles*/
+
+div#groupform_wrap{
+	-webkit-border-top-right-radius: 20px;
+	-webkit-border-bottom-left-radius: 20px;
+	-moz-border-radius-topright: 20px;
+	-moz-border-radius-bottomleft: 20px;
+	border-top-right-radius: 20px;
+	border-bottom-left-radius: 20px;
+	background: #018b01;
+	padding: 20px;
+}
+
+
