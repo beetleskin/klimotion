@@ -4,9 +4,6 @@
  */
 
  
-// TODO: Counter für Textfelder
-// TODO: Multiselect für Themen
-
 
 class NewIdeaForm {
 
@@ -203,7 +200,7 @@ class NewIdeaForm {
 							<table>
 								<tbody>
 									<tr class="links_meta_pair">
-										<td><input type="url" maxlength="40" name="linktext_0" placeholder="Beschreibung"></td>
+										<td><input type="text" maxlength="40" name="linktext_0" placeholder="Beschreibung"></td>
 										<td><input type="url" name="linkurl_0" placeholder="Link"></td>
 										<td><a class="removebutton" href="#" onclick="return false;">entfernen</a></td>
 									</tr>
@@ -241,8 +238,10 @@ class NewIdeaForm {
     function enqueue_scripts() {
     	// autosuggest
         wp_enqueue_script('autosuggest', plugins_url('script/autoSuggestv14/jquery.autoSuggest.packed.js', __FILE__), array('jquery'));
-		// autosuggest
+		// adaptiveTableInput
         wp_enqueue_script('adaptivetableinput', plugins_url('script/adaptiveTableInput.js', __FILE__), array('jquery'));
+		// inputCounter
+		wp_enqueue_script('inputCounter', plugins_url('script/inputCounter.js', __FILE__), array('jquery'));
 		// multiselect
 		wp_enqueue_script('jquery.ui.multiselect', plugins_url('script/jquery.ui.multiselect/src/jquery.multiselect.min.js', __FILE__), array('jquery-ui-core', 'jquery-ui-widget'));
 		

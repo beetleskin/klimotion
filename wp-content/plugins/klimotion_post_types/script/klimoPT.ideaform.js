@@ -42,6 +42,10 @@ jQuery(function($) { ideaform : {
 				});
 				
 				
+				// textfield counters
+				$('textarea[maxlength]', me.wrapper).inputCounter();
+				
+				
 				// declare ajaxForm
 				var formOptions = {
 					beforeSerialize : me.beforeSerialize,
@@ -53,7 +57,6 @@ jQuery(function($) { ideaform : {
 						'action' : me.config.ajaxConfig.submitAction,
 						'klimoIdeaFormNonce' : me.config.ajaxConfig.klimoIdeaFormNonce
 					},
-
 				};
 				
 				me.form.ajaxForm(formOptions);
