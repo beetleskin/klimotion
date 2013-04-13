@@ -109,7 +109,7 @@ class NewIdeaForm {
         	
         <?php endif; ?>
         
-        
+        <?php echo phpinfo() ?>
         <div id="ideaform_wrap">   	
 		    <form action="<?php echo $this->form_action ?>" id="<?php echo $this->form_id ?>" class="<?php echo $data['nopriv'] ?>" method="<?php echo $this->form_method ?>">
 	        	<h1>Formular für neue Ideen:</h1>

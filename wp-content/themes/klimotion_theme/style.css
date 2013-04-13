@@ -32,7 +32,8 @@ Text Domain: klimotion_theme
 }
 
 footer.entry-meta {
-	clear: both;
+	box-shadow: 0 0 2px #d9d9d9;
+	box-shadow: 0 0 2px rgba(0, 0, 0, 0.30);
 	padding: 1rem 2rem;
 }
 
@@ -270,3 +271,14 @@ border-top: none;
 	margin-bottom: 0px;
 	 border-bottom: solid 1px #EEEEEE;
 }
+
+
+
+/*start: NS-Pagestyle*/
+	
+	#article_wrap{
+		margin-top: 25px;
+		border-top: solid 1px #ccc;
+	}
+	
+/*end: NS-Pagestyle*/

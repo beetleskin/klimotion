@@ -16,28 +16,30 @@ get_header(); ?>
 				thsp_hook_before_content();
 			?>
 
-			<?php while ( have_posts() ) : the_post(); ?>
-
-				<?php get_template_part( 'content', 'page' ); ?>
-
-			<?php endwhile; // end of the loop. ?>
-			
-			<?php
-				$lgPage = new LocalGroupsPage();
-				$lgPage->renderMap();
-				$lgPage->postRender();
-			?>
-			
-			<?php
-				LocalGroupsPage::local_groups_query();
-			?>
-			<div id="article_wrap">
-			<?php while ( have_posts() ) : the_post(); ?>
-
-				<?php get_template_part( 'content', 'klimo_localgroup' ); ?>
-
-			<?php endwhile; // end of the loop. ?>
-			</div>
+			<div class="entry-inner">
+				<?php while ( have_posts() ) : the_post(); ?>
+	
+					<?php get_template_part( 'content', 'page' ); ?>
+	
+				<?php endwhile; // end of the loop. ?>
+				
+				<?php
+					$lgPage = new LocalGroupsPage();
+					$lgPage->renderMap();
+					$lgPage->postRender();
+				?>
+				
+				<?php
+					LocalGroupsPage::local_groups_query();
+				?>
+				<div id="article_wrap">
+				<?php while ( have_posts() ) : the_post(); ?>
+	
+					<?php get_template_part( 'content', 'klimo_localgroup' ); ?>
+	
+				<?php endwhile; // end of the loop. ?>
+				</div>
+			</div><!-- .entry-content -->
 
 			<?php
 				// After Content theme hook callback

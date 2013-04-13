@@ -151,3 +151,8 @@ label[for=group_contact_publish]{
 	margin-top: 7px;
 	margin-right: 5px;
 }
+
+#article_wrap{
+	margin-top: 25px;
+	border-top: solid 1px #ccc;
+}
