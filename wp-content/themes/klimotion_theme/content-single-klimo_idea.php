@@ -76,7 +76,7 @@
 			<?php foreach ( $args['attachments_meta'] as $no => $attachment): ?>
 		          <div class="idea-attachment">
 		          	<a href="<?php echo wp_get_attachment_url($attachment->ID); ?>" target="_blank" <?php echo ((strpos($attachment->post_mime_type, "image") !== false)? 'class="image-attachment"' : '') ?>>
-		          		<?php echo (empty($attachment->post_title)? "Datei " . $no : $attachment->post_title) ?>
+		          		<?php echo (empty($attachment->post_title)? basename(get_attached_file($attachment->ID)) : $attachment->post_title) ?>
 		          	</a>
 		          </div><!-- .idea-attachment -->
 		    <?php endforeach; ?>
