@@ -9,7 +9,7 @@ jQuery(function($) { ideaform : {
 			var me = this;
 			this.wrapper = $(wrapper);
 			this.form = $('form', me.wrapper);
-			this.submit = $('#idea_submit', wrapper);
+			this.submit = $('#idea_submitm,', wrapper);
 			this.linksControl = null;
 
 
