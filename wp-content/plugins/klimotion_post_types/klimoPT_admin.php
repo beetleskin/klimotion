@@ -223,7 +223,7 @@ function kpt_hook_save_post_idea($post_id, $post) {
 		if(!array_key_exists ( $keyText , $_POST ) || !array_key_exists ( $keyUrl , $_POST ))
 			break;
 		$valText  = wp_strip_all_tags($_POST[$keyText], true);
-		$valUrl  = sanitize_url($_POST[$keyUrl]);
+		$valUrl  = esc_url_raw($_POST[$keyUrl]);
 		
 		if(strlen($valUrl)) {
 			$valUrl = preg_match('/^(https?|ftps?|mailto|news|gopher|file):/is', $valUrl) ? $valUrl : 'http://' . $valUrl;

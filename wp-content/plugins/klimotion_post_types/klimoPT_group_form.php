@@ -100,13 +100,7 @@ class NewGroupForm {
         $data = $this->preRender();
         ?>
         
-        // display hint if not logged in
         <?php if($data['isLoggedIn'] == false) : ?>
-        <div class="entry-content">
-		<?php while ( have_posts() ) : the_post(); ?>
-			<?php get_template_part( 'content', 'page' ); ?>
-		<?php endwhile; // end of the loop. ?>
-        </div>
         <?php endif; ?>
         
         
@@ -478,7 +472,7 @@ class NewGroupForm {
 
 		// check homepage
 		$element = 'group_homepage';
-		$value = sanitize_url($args[$element]);
+		$value = esc_url_raw($args[$element]);
         if(strlen($value) > self::$validationConfig['homepage_max_chars']) {
             $response['error'][] = array(
                 'element'   => $element,
@@ -530,16 +524,10 @@ class NewGroupForm {
 		// check contact email
 		$element = 'group_contact_mail';
 		$value = sanitize_email($args[$element]);
-		if( empty($value) ) {
+		if( empty($value) || is_email($value) === false) {
             $response['error'][] = array(
                 'element'   => $element,
-                'message'   => "Gib die E-Mail-Adresse deiner Kontaktperson an.",
-            );
-        // valid?
-        } else if( is_email($value) === false ) {
-            $response['error'][] = array(
-                'element'   => $element,
-                'message'   => "Die E-Mail-Adresse deiner Kontaktperson ungültig).",
+                'message'   => "Gib eine gültige E-Mail-Adresse deiner Kontaktperson an.",
             );
         }
 		$postData[$element] = $value;

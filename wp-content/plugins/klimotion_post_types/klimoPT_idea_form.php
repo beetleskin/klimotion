@@ -106,10 +106,8 @@ class NewIdeaForm {
         ?>        
         
         <?php if($data['isLoggedIn'] == false) : //TODO: display hint if not logged in ?>
-        	
         <?php endif; ?>
         
-        <?php echo phpinfo() ?>
         <div id="ideaform_wrap">   	
 		    <form action="<?php echo $this->form_action ?>" id="<?php echo $this->form_id ?>" class="<?php echo $data['nopriv'] ?>" method="<?php echo $this->form_method ?>" novalidate>
 	        	<h1>Formular für neue Ideen:</h1>
@@ -493,7 +491,7 @@ class NewIdeaForm {
 			if(!array_key_exists ( $keyText , $args ) || !array_key_exists ( $keyUrl , $args ))
 				break;
 			$valText  = wp_strip_all_tags($args[$keyText], true);
-			$valUrl  = sanitize_url($args[$keyUrl]);
+			$valUrl  = esc_url_raw($args[$keyUrl]);
 			if(strlen($valUrl)) {
 				$valUrl = preg_match('/^(https?|ftps?|mailto|news|gopher|file):/is', $valUrl) ? $valUrl : 'http://' . $valUrl;
 				$value[] = array('text' => $valText, 'url' => $valUrl);
