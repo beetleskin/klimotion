@@ -4,7 +4,8 @@
  */
 
 /*idea formular styles*/
-form#ideaform  {
+form#ideaform,
+form#groupform  {
 	padding: 20px;
 }
 
