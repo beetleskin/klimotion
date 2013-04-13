@@ -167,7 +167,7 @@ class NewIdeaForm {
 								<tbody>
 									<tr class="files_meta_pair">
 										<td><input type="text" maxlength="40" name="filetext_0" placeholder="Beschreibung"></td>
-										<td><input type="file" id="" name="idea_file_0"></td>
+										<td><input type="file" name="idea_file_0"></td>
 										<td><a class="removebutton" href="#" onclick="return false;">entfernen</a></td>
 									</tr>
 								</tbody>
