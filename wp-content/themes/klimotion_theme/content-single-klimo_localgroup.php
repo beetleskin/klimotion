@@ -25,7 +25,12 @@
 		<div class="entry-group-district">
 			Landkreis: 
 			<?php the_terms($post->ID, "klimo_districts", "", " | "); ?>
-		</div><!-- .entry-idea-district -->
+		</div><!-- .entry-group-district -->
+		
+		<div class="entry-group-scopes">
+			Wirkungskreise: 
+			<?php the_terms($post->ID, "klimo_scopes", "", " | "); ?>
+		</div><!-- .entry-grou-scopes -->
 
 		<div class="entry-content">
 			<?php the_content(); ?>
@@ -61,7 +66,7 @@
 		<div class="entry-group-contact">
 			<strong>Ansprechpartner:</strong>
 			<p>
-				<?php echo $args['contact_meta']['surname']; ?> <?php echo $args['contact_meta']['surname']; ?><br />
+				<?php echo $args['contact_meta']['surname']; ?> <?php echo $args['contact_meta']['name']; ?><br />
 				<a href="mailto:<?php echo $args['contact_meta']['mail']; ?>"><?php echo $args['contact_meta']['mail']; ?></a><br />
 				<?php echo $args['contact_meta']['phone']; ?><br />
 			</p>

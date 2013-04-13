@@ -376,7 +376,7 @@ class NewGroupForm {
 		
 		// check name
         $element = "group_name";
-        $value = trim(wp_strip_all_tags($args[$element]));
+        $value = sanitize_title($args[$element]);
         // too short?
         if(strlen($value) < self::$validationConfig['name_min_chars']) {
             $response['error'][] = array(
@@ -412,13 +412,13 @@ class NewGroupForm {
 		
 		// check district
 		$element = 'group_district';
-		$value = intval(wp_strip_all_tags($args[$element]));
+		$value = intval(wp_strip_all_tags($args[$element], true));
 		$postData[$element] = $value;
 		
 		
 		// check city
 		$element = 'group_city';
-		$value = wp_strip_all_tags($args[$element]);
+		$value = wp_strip_all_tags($args[$element], true);
 		if(empty($value)) {
             $response['error'][] = array(
                 'element'   => $element,
@@ -436,7 +436,7 @@ class NewGroupForm {
 		
 		// check zip code
 		$element = 'group_zipcode';
-		$value = wp_strip_all_tags($args[$element]);
+		$value = wp_strip_all_tags($args[$element], true);
 		if(strlen($value) != 5) {
             $response['error'][] = array(
                 'element'   => $element,
@@ -448,7 +448,7 @@ class NewGroupForm {
 		
 		// check scopes
 		$element = 'group_scopes';
-		$value = explode(",", wp_strip_all_tags($args['as_values_group_scopes']));
+		$value = explode(",", wp_strip_all_tags($args['as_values_group_scopes'], true));
 		foreach ($value as &$scope) {
 			if(is_numeric($scope))
 				$scope = intval($scope);
@@ -466,7 +466,7 @@ class NewGroupForm {
 		
 		// check description
 		$element = 'group_description';
-		$value = $args[$element];
+		$value = force_balance_tags($args[$element]);
         if(strlen($value) > self::$validationConfig['description_max_chars']) {
             $response['error'][] = array(
                 'element'   => $element,
@@ -478,7 +478,7 @@ class NewGroupForm {
 
 		// check homepage
 		$element = 'group_homepage';
-		$value = intval(wp_strip_all_tags($args[$element]));
+		$value = sanitize_url($args[$element]);
         if(strlen($value) > self::$validationConfig['homepage_max_chars']) {
             $response['error'][] = array(
                 'element'   => $element,
@@ -493,7 +493,7 @@ class NewGroupForm {
 
 		// check contact name
 		$element = 'group_contact_name';
-		$value = trim(wp_strip_all_tags($args[$element]));
+		$value = wp_strip_all_tags($args[$element], true);
 		if(empty($value)) {
             $response['error'][] = array(
                 'element'   => $element,
@@ -511,7 +511,7 @@ class NewGroupForm {
 		
 		// check contact surname
 		$element = 'group_contact_surname';
-		$value = trim(wp_strip_all_tags($args[$element]));
+		$value = wp_strip_all_tags($args[$element], true);
 		if(empty($value)) {
             $response['error'][] = array(
                 'element'   => $element,
@@ -529,17 +529,17 @@ class NewGroupForm {
 		
 		// check contact email
 		$element = 'group_contact_mail';
-		$value = trim(wp_strip_all_tags($args[$element]));
-		if(empty($value)) {
+		$value = sanitize_email($args[$element]);
+		if( empty($value) ) {
             $response['error'][] = array(
                 'element'   => $element,
                 'message'   => "Gib die E-Mail-Adresse deiner Kontaktperson an.",
             );
-        // too long?
-        } else if(strlen($value) > self::$validationConfig['contact_max_chars']) {
+        // valid?
+        } else if( is_email($value) === false ) {
             $response['error'][] = array(
                 'element'   => $element,
-                'message'   => "Die E-Mail-Adresse deiner Kontaktperson ist zu lang an (maximal " . self::$validationConfig['contact_max_chars'] . " Zeichen).",
+                'message'   => "Die E-Mail-Adresse deiner Kontaktperson ungültig).",
             );
         }
 		$postData[$element] = $value;
@@ -547,7 +547,7 @@ class NewGroupForm {
 		
 		// check contact phone
 		$element = 'group_contact_phone';
-		$value = trim(wp_strip_all_tags($args[$element]));
+		$value = wp_strip_all_tags($args[$element], true);
 		if(empty($value)) {
             $response['error'][] = array(
                 'element'   => $element,
