@@ -2,6 +2,9 @@
 /**
  * @package Klimotion_Post_Types
  */
+ // TODO: create crucial pages on install
+ 
+ 
 define("KPT_dbtable_post_idea_relations", "klimo_post_relations");
 
 
@@ -166,7 +169,7 @@ function kpt_add_idea()  {
         'description'   => 'klimotion custom post type for project ideas',
         'show_in_menu'  => true,
         'map_meta_cap'  => true,
-        'has_archive'   => false,
+        'has_archive'   => true,
         'supports'      => array('title', 'editor', 'author', 'thumbnail', 'excerpt', 'comments'),
         'taxonomies'    => array('klimo_idea_topics'),
     );
@@ -217,7 +220,7 @@ function kpt_add_localGroup()  {
         'description'   => 'klimotion custom post type for local groups',
         'show_in_menu'  => true,
         'map_meta_cap'  => true,
-        'has_archive'   => false,
+        'has_archive'   => true,
         'supports'      => array('title', 'editor', 'author', 'thumbnail', 'comments'),
         'taxonomies'    => array('klimo_districts', 'klimo_scopes'),
     );

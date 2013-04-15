@@ -22,9 +22,10 @@ class LocalGroupsPage {
 	public static function initAjax() {
 		self::$ioConfig['ajaxurl'] = admin_url('admin-ajax.php');
 		self::$ioConfig['submitAction'] = 'localgroupspage_query';
-		
+
 
 		// register ajax request
+		add_action('wp_ajax_' . self::$ioConfig['submitAction'], 'LocalGroupsPage::ajaxGetGroups');
         add_action('wp_ajax_nopriv_' . self::$ioConfig['submitAction'], 'LocalGroupsPage::ajaxGetGroups');
 	}
 	

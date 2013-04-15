@@ -17,9 +17,10 @@ include_once('klimoPT_admin.php');
 include_once('klimoPT_frontend.php');
 
 
-/* data action hooks */
 register_activation_hook(__FILE__, 'kpt_activate');
+register_activation_hook(__FILE__, 'kpt_create_menu');
 register_uninstall_hook(__FILE__, 'kpt_uninstall');
+
 add_action('init', 'kpt_data_init');
 
 

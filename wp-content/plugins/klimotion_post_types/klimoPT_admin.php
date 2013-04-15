@@ -156,7 +156,7 @@ function kpt_hook_save_post_group($post_id, $post) {
 	// authorization,
 	if ( !array_key_exists ( 'post_type' , $_POST ) || 'klimo_localgroup' != $_POST['post_type'] )
 		return;
-	if ( !current_user_can( 'edit_post', $post->ID ))
+	if ( $_POST['action'] != 'editpost' || !current_user_can( 'edit_post', $post->ID ))
 		return;
 	if ( !wp_verify_nonce( $_POST['groupmeta_nonce'], plugin_basename(__FILE__) ))
 		return;
@@ -194,7 +194,7 @@ function kpt_hook_save_post_idea($post_id, $post) {
 	// authorization,
 	if ( !array_key_exists ( 'post_type' , $_POST ) || 'klimo_idea' != $_POST['post_type'] )
 		return;
-	if ( !current_user_can( 'edit_post', $post->ID ))
+	if ( $_POST['action'] != 'editpost' || !current_user_can( 'edit_post', $post->ID ))
 		return;
 	if ( !wp_verify_nonce( $_POST['linksmeta_nonce'], plugin_basename(__FILE__) ))
 		return;
