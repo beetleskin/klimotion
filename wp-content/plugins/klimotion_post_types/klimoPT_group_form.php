@@ -38,18 +38,9 @@ class NewGroupForm {
         $data = array();
         
 		// defaults
-        $nopriv = 'nopriv';
-        $submitLink = wp_login_url(get_permalink());
-        $onClick = '';
+        $nopriv_redirect = wp_login_url(get_permalink());
 		$isLoggedIn = get_current_user_id() != 0;
         
-		// login settings
-        if($isLoggedIn) {
-            $nopriv = '';
-            $submitLink = '#';
-            $onClick = 'onclick="return false;"';
-        }
-		
 		
 		// districts:
 		$districts = get_terms("klimo_districts", array(
@@ -80,11 +71,9 @@ class NewGroupForm {
 		
 		// leftover
         $data['isLoggedIn'] = $isLoggedIn;
-        $data['nopriv'] = $nopriv;
-        $data['submitLink'] = $submitLink;
-        $data['onClick'] = $onClick;
+        $data['nopriv_redirect'] = $nopriv_redirect;
 		
-		$this->renderData = &$data;
+		$this->renderData = $data;
         return $data;
     }
 	
@@ -100,14 +89,17 @@ class NewGroupForm {
         $data = $this->preRender();
         ?>
         
-        <?php if($data['isLoggedIn'] == false) : ?>
-        <?php endif; ?>
+        
         
         
         <div id="groupform_wrap">   	
-		    <form action="<?php echo $this->form_action ?>" id="<?php echo $this->form_id ?>" class="<?php echo $data['nopriv'] ?>" method="<?php echo $this->form_method ?>" novalidate>
+		    <form action="<?php echo $this->form_action ?>" id="<?php echo $this->form_id ?>" <?php if($data['isLoggedIn'] == false) echo 'nopriv="nopriv"' ?> method="<?php echo $this->form_method ?>" novalidate="novalidate">
 	        	<h1><?php echo __("Gruppe-Formular") ?></h1>
-	        	<div id="errormessage"></div>
+	        	<div id="errormessage">
+	        		<?php if($data['isLoggedIn'] == false) : ?>
+	        			<p>Um eine <strong>neue Gruppe</strong> zu erstellen musst du <a href="<?php echo $data['nopriv_redirect']; ?>">eingeloggt</a> sein!</p>
+        			<?php endif; ?>
+	        	</div>
 	        
 	        	<fieldset form="<?php echo $this->form_id ?>"> 
       	  			<legend>Infos zur Lokalgruppe</legend>
@@ -192,7 +184,7 @@ class NewGroupForm {
 					</div><!-- .form-field-wrap -->
 				</fieldset>
 
-				<button form="<?php echo $this->form_id ?>" id="group_submit">Abschicken</button>
+				<button form="<?php echo $this->form_id ?>" id="group_submit" <?php if($data['isLoggedIn'] == false) echo 'nopriv="nopriv"' ?>>Abschicken</button>
         	</form>
        </div><!-- .groupform_wrap -->
 	<?php

@@ -60,8 +60,16 @@ jQuery(function($) { ideaform : {
 				};
 				
 				me.form.ajaxForm(formOptions);
-				me.submit.click(function() {
-					me.form.submit();
+				me.submit.click(function(event) {
+					if( $(this).attr('nopriv') !== 'undefined' ) {
+						$("html body").animate({ scrollTop: 0 }, "slow", function(){
+							$('#errormessage', me.form).fadeTo(400, 0.2).fadeTo(400, 1.0);
+						});
+					} else {
+						me.form.submit();
+					}
+					
+					// no further click handling
 					return false;
 				});
 			}
@@ -80,7 +88,7 @@ jQuery(function($) { ideaform : {
 				} else if(response.success != null) {
 					me.submitSuccessHandler(response);
 				} else {
-					alert("xxx this should never happen!")
+					console.log("transmittion error: ", response, statusText, xhr);
 				}
 			}
 			
@@ -98,7 +106,7 @@ jQuery(function($) { ideaform : {
 					}, "slow");
 				});
 				
-				$("html, body").animate({ scrollTop: 0 }, "slow");
+				$("html body").animate({ scrollTop: 0 }, "slow");
 				setTimeout("location.reload()", 5000);
 			}
 			

@@ -24,7 +24,7 @@ get_header(); ?>
 			<div class="entry-inner">
 				<?php if ( have_posts() ) : the_post(); ?>
 					<?php get_template_part( 'content', 'page' ); ?>
-				<?php endif; // end of the loop. ?>
+				<?php endif; ?>
 				
 				<?php
 					// render form
