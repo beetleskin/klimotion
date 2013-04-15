@@ -85,12 +85,12 @@ footer.entry-meta {
 }
 
 /*Menü --> horizontal Sub*/
-#menu-klimotion_first{
+#menu-klimo_primary {
 	width: 100%;
 	position: relative;
 }
 
-#menu-klimotion_first .sub-menu {
+#menu-klimo_primary .sub-menu {
 	width: 100%;
 	box-sizing:border-box;
     -moz-box-sizing:border-box;
@@ -102,11 +102,11 @@ footer.entry-meta {
 	padding-left: 1px;
 }
 
-#menu-klimotion_first .current-menu-item .sub-menu {
+#menu-klimo_primary .current-menu-item .sub-menu {
 	display: block !important;
 }
 
-#menu-klimotion_first .menu-item:hover{
+#menu-klimo_primary .menu-item:hover{
 	box-sizing:border-box;
     -moz-box-sizing:border-box;
     -webkit-box-sizing:border-box;
@@ -118,26 +118,26 @@ footer.entry-meta {
 }
 
 /*block submenu while current menu ancestor is selected*/
-#menu-klimotion_first .current-menu-ancestor .sub-menu{
+#menu-klimo_primary .current-menu-ancestor .sub-menu{
 	display: block;
 }
 
 /* override default hover for current menu item */
 
-#menu-klimotion_first .current-menu-ancestor ul.sub-menu,
-#menu-klimotion_first .current-menu-item ul.sub-menu,
-#menu-klimotion_first .current-menu-item:hover ul.sub-menu,
-#menu-klimotion_first .current-menu-ancestor:hover ul.sub-menu,
-#menu-klimotion_first .sub-menu .current-menu-item ul.sub-menu {
+#menu-klimo_primary .current-menu-ancestor ul.sub-menu,
+#menu-klimo_primary .current-menu-item ul.sub-menu,
+#menu-klimo_primary .current-menu-item:hover ul.sub-menu,
+#menu-klimo_primary .current-menu-ancestor:hover ul.sub-menu,
+#menu-klimo_primary .sub-menu .current-menu-item ul.sub-menu {
 	border-color: #1e497d !important;
 	background: #fff !important;
 }
 
-#menu-klimotion_first .current-menu-ancestor,
-#menu-klimotion_first .current-menu-item,
-#menu-klimotion_first .current-menu-item:hover,
-#menu-klimotion_first .current-menu-ancestor:hover,
-#menu-klimotion_first .sub-menu .current-menu-item{
+#menu-klimo_primary .current-menu-ancestor,
+#menu-klimo_primary .current-menu-item,
+#menu-klimo_primary .current-menu-item:hover,
+#menu-klimo_primary .current-menu-ancestor:hover,
+#menu-klimo_primary .sub-menu .current-menu-item{
 	box-sizing:border-box;
     -moz-box-sizing:border-box;
     -webkit-box-sizing:border-box;
@@ -148,12 +148,12 @@ footer.entry-meta {
 	margin-bottom: 0px !important; 
 }
 
-#menu-klimotion_first .current-menu-ancestor a,
-#menu-klimotion_first .current-menu-item a{
+#menu-klimo_primary .current-menu-ancestor a,
+#menu-klimo_primary .current-menu-item a{
 	color:  #1e497d !important;
 }
 
-#menu-klimotion_first .menu-parent-item:hover .sub-menu {
+#menu-klimo_primary .menu-parent-item:hover .sub-menu {
 	border-top: 2px;
 	border-bottom: 2px;
 	border-style:solid;
@@ -162,25 +162,25 @@ footer.entry-meta {
 	width: 100%;
 }
 
-#menu-klimotion_first > li > a{
+#menu-klimo_primary > li > a{
 	text-shadow: none;
 	margin: 0px 15px 0px 15px;
 	padding: 7px;
 }
 
-#menu-klimotion_first > li{
+#menu-klimo_primary > li{
 	margin-right: 0px;
 	float: left;
 	margin-bottom: 6px;
 }
-#menu-klimotion_first .sub-menu > li{
+#menu-klimo_primary .sub-menu > li{
 	float: left;
 	border-top: 0px;
 	z-index: 2;
 	margin-bottom: 6px;
 }
 
-#menu-klimotion_first .sub-menu > li > a{
+#menu-klimo_primary .sub-menu > li > a{
 	width: auto;
 	padding-top: 7px;
 	padding-bottom: 7px;
@@ -204,12 +204,12 @@ footer.entry-meta {
 	padding: 5rem 0;
 }
 
-#menu-klimotion_first:hover .sub-menu {
+#menu-klimo_primary:hover .sub-menu {
 	display:none;
 	visibility: hidden;
 }
 
-ul#menu-klimotion_first > li:hover .sub-menu {
+ul#menu-klimo_primary > li:hover .sub-menu {
 	display:block;
 	visibility: visible;
 }
@@ -243,7 +243,7 @@ border-top: none;
 	visibility: hidden;
 }
 
-#menu-klimotion_first ul{
+#menu-klimo_primary ul{
 	top: 36px;
 }
 
