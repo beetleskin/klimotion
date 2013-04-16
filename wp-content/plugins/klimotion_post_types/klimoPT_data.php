@@ -108,6 +108,7 @@ function kpt_activate() {
 	
 	// populate district taxonomy
 	foreach ($lower_saxony_districts as $id => $name) {
+		// TODO: check if term exists? actually ... wp does that?
 		wp_insert_term($name, 'klimo_districts', array('slug' => '_district_' . $id));
 	}
 	

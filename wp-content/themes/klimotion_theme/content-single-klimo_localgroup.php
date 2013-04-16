@@ -19,7 +19,7 @@
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
     <div class="entry-inner">
     	
-		<?php get_template_part( 'post', 'header' ); ?>
+		<?php get_template_part( 'klimo_localgroup', 'header' ); ?>
 
 			
 		<div class="entry-group-district">

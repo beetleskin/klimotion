@@ -30,8 +30,7 @@
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
     <div class="entry-inner">
     	
-		<?php get_template_part( 'post', 'header' ); ?>
-		// TODO: Box/Klarmachen: WAS kan ich hier eigentlich machen? ähnlich github, noch stärker
+		<?php get_template_part( 'klimo_idea', 'header' ); ?>
 		
 		
 		<?php if( !empty($args['initiator_meta']) ): ?>
