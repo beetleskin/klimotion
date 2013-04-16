@@ -36,7 +36,7 @@
 
 		<?php else : ?>
 
-			<p><?php echo __( 'Entschuldige, für deine Anfrage gibt es noch keine Inhalte. Vielleicht hilft die Suche.' ); ?></p>
+			<p><?php echo __( 'Entschuldige, für deine Anfrage gibt es noch keine Inhalte.<br />Vielleicht hilft die Suche.' ); ?></p>
 			<?php get_search_form(); ?>
 
 		<?php endif; ?>
