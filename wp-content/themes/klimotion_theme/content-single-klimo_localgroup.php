@@ -8,6 +8,7 @@
 
 <?php
 	$args = array();
+	$args['member_meta'] = get_post_meta($post->ID, '_member', true);
 	$args['contact_meta'] = get_post_meta($post->ID, '_contact', true);
 	$args['homepage_meta'] = get_post_meta($post->ID, '_homepage', true);
 	$args['city_meta'] = get_post_meta($post->ID, '_city', true);
@@ -31,6 +32,13 @@
 			Wirkungskreise: 
 			<?php the_terms($post->ID, "klimo_scopes", "", " | "); ?>
 		</div><!-- .entry-grou-scopes -->
+		
+		<?php if( !empty($args['member_meta']) ): ?>
+		<div class="entry-group-member">
+			Mitglieder: 
+			<?php echo $args['member_meta']; ?>
+		</div><!-- .entry-grou-member -->
+		<?php endif ?>
 
 		<div class="entry-content">
 			<?php the_content(); ?>

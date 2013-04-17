@@ -118,6 +118,11 @@ class NewGroupForm {
   	  					<input type="file" id="group_image" name="group_image" accept="image/*">
   	  				</div><!-- .form-field-wrap -->
   	  				
+  	  				<div class="form-field-wrap">
+						<label for="group_member"><?php echo __("Mitglieder") ?></label>
+						<input type="number" id="group_member" name="group_member">
+					</div><!-- .form-field-wrap -->
+  	  				
 					<div class="form-field-wrap">
 						<label for="groupdescription"><?php echo __("Kurzvorstellung") ?> *</label>
 				        <?php wp_editor("", 'groupdescription', array(
@@ -290,6 +295,13 @@ class NewGroupForm {
         }
 		
 		
+		// attach member
+		$member_meta_slug = "_member";
+		if(!empty($postData['group_member'])){
+			update_post_meta($postID, $member_meta_slug, $postData['group_member']);
+		}
+		
+		
 		// attach city
 		$city_meta_slug = "_city";
 		if(!empty($postData['group_city'])){
@@ -393,6 +405,12 @@ class NewGroupForm {
                 );
             }
         }
+		$postData[$element] = $value;
+		
+		
+		// check district
+		$element = 'group_number';
+		$value = intval(wp_strip_all_tags($args[$element], true));
 		$postData[$element] = $value;
 		
 		

@@ -127,7 +127,8 @@ function kpt_hook_metabox_contact($post) {
 
 
 function kpt_hook_metabox_group_meta($post) {
-	// get current _city meta
+	$member_meta_slug = '_member';
+    $member_meta = get_post_meta($post->ID, $member_meta_slug, true);
 	$city_meta_slug = '_city';
     $city_meta = get_post_meta($post->ID, $city_meta_slug, true);
 	$zipcode_meta_slug = '_zip';
@@ -144,6 +145,9 @@ function kpt_hook_metabox_group_meta($post) {
 	echo '</tr><tr>';
 	echo '<td><label>' . __("Ort") . '</label></td>';
 	echo '<td><input type="text" id="meta-group_city" name="meta-group_city" placeholder="Ort" value="' . $city_meta . '"></td></tr>';
+	echo '</tr><tr>';
+	echo '<td><label>' . __("Mitglieder") . '</label></td>';
+	echo '<td><input type="text" id="meta-group_member" name="meta-group_member" value="' . $member_meta . '"></td></tr>';
 	echo '</tr><tr>';
 	echo '<td><label>' . __("Postleitzahl") . '</label></td>';
 	echo '<td><input type="text" id="meta-group_zipcode" name="meta-group_zipcode" placeholder="Postleitzahl" value="' . $zipcode_meta . '"></td>';
@@ -170,6 +174,10 @@ function kpt_hook_save_post_group($post_id, $post) {
 	// save city
 	$new_city = $_POST['meta-group_city'];
 	update_post_meta($post->ID, '_city', $new_city);
+	
+	// save member
+	$new_member = $_POST['meta-group_member'];
+	update_post_meta($post->ID, '_member', $new_member);
 	
 	// save zip code
 	$new_zipcode = $_POST['meta-group_zipcode'];
