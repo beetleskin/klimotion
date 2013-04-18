@@ -409,7 +409,7 @@ class NewGroupForm {
 		
 		
 		// check district
-		$element = 'group_number';
+		$element = 'group_member';
 		$value = intval(wp_strip_all_tags($args[$element], true));
 		$postData[$element] = $value;
 		
