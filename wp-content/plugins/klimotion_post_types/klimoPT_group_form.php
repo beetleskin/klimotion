@@ -220,9 +220,11 @@ class NewGroupForm {
 		wp_enqueue_script('inputCounter', plugins_url('script/inputCounter.js', __FILE__), array('jquery'));
 		// multiselect
 		wp_enqueue_script('jquery.ui.multiselect', plugins_url('script/jquery.ui.multiselect/src/jquery.multiselect.min.js', __FILE__), array('jquery-ui-core', 'jquery-ui-widget'));
+		// multiselect-filter
+		wp_enqueue_script('jquery.ui.multiselect-filter', plugins_url('script/jquery.ui.multiselect/src/jquery.multiselect.filter.min.js', __FILE__), array('jquery.ui.multiselect'));
 		
     	// frontend forms script
-        wp_enqueue_script('klimo_groupform', plugins_url('script/klimoPT.groupform.js', __FILE__), array('jquery', 'jquery-form', 'autosuggest', 'adaptivetableinput'));
+        wp_enqueue_script('klimo_groupform', plugins_url('script/klimoPT.groupform.js', __FILE__), array('jquery', 'jquery-form', 'autosuggest', 'adaptivetableinput', 'jquery.ui.multiselect-filter', 'jquery.ui.multiselect'));
     }
     
     

@@ -17,7 +17,7 @@ jQuery(function($) { ideaform : {
 				me.config = groupform_config;
 				
 				
-				// district autosuggest
+				// scopes autosuggest
 				$('input#group_scopes', me.wrapper).autoSuggest(
 					me.config.as_scopes.items, 
 					{
@@ -35,8 +35,10 @@ jQuery(function($) { ideaform : {
 				$('select#group_district').multiselect({
 					multiple: false,
 					selectedList: 1,
-					header: false,
 					noneSelectedText: "Wähle einen Landkreis",
+				}).multiselectfilter({
+					label: false,
+					placeholder: 'Filter ...'
 				});
 				
 				
