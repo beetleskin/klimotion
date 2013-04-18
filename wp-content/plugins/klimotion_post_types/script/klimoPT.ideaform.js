@@ -33,12 +33,21 @@ jQuery(function($) { ideaform : {
 				);
 				
 				
-				// district multiselect
-				$('select#idea_group').multiselect({
+				// group multiselect
+				$('select#idea_group', me.wrapper).multiselect({
 					multiple: false,
 					selectedList: 1,
 					header: false,
-					noneSelectedText: "Wähle einen Landkreis",
+					noneSelectedText: "Gruppen ...",
+				});
+				
+				
+				// topic multiselect
+				$('select#idea_topics', me.wrapper).multiselect({
+					multiple: true,
+					selectedList: 5,
+					header: false,
+					noneSelectedText: "Themen ...",
 				});
 				
 				

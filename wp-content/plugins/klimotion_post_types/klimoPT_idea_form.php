@@ -138,8 +138,8 @@ class NewIdeaForm {
       	  		<fieldset form="<?php echo $this->form_id ?>">
       	  			<legend>Einordnung</legend>
       	  			<div class="form-field-wrap">
-	        			<label for="idea_topic">Thema *</label>
-	        			<select id="idea_topic" name="idea_topic">
+	        			<label for="idea_topics">Thema *</label>
+	        			<select id="idea_topics" name="idea_topics[]" multiple="multiple">
 				        	<?php foreach ( $data['topics'] as &$topic ): ?>
 			                    <option value="<?php echo $topic['value'] ?>"><?php echo $topic['name'] ?></option>
 			                <?php endforeach; ?>
@@ -285,7 +285,7 @@ class NewIdeaForm {
 		$idea_group_id = $postData['idea_group'];
 		$idea_excerp = $postData['idea_excerp'];
 		$idea_description = $postData['ideadescription'];
-		$idea_topic_id = $postData['idea_topic'];
+		$idea_topic_ids = $postData['idea_topics'];
 		$idea_aim_ids = $postData['idea_aims'];
 		$idea_links = $postData['idea_links'];
 		
@@ -299,7 +299,7 @@ class NewIdeaForm {
             'post_content'  => $idea_description,
             'post_excerpt'  => $idea_excerp,
             'tax_input'		=> array(
-            	'klimo_idea_topics' => array(intval($idea_topic_id)),
+            	'klimo_idea_topics' => $idea_topic_ids,
             	'klimo_idea_aims' => $idea_aim_ids,
 			),
         );
@@ -454,8 +454,8 @@ class NewIdeaForm {
 		
 		
 		// check topic
-		$element = 'idea_topic';
-		$value = intval(wp_strip_all_tags($args[$element]));
+		$element = 'idea_topics';
+		$value = array_key_exists('idea_topics', $_POST)? $_POST['idea_topics'] : array();
 		$postData[$element] = $value;
 		
 		
