@@ -30,7 +30,7 @@ jQuery(function($) { ideaform : {
 					}
 				);
 				
-				
+				 
 				// district multiselect
 				$('select#group_district').multiselect({
 					multiple: false,
