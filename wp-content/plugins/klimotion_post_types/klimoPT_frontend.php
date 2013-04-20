@@ -12,6 +12,8 @@ include_once('klimoPT_group_form.php');
 /* front end action hooks */
 add_action('init', 'kpt_fe_hook_init', 100);
 add_filter('created_klimo_idea_topics', 'kpt_add_idea_menu_term_item_hook');
+add_filter('sidebar_login_widget_logged_out_links', 'kpt_sidebar_login_loggedout_links_hook');
+add_filter('sidebar_login_widget_logged_in_links', 'kpt_sidebar_login_loggedin_links_hook');
 
 /**
  * INIT 
@@ -22,6 +24,23 @@ function kpt_fe_hook_init() {
 	NewGroupForm::initAjax();
 }
 
+
+/**
+ * SIDEBAR LOGIN
+ */
+function kpt_sidebar_login_loggedout_links_hook(&$links) {
+	if( array_key_exists('register', $links)) {
+		$links['register']['href'] = home_url( '/wpm_register/' );
+	}
+	return $links;
+}
+
+function kpt_sidebar_login_loggedin_links_hook(&$links) {
+	if( array_key_exists('profile', $links)) {
+		$links['profile']['href'] = home_url( '/wpm_profile/' );
+	}
+	return $links;
+}
 
 /**
  * MENU
