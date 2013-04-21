@@ -49,7 +49,7 @@
 			Ideen:
 			<ul>
 				<?php foreach ( $args['ideas_meta'] as &$idea): ?>
-		         	<a href="<?php echo get_permalink($idea->ID); ?>"><?php echo $idea->post_title; ?></a>
+		         	<li><a href="<?php echo get_permalink($idea->ID); ?>"><?php echo $idea->post_title; ?></a></li>
 		    <?php endforeach; ?>
 			</ul>
 		</div><!-- .entry-group-ideas -->
