@@ -30,8 +30,24 @@ function kpt_fe_hook_init() {
  * WP_MEMBERS
  */
 function kpt_adapt_register_form(&$form) {
-	//var_dump($form);
-	return $form;
+	$fieldset1_begin = '<label for="username" class="text">Wähle einen Mitgliedernamen<font class="req">*</font></label>';
+	$fieldset_inter = '<label for="first_name" class="text">Vorname</label>';
+	$fieldset2_end = '<div class="div_text"><input name="tos"';
+	$form = str_replace($fieldset1_begin, '<fieldset><legend>Benötigt</legend><div class="slide-wrap">' . $fieldset1_begin, $form);
+	$form = str_replace($fieldset_inter, '</div></fieldset><fieldset><legend>Details</legend><div class="slide-wrap">' . $fieldset_inter, $form);
+	$form = str_replace($fieldset2_end, '</div></fieldset>' . $fieldset2_end, $form);
+	 
+	
+	
+	$script = 'jQuery(function($) { 
+			$(document).ready(function() {
+				$("#wpmem_reg form fieldset fieldset legend").click(function() {
+  					$(".slide-wrap", $(this).parent()).slideToggle();
+				});
+			});
+		});';
+	return $form . "<script>" . $script . "</script>";
+	 
 }
 
 
