@@ -14,6 +14,8 @@ add_action('init', 'kpt_fe_hook_init', 100);
 add_filter('created_klimo_idea_topics', 'kpt_add_idea_menu_term_item_hook');
 add_filter('sidebar_login_widget_logged_out_links', 'kpt_sidebar_login_loggedout_links_hook');
 add_filter('sidebar_login_widget_logged_in_links', 'kpt_sidebar_login_loggedin_links_hook');
+add_filter( 'wpmem_register_form', 'kpt_adapt_register_form' );
+
 
 /**
  * INIT 
@@ -24,6 +26,14 @@ function kpt_fe_hook_init() {
 	NewGroupForm::initAjax();
 }
 
+/**
+ * WP_MEMBERS
+ */
+function kpt_adapt_register_form(&$form) {
+	//var_dump($form);
+	return $form;
+}
+
 
 /**
  * SIDEBAR LOGIN
@@ -31,6 +41,9 @@ function kpt_fe_hook_init() {
 function kpt_sidebar_login_loggedout_links_hook(&$links) {
 	if( array_key_exists('register', $links)) {
 		$links['register']['href'] = home_url( '/wpm_register/' );
+	}
+	if( array_key_exists('lost_password', $links)) {
+		$links['lost_password']['href'] = home_url( '/wpm_password/' );
 	}
 	return $links;
 }
@@ -41,6 +54,7 @@ function kpt_sidebar_login_loggedin_links_hook(&$links) {
 	}
 	return $links;
 }
+
 
 /**
  * MENU
