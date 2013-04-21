@@ -30,7 +30,11 @@ function kpt_fe_hook_init() {
  * WP_MEMBERS
  */
 function kpt_adapt_register_form(&$form) {
-	$fieldset1_begin = '<label for="username" class="text">Wähle einen Mitgliedernamen<font class="req">*</font></label>';
+	$form = str_replace("First Name", "Vorname", $form);
+	$form = str_replace("Last Name", "Nachname", $form);
+	$form = str_replace("Wähle einen Mitgliedernamen", "Benutzername", $form);
+	
+	$fieldset1_begin = '<label for="username" class="text">Benutzername<font class="req">*</font></label>';
 	$fieldset_inter = '<label for="first_name" class="text">Vorname</label>';
 	$fieldset2_end = '<div class="div_text"><input name="tos"';
 	$form = str_replace($fieldset1_begin, '<fieldset><legend>Benötigt</legend><div class="slide-wrap">' . $fieldset1_begin, $form);
@@ -41,7 +45,7 @@ function kpt_adapt_register_form(&$form) {
 	
 	$script = 'jQuery(function($) { 
 			$(document).ready(function() {
-				$("#wpmem_reg div.slide-wrap[collapsed]").css("display", "none");
+				$("#wpmem_reg div.slide-wrap[collapsed]").slideToggle(0);
 				$("#wpmem_reg form fieldset fieldset legend").click(function() {
   					$(".slide-wrap", $(this).parent()).slideToggle();
 				});
