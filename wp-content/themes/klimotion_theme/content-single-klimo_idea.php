@@ -33,12 +33,14 @@
 		<?php get_template_part( 'klimo_idea', 'header' ); ?>
 		
 		
-		<?php if( !empty($args['initiator_meta']) ): ?>
 		<div class="entry-idea-initiator">
-			Initiator:
-			<a href="<?php echo get_permalink($args['initiator_meta']->ID); ?>"><?php echo $args['initiator_meta']->post_title; ?></a>
+			Lokalgruppe:
+			<?php if( !empty($args['initiator_meta']) ): ?>
+				<a href="<?php echo get_permalink($args['initiator_meta']->ID); ?>"><?php echo $args['initiator_meta']->post_title; ?></a>
+			<?php else: ?>
+				<i>nicht zugeordnet</i> 
+			<?php endif ?>
 		</div><!-- .entry-idea-initiator -->
-		<?php endif ?>
 		
 		
 		<?php if( !empty($args['group_meta']) ): ?>
@@ -51,16 +53,16 @@
 			</ul>
 		</div><!-- .entry-idea-group -->
 		<?php endif ?>
-			
-		<div class="entry-idea-aims">
-			Ziele: 
-			<?php the_terms($post->ID, "klimo_idea_aims", "", " | "); ?>
-		</div><!-- .entry-idea-aims -->
 		
 		<div class="entry-idea-topics">
 			Themen: 
 			<?php the_terms($post->ID, "klimo_idea_topics", "", " | "); ?>
 		</div><!-- .entry-idea-topics -->
+		
+		<div class="entry-idea-aims">
+			Ziele: 
+			<?php the_terms($post->ID, "klimo_idea_aims", "", " | "); ?>
+		</div><!-- .entry-idea-aims -->
 		
 		<div class="entry-idea-excerpt">
 			<?php the_excerpt() ?>
