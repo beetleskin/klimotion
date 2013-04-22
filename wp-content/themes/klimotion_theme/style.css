@@ -244,23 +244,24 @@ background: #272727;
 border-bottom: 0px solid #1f1f1f;
 }
 
+/*alle buttons gleich machen!*/
 #commentform #submit, 
 #commentform .wpcf7-submit, 
 .wpcf7-form #submit, 
 .wpcf7-form .wpcf7-submit {
-	border: none;
+	border: 1px solid rgb(204,204,204);
 	box-shadow: none;
 	font-weight: bold;
-	color: #222;
+	color: rgb(55,55,55);
 	text-shadow: none;
-	padding: 0.75em 1em;
+	padding: 0.5em 0.5em 0.5em 0.5em ;
 }
 
 .scheme-white .main-navigation .sub-menu li, 
 .scheme-white .main-navigation .sub-menu .sub-menu li {
-background: #fff;
-border: 0px solid #f0f0f0;
-border-top: none;
+	background: #fff;
+	border: 0px solid #f0f0f0;
+	border-top: none;
 }
 
 /*no arrows*/
@@ -314,7 +315,17 @@ border-top: none;
 	font-size: 1.5rem;
 }
 
-/* ideas*/
+.comments-title {
+	font-size: 1.5rem;
+	margin-bottom: 1rem;
+}
+
+#respond h3{
+	font-size: 1.5rem;
+	margin-bottom: 1rem;
+}
+
+/* ideas + groups*/
 
 
 article.klimo_idea{

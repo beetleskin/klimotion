@@ -137,6 +137,7 @@ html input[type="button"]:hover,
 input[type="reset"]:hover, 
 input[type="submit"]:hover {
 	padding: 0.5em 0.5em 0.5em 0.5em !important;
+	font-weight: bold;
 }
 
 
