@@ -25,7 +25,7 @@ jQuery(function($) { ideaform : {
 						searchObjProps : "name",
 						minChars : 2,
 						startText : "Schule / etc.",
-						emptyText : "neues Ziel mit TAB",
+						emptyText : "neuer Eintrag mit TAB",
 						asHtmlID : "group_scopes"
 					}
 				);
