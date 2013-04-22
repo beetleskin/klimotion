@@ -214,8 +214,14 @@ function kpt_hook_save_post_idea($post_id, $post) {
 	$new_group_ids = array_key_exists('meta-group', $_POST)? $_POST['meta-group'] : array();
 	foreach ($old_groups as $old_group) {
 		if(! in_array($old_group->ID, $new_group_ids)) {
+			// relation was removed, delete db entry
 			kpt_delete_idea_group_relation($post->ID, $old_group->ID);
+		} else {
+			// relation is already stored, remove from array
+			unset($new_group_ids[array_search($old_group->ID, $new_group_ids)]);
 		}
+		// 
+		
 	}
 	foreach ($new_group_ids as $group_id) {
 		kpt_insert_idea_group_relation($post->ID, $group_id);
