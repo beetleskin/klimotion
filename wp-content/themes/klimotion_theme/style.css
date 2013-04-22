@@ -316,26 +316,26 @@ border-bottom: 0px solid #1f1f1f;
 }
 
 .comments-title {
-	font-size: 1.5rem;
+	font-size: 1.7rem;
 	margin-bottom: 1rem;
 }
 
 #respond h3{
-	font-size: 1.5rem;
+	font-size: 1.7rem;
 	margin-bottom: 1rem;
 }
 
 /* ideas + groups*/
 
 
-article.klimo_idea{
+article.type-klimo_idea{
 	  box-sizing:border-box;
       -moz-box-sizing:border-box;
       -webkit-box-sizing:border-box;
       border: 3px solid rgba(30,73,125,0.2);
 }
 
-article.klimo_localgroup{
+article.type-klimo_localgroup{
 	  box-sizing:border-box;
       -moz-box-sizing:border-box;
       -webkit-box-sizing:border-box;
@@ -344,7 +344,7 @@ article.klimo_localgroup{
       
 }
 
-#article_wrap article.klimo_localgroup
+#article_wrap article.type-klimo_localgroup
 {
 	width: 95%;
 	margin: 20px 0% 0% 2.5%;
@@ -357,31 +357,53 @@ article.type-post{
       border: 3px solid rgba(216,216,216,0.5);
 }
 
-article.klimo_localgroup .localgroup_info{
+/*style group + idea*/
+
+article.type-klimo_localgroup .localgroup_info,
+article.type-klimo_idea .entry-idea-aims{
 	margin-top: 20px;
 	padding: 2rem 0rem 2rem 0rem;
-	border-top: 2px rgba(1,139,1,0.2);
-	border-bottom: 2px rgba(1,139,1,0.2);
-	border-style: dotted;
+	border-top: 2px dotted;
+	border-bottom: 2px dotted;
 }
 
-article.klimo_localgroup .entry-group-ideas,
-article.klimo_localgroup .entry-content
+article.type-klimo_localgroup .entry-group-ideas,
+article.type-klimo_localgroup .entry-content,
+article.type-klimo_idea .entry-idea-excerpt,
+article.type-klimo_idea .entry-content,
+article.type-klimo_idea .entry-idea-attachments,
+article.type-klimo_idea .entry-idea-links
 {
-	border-bottom: 2px dotted rgba(1,139,1,0.2);
+	border-bottom: 2px dotted;
 	padding: 2rem 0rem 2rem 0rem;
 }
 
-#article_wrap article.klimo_localgroup .entry-content{
+article.type-klimo_localgroup .entry-group-ideas,
+article.type-klimo_localgroup .entry-content,
+article.type-klimo_localgroup .localgroup_info{
+	border-color: rgba(1,139,1,0.2);
+}
+
+article.type-klimo_idea .entry-idea-aims,
+article.type-klimo_idea .entry-idea-excerpt,
+article.type-klimo_idea .entry-content,
+article.type-klimo_idea .entry-idea-attachments,
+article.type-klimo_idea .entry-idea-links{
+	border-color: rgba(30,73,125,0.2);
+}
+
+#article_wrap article.type-klimo_localgroup .entry-content{
 	border-bottom: 0px;
 	padding: 0px 0px 5px 0px;
 }
 
-article.klimo_localgroup .entry-group-contact{
+article.type-klimo_localgroup .entry-group-contact,
+article.type-klimo_idea .entry-idea-group{
 	padding: 2rem 0rem 2rem 0rem;
 }
-
-
-.entry-group-contact p{
+/*letztes Element*/
+.entry-group-contact p,
+.entry-idea-group ul,
+.entry-idea-excerpt p{
 	margin: 0px;
 }

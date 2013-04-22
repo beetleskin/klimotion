@@ -43,17 +43,6 @@
 		</div><!-- .entry-idea-initiator -->
 		
 		
-		<?php if( !empty($args['group_meta']) ): ?>
-		<div class="entry-idea-group">
-			Beteiligte Gruppen:
-			<ul>
-				<?php foreach ( $args['group_meta'] as &$group): ?>
-		         	<a href="<?php echo get_permalink($group->ID); ?>"><?php echo $group->post_title; ?></a>
-		    <?php endforeach; ?>
-			</ul>
-		</div><!-- .entry-idea-group -->
-		<?php endif ?>
-		
 		<div class="entry-idea-topics">
 			Themen: 
 			<?php the_terms($post->ID, "klimo_idea_topics", "", " | "); ?>
@@ -72,15 +61,17 @@
 			<?php the_content(); ?>
 		</div><!-- .entry-content -->
 		
-		<div class="entry-idea-attachments">
-			<?php foreach ( $args['attachments_meta'] as $no => $attachment): ?>
-		          <div class="idea-attachment">
-		          	<a href="<?php echo wp_get_attachment_url($attachment->ID); ?>" target="_blank" <?php echo ((strpos($attachment->post_mime_type, "image") !== false)? 'class="image-attachment"' : '') ?>>
-		          		<?php echo (empty($attachment->post_title)? basename(get_attached_file($attachment->ID)) : $attachment->post_title) ?>
-		          	</a>
-		          </div><!-- .idea-attachment -->
-		    <?php endforeach; ?>
-		</div><!-- .entry-idea-attachments -->
+		<?php if( !empty($args['idea-attachment']) ): ?>
+			<div class="entry-idea-attachments">
+				<?php foreach ( $args['attachments_meta'] as $no => $attachment): ?>
+				      <div class="idea-attachment">
+				         <a href="<?php echo wp_get_attachment_url($attachment->ID); ?>" target="_blank" <?php echo ((strpos($attachment->post_mime_type, "image") !== false)? 'class="image-attachment"' : '') ?>>
+				          	<?php echo (empty($attachment->post_title)? basename(get_attached_file($attachment->ID)) : $attachment->post_title) ?>
+				         </a>
+				      </div><!-- .idea-attachment -->
+				<?php endforeach; ?>
+			</div><!-- .entry-idea-attachments -->
+		<?php endif; ?>
 
 		<?php if( !empty($args['links_meta']) ): ?>
 		<div class="entry-idea-links">
@@ -92,6 +83,17 @@
 		         </div><!-- .idea-link -->
 		    <?php endforeach; ?>
 		</div><!-- .entry-idea-links -->
+		<?php endif ?>
+		
+		<?php if( !empty($args['group_meta']) ): ?>
+		<div class="entry-idea-group">
+			Beteiligte Gruppen:
+			<ul>
+				<?php foreach ( $args['group_meta'] as &$group): ?>
+		         	<a href="<?php echo get_permalink($group->ID); ?>"><?php echo $group->post_title; ?></a>
+		    <?php endforeach; ?>
+			</ul>
+		</div><!-- .entry-idea-group -->
 		<?php endif ?>
 		
 	</div><!-- .entry-inner -->
