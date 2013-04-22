@@ -59,7 +59,7 @@ function kpt_adapt_register_form(&$form) {
 /**
  * SIDEBAR LOGIN
  */
-function kpt_sidebar_login_loggedout_links_hook(&$links) {
+function kpt_sidebar_login_loggedout_links_hook($links) {
 	if( array_key_exists('register', $links)) {
 		$links['register']['href'] = home_url( '/wpm_register/' );
 	}
@@ -69,7 +69,7 @@ function kpt_sidebar_login_loggedout_links_hook(&$links) {
 	return $links;
 }
 
-function kpt_sidebar_login_loggedin_links_hook(&$links) {
+function kpt_sidebar_login_loggedin_links_hook($links) {
 	if( array_key_exists('profile', $links)) {
 		$links['profile']['href'] = home_url( '/wpm_profile/' );
 	}

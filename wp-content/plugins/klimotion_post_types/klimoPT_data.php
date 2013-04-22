@@ -26,12 +26,15 @@ function kpt_insert_idea_group_relation($idea_id, $group_id, $initiated=false, $
 	$table_name = KPT_dbtable_post_idea_relations;
 	if($uid == -1)
 		$uid = get_current_user_id();
-	$response = $wpdb->insert(KPT_dbtable_post_idea_relations, array(
+	
+	// TODO: INSERT IGNORE ... needs manual query
+	$result = $wpdb->insert(KPT_dbtable_post_idea_relations, array(
 		'localgroup' 	=> $group_id,
 		'idea' 			=> $idea_id,
 		'uid'			=> $uid,
 		'initiated'		=> $initiated,
 	));
+	return $result;
 }
 
 function kpt_get_ideas_by_localgroup($group_id, $get_posts=false) {
