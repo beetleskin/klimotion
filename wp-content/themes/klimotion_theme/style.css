@@ -304,10 +304,15 @@ border-top: none;
 	#article_wrap{
 		margin-top: 25px;
 		border-top: solid 1px #ccc;
+		padding-bottom: 20px;
 	}
 	
 /*end: NS-Pagestyle*/
 
+.widget * {
+	max-width: 100%;
+	font-size: 1.5rem;
+}
 
 /* ideas*/
 
@@ -324,6 +329,14 @@ article.klimo_localgroup{
       -moz-box-sizing:border-box;
       -webkit-box-sizing:border-box;
       border: 3px solid rgba(1,139,1,0.2);
+      width: 100%;
+      
+}
+
+#article_wrap article.klimo_localgroup
+{
+	width: 95%;
+	margin: 20px 0% 0% 2.5%;
 }
 
 article.type-post{
@@ -333,7 +346,7 @@ article.type-post{
       border: 3px solid rgba(216,216,216,0.5);
 }
 
-article.klimo_localgroup .entry-content{
+article.klimo_localgroup .localgroup_info{
 	margin-top: 20px;
 	padding: 2rem 0rem 2rem 0rem;
 	border-top: 2px rgba(1,139,1,0.2);
@@ -341,7 +354,23 @@ article.klimo_localgroup .entry-content{
 	border-style: dotted;
 }
 
-article.klimo_localgroup .entry-group-ideas{
+article.klimo_localgroup .entry-group-ideas,
+article.klimo_localgroup .entry-content
+{
 	border-bottom: 2px dotted rgba(1,139,1,0.2);
-	padding: 2rem 0rem 0rem 0rem;
+	padding: 2rem 0rem 2rem 0rem;
+}
+
+#article_wrap article.klimo_localgroup .entry-content{
+	border-bottom: 0px;
+	padding: 0px 0px 5px 0px;
+}
+
+article.klimo_localgroup .entry-group-contact{
+	padding: 2rem 0rem 2rem 0rem;
+}
+
+
+.entry-group-contact p{
+	margin: 0px;
 }

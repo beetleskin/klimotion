@@ -22,31 +22,47 @@
     	
 		<?php get_template_part( 'klimo_localgroup', 'header' ); ?>
 
+		<div class="localgroup-location">
+			<div class="entry-group-district">
+				Landkreis: 
+				<?php the_terms($post->ID, "klimo_districts", "", " | "); ?>
+			</div><!-- .entry-group-district -->
 			
-		<div class="entry-group-district">
-			Landkreis: 
-			<?php the_terms($post->ID, "klimo_districts", "", " | "); ?>
-		</div><!-- .entry-group-district -->
+			<?php if( !empty($args['city_meta']) ): ?>
+			<div class="entry-group-city">
+				Stadt: 
+				<?php echo $args['zip_meta']; ?> <?php echo $args['city_meta']; ?>
+			</div><!-- .entry-group-city -->
+			<?php endif ?>
+		</div>
 		
-		<div class="entry-group-scopes">
-			Wirkungskreise: 
-			<?php the_terms($post->ID, "klimo_scopes", "", " | "); ?>
-		</div><!-- .entry-grou-scopes -->
-		
-		<?php if( !empty($args['member_meta']) ): ?>
-		<div class="entry-group-member">
-			Mitglieder: 
-			<?php echo $args['member_meta']; ?>
-		</div><!-- .entry-grou-member -->
-		<?php endif ?>
-
-		<div class="entry-content">
-			<?php the_content(); ?>
+		<div class="localgroup_info">
+			<div class="entry-group-scopes">
+				Wirkungskreise: 
+				<?php the_terms($post->ID, "klimo_scopes", "", " | "); ?>
+			</div><!-- .entry-grou-scopes -->
+			
+			<?php if( !empty($args['member_meta']) ): ?>
+			<div class="entry-group-member">
+				Mitglieder: 
+				<?php echo $args['member_meta']; ?>
+			</div><!-- .entry-grou-member -->
+			<?php endif ?>
+			
+			<?php if( !empty($args['homepage_meta']) ): ?>
+			<div class="entry-group-homepage">
+				Homepage: 
+				<a href="<?php echo $args['homepage_meta']; ?>" target="_blank"><?php echo $args['homepage_meta']; ?></a>
+			</div><!-- .entry-group-homepage -->
+			<?php endif ?>
+			</div>	
+			<div class="entry-content">
+				<?php the_content(); ?>
 		</div><!-- .entry-content -->
 		
 		<?php if( !empty($args['ideas_meta']) ): ?>
 		<div class="entry-group-ideas">
-			Ideen:
+			<p>Ideen:</p>
 			<ul>
 				<?php foreach ( $args['ideas_meta'] as &$idea): ?>
 		         	<li><a href="<?php echo get_permalink($idea->ID); ?>"><?php echo $idea->post_title; ?></a></li>
@@ -55,20 +71,6 @@
 		</div><!-- .entry-group-ideas -->
 		<?php endif ?>
 		
-		
-		<?php if( !empty($args['homepage_meta']) ): ?>
-		<div class="entry-group-homepage">
-			Homepage: 
-			<a href="<?php echo $args['homepage_meta']; ?>" target="_blank"><?php echo $args['homepage_meta']; ?></a>
-		</div><!-- .entry-group-homepage -->
-		<?php endif ?>
-		
-		<?php if( !empty($args['city_meta']) ): ?>
-		<div class="entry-group-city">
-			Stadt: 
-			<?php echo $args['zip_meta']; ?> <?php echo $args['city_meta']; ?>
-		</div><!-- .entry-group-city -->
-		<?php endif ?>
 		
 		<?php if($args['contact_meta']['publish'] === true): ?>
 		<div class="entry-group-contact">
