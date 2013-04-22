@@ -325,12 +325,23 @@ table.tribe-events-calendar tbody td{
 	font-style: normal;
 }
 
+<<<<<<< HEAD
 .event-day{
 	font-size: 2.4rem;
 }
 
 .post-list .type-tribe_events .entry-thumbnail img{
 	margin-top: 20px;
+=======
+.comments-title {
+	font-size: 1.7rem;
+	margin-bottom: 1rem;
+}
+
+#respond h3{
+	font-size: 1.7rem;
+	margin-bottom: 1rem;
+>>>>>>> d5f785a... vcx
 }
 
 .tribe-events-no-entry{
@@ -344,6 +355,7 @@ table.tribe-events-calendar tbody td{
 	border: 1px solid #bbb;
 }
 
+<<<<<<< HEAD
 span.back {
 	font-size: 1.6rem;
 }
@@ -440,6 +452,28 @@ input[type="submit"]{
 	box-shadow: none;
 	box-shadow: none;
 	padding: 0.5em;
+=======
+article.type-klimo_idea{
+	  box-sizing:border-box;
+      -moz-box-sizing:border-box;
+      -webkit-box-sizing:border-box;
+      border: 3px solid rgba(30,73,125,0.2);
+}
+
+article.type-klimo_localgroup{
+	  box-sizing:border-box;
+      -moz-box-sizing:border-box;
+      -webkit-box-sizing:border-box;
+      border: 3px solid rgba(1,139,1,0.2);
+      width: 100%;
+      
+}
+
+#article_wrap article.type-klimo_localgroup
+{
+	width: 95%;
+	margin: 20px 0% 0% 2.5%;
+>>>>>>> d5f785a... vcx
 }
 
 .hentry, .not-found {
@@ -447,6 +481,7 @@ input[type="submit"]{
 	box-shadow: none;
 }
 
+<<<<<<< HEAD
 .hentry footer, 
 .not-found footer {
 	padding: 20px;
@@ -543,6 +578,9 @@ article.type-klimo_idea .entry-inner div > a{
 .wpcf7-form textarea {
 	border: 1px solid #ccc;
 }
+=======
+/*style group + idea*/
+>>>>>>> d5f785a... vcx
 
 article.type-klimo_localgroup .localgroup_info,
 article.type-klimo_idea .entry-idea-aims{
@@ -555,7 +593,11 @@ article.type-klimo_idea .entry-idea-aims{
 article.type-klimo_localgroup .entry-group-ideas,
 article.type-klimo_localgroup .entry-content,
 article.type-klimo_idea .entry-idea-excerpt,
+<<<<<<< HEAD
 .site-content > article.type-klimo_idea .entry-content,
+=======
+article.type-klimo_idea .entry-content,
+>>>>>>> d5f785a... vcx
 article.type-klimo_idea .entry-idea-attachments,
 article.type-klimo_idea .entry-idea-links
 {
@@ -571,7 +613,11 @@ article.type-klimo_localgroup .localgroup_info{
 
 article.type-klimo_idea .entry-idea-aims,
 article.type-klimo_idea .entry-idea-excerpt,
+<<<<<<< HEAD
 .site-content > article.type-klimo_idea .entry-content,
+=======
+article.type-klimo_idea .entry-content,
+>>>>>>> d5f785a... vcx
 article.type-klimo_idea .entry-idea-attachments,
 article.type-klimo_idea .entry-idea-links{
 	border-color: rgba(30,73,125,0.2);
@@ -581,8 +627,14 @@ article.type-klimo_idea .entry-idea-links{
 	border-bottom: 0px;
 	padding: 0px 0px 5px 0px;
 }
+<<<<<<< HEAD
 .site-content > article.type-klimo_localgroup .entry-inner > div:last-of-type,
 .site-content > article.type-klimo_idea .entry-inner > div:last-of-type{
+=======
+
+article.type-klimo_localgroup .entry-group-contact,
+article.type-klimo_idea .entry-idea-group{
+>>>>>>> d5f785a... vcx
 	padding: 2rem 0rem 2rem 0rem;
 	border: none;
 }
@@ -593,6 +645,7 @@ article.type-klimo_idea .entry-idea-links{
 	box-shadow: 0;
 	border: 1px solid #ccc;
 }
+<<<<<<< HEAD
 
 #respond #commentform input, 
 #respond #commentform textarea{
@@ -622,4 +675,11 @@ article.type-tribe_events .entry-inner{
 .page-header .taxonomy-description {
 	margin-bottom: 2rem;
 	font-size: 1.6rem;
+=======
+/*letztes Element*/
+.entry-group-contact p,
+.entry-idea-group ul,
+.entry-idea-excerpt p{
+	margin: 0px;
+>>>>>>> d5f785a... vcx
 }

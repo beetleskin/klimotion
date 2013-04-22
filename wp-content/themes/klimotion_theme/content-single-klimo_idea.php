@@ -61,10 +61,10 @@
 			<?php the_content(); ?>
 		</div><!-- .entry-content -->
 		<?php if( !empty($args['attachments_meta']) ): ?>
-			<div class="entry-idea-attachments"> Dateien:
+			<div class="entry-idea-attachments">
 				<?php foreach ( $args['attachments_meta'] as $no => $attachment): ?>
-				      <div class="idea-attachment">
-				         <a href="<?php echo wp_get_attachment_url($attachment->ID); ?>" target="_blank" <?php echo ((strpos($attachment->post_mime_type, "image") !== false)? 'class="image-attachment"' : '') ?>>
+					<div class="idea-attachment">
+				    	<a href="<?php echo wp_get_attachment_url($attachment->ID); ?>" target="_blank" <?php echo ((strpos($attachment->post_mime_type, "image") !== false)? 'class="image-attachment"' : '') ?>>
 				          	<?php echo (empty($attachment->post_title)? basename(get_attached_file($attachment->ID)) : $attachment->post_title) ?>
 				         </a>
 				      </div><!-- .idea-attachment -->
@@ -73,7 +73,7 @@
 		<?php endif; ?>
 
 		<?php if( !empty($args['links_meta']) ): ?>
-		<div class="entry-idea-links"> weiterführende Links: 
+		<div class="entry-idea-links">
 			<?php foreach ( $args['links_meta'] as $linkl): ?>
 		         <div class="idea-link">
 		         	<a href="<?php echo $linkl['url']; ?>" target="_blank">
@@ -86,7 +86,7 @@
 		
 		<?php if( !empty($args['group_meta']) ): ?>
 		<div class="entry-idea-group">
-			beteiligte Gruppen:
+			Beteiligte Gruppen:
 			<ul>
 				<?php foreach ( $args['group_meta'] as &$group): ?>
 		         	<a href="<?php echo get_permalink($group->ID); ?>"><?php echo $group->post_title; ?></a>
