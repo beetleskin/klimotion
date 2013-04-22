@@ -396,13 +396,13 @@ class NewIdeaForm {
         $element = "idea_title";
         $value = sanitize_title($args[$element], true);
         // too short?
-        if(strlen($value) < self::$validationConfig['title_min_chars']) {
+        if( mb_strlen($value, get_option( 'blog_charset' )) < self::$validationConfig['title_min_chars']) {
             $response['error'][] = array(
                 'element'   => $element,
                 'message'   => "Der Titel muss mindestens " . self::$validationConfig['title_min_chars'] . " Zeichen lang sein.",
             );
         // too long?
-        } else if(strlen($value) > self::$validationConfig['title_max_chars']) {
+        } else if( mb_strlen($value, get_option( 'blog_charset' )) > self::$validationConfig['title_max_chars']) {
             $response['error'][] = array(
                 'element'   => $element,
                 'message'   => "Der Titel darf maximal " . self::$validationConfig['title_max_chars'] . " Zeichen lang sein.",
@@ -438,7 +438,7 @@ class NewIdeaForm {
 		$element = 'idea_excerp';
 		$value = sanitize_text_field($args[$element]);
 		// too long?
-		if(strlen($value) > self::$validationConfig['excerp_max_chars']) {
+		if( mb_strlen($value, get_option( 'blog_charset' )) > self::$validationConfig['excerp_max_chars']) {
             $response['error'][] = array(
                 'element'   => $element,
                 'message'   => "Kurzbeschreibung darf maximal " . self::$validationConfig['excerp_max_chars'] . " Zeichen lang sein.",
