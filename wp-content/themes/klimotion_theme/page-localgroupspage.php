@@ -28,24 +28,24 @@ get_header(); ?>
 					$lgPage->renderMap();
 					$lgPage->postRender();
 				?>
-				
 				<?php
 					LocalGroupsPage::local_groups_query();
 				?>
-				<div id="article_wrap">
-				<?php while ( have_posts() ) : the_post(); ?>
-	
-					<?php get_template_part( 'content', 'klimo_localgroup' ); ?>
-	
-				<?php endwhile; // end of the loop. ?>
-				</div>
 			</div><!-- .entry-content -->
 
 			<?php
 				// After Content theme hook callback
 				thsp_hook_after_content();
-			?>
-
+			?>	
+				
+			<div id="article_wrap">
+				<?php while ( have_posts() ) : the_post(); ?>
+	
+					<?php get_template_part( 'content', 'klimo_localgroup' ); ?>
+	
+				<?php endwhile; // end of the loop. ?>
+			</div>
+			
 		</div><!-- #content .site-content -->
 	</div><!-- #primary .content-area -->
 

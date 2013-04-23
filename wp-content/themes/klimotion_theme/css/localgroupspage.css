@@ -1,11 +1,19 @@
 #groupmap {
 	width: 95%;
 	height: 380px;
-	margin: 20px 0% 0% 2.5%;
+	margin: 0px 0px 0px 2.5%;
+	padding-bottom: 15px;
 }
 
 .jvectormap-region {
 	stroke: grey;
 	stroke-width: 1px;
 
+}
+
+#noqueryresults{
+	margin-top: 20px;
+	background: white;
+	padding: 5px;
+	border: 1px solid grey;
 }

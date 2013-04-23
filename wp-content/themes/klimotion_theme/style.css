@@ -293,22 +293,11 @@ border-bottom: 0px solid #1f1f1f;
 	 word-wrap: break-word;
 }
 
-.entry-inner article{
+.entry-inner article:only-child{
 	margin-bottom: 0px;
-	 border-bottom: solid 1px #EEEEEE;
+	border-bottom: solid 1px #EEEEEE;
 }
-
-
-
-/*start: NS-Pagestyle*/
 	
-	#article_wrap{
-		margin-top: 25px;
-		border-top: solid 1px #ccc;
-		padding-bottom: 20px;
-	}
-	
-/*end: NS-Pagestyle*/
 
 .widget * {
 	max-width: 100%;
@@ -346,8 +335,7 @@ article.type-klimo_localgroup{
 
 #article_wrap article.type-klimo_localgroup
 {
-	width: 95%;
-	margin: 20px 0% 0% 2.5%;
+	margin: 20px 0% 0% 0%;
 }
 
 article.type-post{
@@ -397,9 +385,10 @@ article.type-klimo_idea .entry-idea-links{
 	padding: 0px 0px 5px 0px;
 }
 
-article.type-klimo_localgroup .entry-group-contact,
-article.type-klimo_idea .entry-idea-group{
+article.type-klimo_localgroup .entry-inner > div:last-of-type,
+article.type-klimo_idea .entry-inner > div:last-of-type{
 	padding: 2rem 0rem 2rem 0rem;
+	border: none;
 }
 /*letztes Element*/
 .entry-group-contact p,
