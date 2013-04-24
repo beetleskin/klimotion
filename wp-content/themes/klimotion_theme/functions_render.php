@@ -69,7 +69,7 @@ class LocalGroupsPage {
 		
 		if(empty($buffer)) {
 			$termName = get_term_by( 'slug', '_district_' . $district, 'klimo_districts')->name;
-			$response['success'] = '<div id="noqueryresults"><p><strong>Für ' . $termName . '</strong> ist keine Gruppe eingetragen. Willst du eine <a href="' . home_url('newgrouppage') . '">erstellen?</a></p></div>';
+			$response['success'] = '<div id="noqueryresults"><h1>Für ' . $termName . ' ist keine Gruppe eingetragen! </h1> <p>Willst du eine <a href="' . home_url('newgrouppage') . '">erstellen?</a></p></div>';
 		} else {
 			$response['success'] = $buffer;
 		}
