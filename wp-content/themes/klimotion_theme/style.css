@@ -401,3 +401,51 @@ article.type-klimo_idea .entry-idea-links{
 	margin: 0px;
 }
 
+/*Kalender*/
+
+#tribe-events-content {
+	position: relative;
+	margin-bottom: 48px;
+	padding: 5px;
+}
+
+.tribe_events .entry-inner{
+	padding: 5px;
+}
+
+.events-archive .entry-content, 
+.events-archive .entry-header {
+	width: 100%;
+	margin: 0px;
+}
+
+.tribe-events-month-nav > span{
+margin-right: 0px;
+font-size: 1.4rem;
+}
+
+.tribe-events-calendar{
+	width: 100%;
+}
+
+.tribe-events-events > div.type-tribe_events{
+	margin-top: 20px;
+}
+
+table.tribe-events-calendar tbody td{
+	height: 100px !important;	
+}
+
+#tribe-events-content {
+	position: relative;
+	margin-bottom: 0px;
+	padding: 5px;
+}
+
+article.type-tribe_events .entry-inner{
+	border: none;
+	box-shadow: 0 0 0px #d9d9d9;
+	box-shadow: 0 0 0px rgba(0, 0, 0, 0.0);
+}
+/*Kalender*/
+
