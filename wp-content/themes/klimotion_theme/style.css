@@ -410,7 +410,7 @@ article.type-klimo_idea .entry-idea-links{
 }
 
 .tribe_events .entry-inner{
-	padding: 5px;
+	padding: 2rem 2rem 0;
 }
 
 .events-archive .entry-content, 
@@ -446,6 +446,79 @@ article.type-tribe_events .entry-inner{
 	border: none;
 	box-shadow: 0 0 0px #d9d9d9;
 	box-shadow: 0 0 0px rgba(0, 0, 0, 0.0);
+}
+
+#tribe-events-loop .type-tribe_events {
+	padding: 0px 20px 20px 20px !important;
+}
+
+.type-tribe_events div.tribe-events-event-entry{
+	padding: 0px;
+}
+
+.events-archive .event-day, .single-tribe_venue .event-day, .venue-events .event-day {
+	font-size: 2.4rem;
+	margin-top: 18px !important;
+	font-style: normal;
+}
+
+.event-day{
+	font-size: 2.4rem;
+}
+
+.post-list .type-tribe_events .entry-thumbnail img{
+	margin-top: 20px;
+}
+
+.tribe-events-no-entry{
+	margin-top: 20px;
+	border: 1px solid #bbb;
+    padding: 20px;
+    font-size: 1.5rem;
+}
+
+.post-list .type-tribe_events {
+	border: 1px solid #bbb;
+}
+
+span.back {
+	font-size: 1.6rem;
+}
+
+#tribe-events-event-meta .column {
+	float: left;
+	width: 100%;
+	padding: 0 4% 0 0;
+	text-align: left;
+	margin: 0;
+}
+
+#tribe-events-event-meta dt {
+	float: left;
+	clear: left;
+	font-weight: bold;
+	width: 80px;
+}
+
+#tribe-events-event-meta dd {
+	padding: 0;
+	margin-left: 95px;
+	margin-bottom: 10px;
+}
+
+.type-tribe_events .summary > p:last-of-type{
+	margin-bottom: 5px;
+}
+
+#tribe-events-event-meta {
+	border-bottom: 2px dotted; 
+	border-top: 2px dotted; 
+	border-color: rgba(216,216,216,0.5);
+	margin: 8px 0 18px 0;
+	padding: 12px 0 2px;
+	overflow: hidden;
+	clear: both;
+	font-size: 12px;
 }
 /*Kalender*/
 
