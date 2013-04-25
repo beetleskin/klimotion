@@ -545,6 +545,7 @@ padding: 8px !important;
 /*Kalender*/
 
 #post-2,
+#post-77,
 #post-162,
 #post-231{
 	border: none;
@@ -552,9 +553,22 @@ padding: 8px !important;
 
 /*Side-bar Login*/
 
+.widget_wp_sidebarlogin input[type="submit"],
+input[type="reset"],
+input[type="submit"]{
+	padding: 0.5em 0.5em 0.5em 0.5em ;	
+}
 
-
-
+.widget_wp_sidebarlogin input[type="password"]{
+	border-radius: 3px;
+	padding: 3px;
+	border: solid 1px #ccc;
+}
+.entry-content ul{
+	margin-left: 0;
+	list-style: none;
+	font-style: italic;
+}
 
 
 /*Side-bar Login*/
