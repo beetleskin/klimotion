@@ -555,7 +555,8 @@ padding: 8px !important;
 
 .widget_wp_sidebarlogin input[type="submit"],
 input[type="reset"],
-input[type="submit"]{
+input[type="submit"],
+input[type="password"]{
 	padding: 0.5em 0.5em 0.5em 0.5em ;	
 }
 
