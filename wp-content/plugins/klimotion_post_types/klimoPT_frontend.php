@@ -14,7 +14,7 @@ add_action('init', 'kpt_fe_hook_init', 100);
 add_filter('created_klimo_idea_topics', 'kpt_add_idea_menu_term_item_hook');
 add_filter('sidebar_login_widget_logged_out_links', 'kpt_sidebar_login_loggedout_links_hook');
 add_filter('sidebar_login_widget_logged_in_links', 'kpt_sidebar_login_loggedin_links_hook');
-add_filter( 'wpmem_register_form', 'kpt_adapt_register_form' );
+// add_filter( 'wpmem_register_form', 'kpt_adapt_register_form' );
 
 
 /**
@@ -29,7 +29,8 @@ function kpt_fe_hook_init() {
 /**
  * WP_MEMBERS
  */
-function kpt_adapt_register_form(&$form) {
+function kpt_adapt_register_form($form) {
+	//FIXME: register and profile edit have the same form. the following adaptions dont work for profile edit.
 	$form = str_replace("First Name", "Vorname", $form);
 	$form = str_replace("Last Name", "Nachname", $form);
 	$form = str_replace("Wähle einen Mitgliedernamen", "Benutzername", $form);
