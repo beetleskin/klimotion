@@ -586,6 +586,8 @@ input[type="submit"]{
 }
 
 #wpmem_login div small a,
+#wpmem_reg div small,
+#wpmem_login div small,
 #wpmem_reg div small a{
 	visibility: hidden;
 }
