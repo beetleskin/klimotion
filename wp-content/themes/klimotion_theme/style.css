@@ -569,6 +569,18 @@ input[type="submit"]{
 	list-style: none;
 	font-style: italic;
 }
+#wpmem_reg fieldset div,
+#wpmem_login fieldset div{
+	margin-bottom: 20px;
+}
+#wpmem_login fieldset legend,
+#wpmem_reg fieldset legend{
+	margin-bottom: 20px;
+	font-style: italic;
+}
 
-
+#wpmem_login fieldset .button_div,
+#wpmem_reg fieldset .button_div{
+	margin-bottom: 20px;
+}
 /*Side-bar Login*/
