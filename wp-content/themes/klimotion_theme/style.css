@@ -555,12 +555,12 @@ padding: 8px !important;
 
 .widget_wp_sidebarlogin input[type="submit"],
 input[type="reset"],
-input[type="submit"],
-input[type="password"]{
+input[type="submit"]{
 	padding: 0.5em 0.5em 0.5em 0.5em ;	
 }
 
-.widget_wp_sidebarlogin input[type="password"]{
+.widget_wp_sidebarlogin input[type="password"],
+.div_text input[type="password"]{
 	border-radius: 3px;
 	padding: 3px;
 	border: solid 1px #ccc;
@@ -583,5 +583,10 @@ input[type="password"]{
 #wpmem_login fieldset .button_div,
 #wpmem_reg fieldset .button_div{
 	margin-bottom: 20px;
+}
+
+#wpmem_login div small a,
+#wpmem_reg div small a{
+	visibility: hidden;
 }
 /*Side-bar Login*/
