@@ -230,7 +230,7 @@ padding-bottom: 0.8rem;
 }
 
 #main {
-	padding: 5rem 0;
+	padding: 5rem 0 3rem 0;
 }
 
 #menu-klimo_primary:hover .sub-menu {
@@ -349,6 +349,16 @@ article.type-post{
       border: 3px solid rgba(216,216,216,0.5);
 }
 
+.site-content >.entry-inner{
+	 box-sizing:border-box;
+     -moz-box-sizing:border-box;
+     -webkit-box-sizing:border-box;
+     border: 3px solid rgba(1,139,1,0.2);
+     box-shadow: 0 0 2px #d9d9d9;
+	box-shadow: 0 0 2px rgba(0, 0, 0, 0.30);
+}
+
+
 /*style group + idea*/
 
 article.type-klimo_localgroup .localgroup_info,
@@ -394,6 +404,8 @@ article.type-klimo_idea .entry-idea-links{
 	padding: 2rem 0rem 2rem 0rem;
 	border: none;
 }
+
+
 /*letztes Element*/
 .entry-group-contact p,
 .entry-idea-group ul,
@@ -410,7 +422,7 @@ article.type-klimo_idea .entry-idea-links{
 }
 
 .tribe_events .entry-inner{
-	padding: 2rem 2rem 0;
+	padding: 2rem 1rem 0;
 }
 
 .events-archive .entry-content, 
@@ -420,8 +432,8 @@ article.type-klimo_idea .entry-idea-links{
 }
 
 .tribe-events-month-nav > span{
-margin-right: 0px;
-font-size: 1.4rem;
+	margin-right: 0px;
+	font-size: 1.4rem;
 }
 
 .tribe-events-calendar{
@@ -444,8 +456,8 @@ table.tribe-events-calendar tbody td{
 
 article.type-tribe_events .entry-inner{
 	border: none;
-	box-shadow: 0 0 0px #d9d9d9;
-	box-shadow: 0 0 0px rgba(0, 0, 0, 0.0);
+	box-shadow: 0 0 2px #d9d9d9;
+	box-shadow: 0 0 2px rgba(0, 0, 0, 0.15);
 }
 
 #tribe-events-loop .type-tribe_events {
@@ -520,5 +532,35 @@ span.back {
 	clear: both;
 	font-size: 12px;
 }
+
+table.tribe-events-calendar td div.type-tribe_events{
+	border-color: rgba(102,102,102,1);
+}
+
+.eventsListWidget .upcoming li{
+border: none;
+padding: 8px !important;
+}
+
 /*Kalender*/
 
+#post-2,
+#post-162{
+	border: none;
+}
+
+/*Side-bar Login*/
+
+.sidebar_login_links li{
+	margin-left: 30%;
+
+}
+
+.avatar_container img{
+	width: 100%
+}
+
+
+
+
+/*Side-bar Login*/
