@@ -592,3 +592,7 @@ input[type="submit"]{
 	visibility: hidden;
 }
 /*Side-bar Login*/
+
+#masthead .inner hgroup{
+	visibility: hidden;
+}
