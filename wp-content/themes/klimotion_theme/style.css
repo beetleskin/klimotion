@@ -584,15 +584,16 @@ input[type="submit"]{
 #wpmem_reg fieldset .button_div{
 	margin-bottom: 20px;
 }
-
+/*
 #wpmem_login div small a,
 #wpmem_reg div small,
 #wpmem_login div small,
 #wpmem_reg div small a{
 	visibility: hidden;
 }
-/*Side-bar Login*/
+
 
 #masthead .inner hgroup{
 	visibility: hidden;
 }
+*/
