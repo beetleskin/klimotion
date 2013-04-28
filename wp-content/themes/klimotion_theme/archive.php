@@ -20,7 +20,6 @@ get_header(); ?>
 
 			<?php if ( have_posts() ) : ?>
 				
-				<!-- 
 				<header class="page-header">
 					<h1 class="page-title">
 						<?php
@@ -68,7 +67,7 @@ get_header(); ?>
 								echo apply_filters( 'tag_archive_meta', '<div class="taxonomy-description">' . $term->description . '</div>' );
 						}
 					?>
-				</header>--><!-- .page-header -->
+				</header><!-- .page-header -->
 				
 
 				<?php thsp_content_nav( 'nav-above' ); ?>
