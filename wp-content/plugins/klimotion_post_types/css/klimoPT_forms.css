@@ -90,7 +90,9 @@ form#groupform fieldset div.form-field-wrap input[type=file]{
 .form-field-wrap  #idea_links table input[type="file"]{
 	width: 100%;
 	line-height: 10%;
+	
 }
+
 
 .form-field-wrap  #idea_files table td,
 .form-field-wrap  #idea_links table td{

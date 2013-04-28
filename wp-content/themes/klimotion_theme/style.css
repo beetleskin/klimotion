@@ -452,3 +452,7 @@ input[type="submit"]{
 	padding: 2rem;
 	border-top: 1px solid #ccc;
 }	
+
+.site-content > .page-header{
+	padding: 2rem 2rem 0;
+}
