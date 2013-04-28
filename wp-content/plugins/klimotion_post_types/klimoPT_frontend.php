@@ -14,7 +14,7 @@ add_action('init', 'kpt_fe_hook_init', 100);
 add_filter('created_klimo_idea_topics', 'kpt_add_idea_menu_term_item_hook');
 add_filter('sidebar_login_widget_logged_out_links', 'kpt_sidebar_login_loggedout_links_hook');
 add_filter('sidebar_login_widget_logged_in_links', 'kpt_sidebar_login_loggedin_links_hook');
-// add_filter( 'wpmem_register_form', 'kpt_adapt_register_form' );
+add_filter( 'wpmem_register_form', 'kpt_adapt_register_form' );
 
 
 /**
@@ -30,12 +30,13 @@ function kpt_fe_hook_init() {
  * WP_MEMBERS
  */
 function kpt_adapt_register_form($form) {
-	//FIXME: register and profile edit have the same form. the following adaptions dont work for profile edit.
 	$form = str_replace("First Name", "Vorname", $form);
 	$form = str_replace("Last Name", "Nachname", $form);
 	$form = str_replace("Wähle einen Mitgliedernamen", "Benutzername", $form);
+	$form = str_replace('<small>Powered by <a href="http://rocketgeek.com" target="_blank">WP-Members</a></small>', '', $form);
 	
-	$fieldset1_begin = '<label for="username" class="text">Benutzername<font class="req">*</font></label>';
+	//FIXME: register and profile edit have the same form. the following adaptions dont work for profile edit.
+	/*$fieldset1_begin = '<label for="username" class="text">Benutzername<font class="req">*</font></label>';
 	$fieldset_inter = '<label for="first_name" class="text">Vorname</label>';
 	$fieldset2_end = '<div class="div_text"><input name="tos"';
 	$form = str_replace($fieldset1_begin, '<fieldset><legend>Benötigt</legend><div class="slide-wrap">' . $fieldset1_begin, $form);
@@ -52,7 +53,8 @@ function kpt_adapt_register_form($form) {
 				});
 			});
 		});';
-	return $form . "<script>" . $script . "</script>";
+	return $form . "<script>" . $script . "</script>";*/
+	return $form;
 	 
 }
 
@@ -97,24 +99,83 @@ function kpt_create_menu() {
 	
 	if($menu_id == 0 || is_wp_error($menu_id)) {
 		// TODO: log
-		return;
+		return false;
 	}
+	
+	
+	
+	// create localgroups and idea pages
+	$groupsPage = get_page_by_path('localgroupspage');
+	$ideasPage = get_page_by_path('ideaspage');
+	
+	if(!$groupsPage) {
+		$groupsPage = wp_insert_post( array(
+			'post_name'			=> 'localgroupspage',
+			'post_title'		=> __('Lokalgruppen'),
+			'post_type'			=> 'page',
+			'post_status'		=> 'publish',
+			'comment_status'	=> 'closed',
+			'ping_status'		=> 'closed',
+			
+		) );
+	} else {
+		$groupsPage = $groupsPage->ID;
+	}
+
+	if(!$ideasPage) {
+		$ideasPage = wp_insert_post( array(
+			'post_name'			=> 'ideaspage',
+			'post_title'		=> __('Ideenpool'),
+			'post_type'			=> 'page',
+			'post_status'		=> 'publish',
+			'comment_status'	=> 'closed',
+			'ping_status'		=> 'closed',
+			
+		) );
+	} else {
+		$ideasPage = $ideasPage->ID;
+	}
+
+
+
+	if( is_wp_error($groupsPage) || is_wp_error($ideasPage) ) {
+		// TODO: log
+		return false;
+	}
+	
+	
 	
 	// create 'alle-ideen' item if not exist
 	$menu_items = wp_get_nav_menu_items($menu_id);
+	$ideasMenuItemExists = false;
+	$groupsMenuItemExists = false;
 	foreach ($menu_items as $item) {
-		if($item->object == 'custom' && $item->post_name == "alle-ideen") {
-			return $menu_id;
+		if($item->object == 'page' && $item->object_id == $ideasPage) {
+			$ideasMenuItemExists = true;
+		} else if($item->object == 'page' && $item->object_id == $groupsPage) {
+			$groupsMenuItemExists = true;
 		}
 	}
 	
-	wp_update_nav_menu_item($menu_id, 0, array(
-        'menu-item-title' 	=>  __('Alle Ideen'),
-        'menu-item-object'  => 'klimo_idea',
-        'menu-item-type' 	=> 'custom',  
-        'menu-item-url' 	=> get_post_type_archive_link( 'klimo_idea' ),
-        'menu-item-status'	=> 'publish',
-	));
+	if( !$groupsMenuItemExists ) {
+		wp_update_nav_menu_item($menu_id, 0, array(
+	        'menu-item-object'  	=> 'page',
+	        'menu-item-type' 		=> 'post_type',  
+	        'menu-item-object-id'	=> $groupsPage,
+	        'menu-item-url' 		=> home_url('/localgroupspage/'),
+	        'menu-item-status'		=> 'publish',
+		));
+	}
+	
+	if( !$ideasMenuItemExists ) {
+		wp_update_nav_menu_item($menu_id, 0, array(
+	        'menu-item-object'  	=> 'page',
+	        'menu-item-type' 		=> 'post_type',  
+	        'menu-item-object-id'	=> $ideasPage,
+	        'menu-item-url' 		=> home_url('/ideaspage/'),
+	        'menu-item-status'		=> 'publish',
+		));
+	}
 	
 	return $menu_id;
 }
@@ -134,7 +195,7 @@ function kpt_add_idea_menu_term_item_hook($term_id) {
 	$menu_items = wp_get_nav_menu_items($menu->term_id);
 	$parent_id = 0;
 	foreach ($menu_items as $item) {
-		if($item->object == 'custom' && $item->post_name == "alle-ideen") {
+		if($item->object == 'page' && $item->object_id == $groupsPage) {
 			$parent_id = $item->ID;
 			break;
 		}

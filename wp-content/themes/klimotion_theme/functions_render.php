@@ -15,7 +15,10 @@ class LocalGroupsPage {
 	private static $ioConfig = array();
 	private static $nonceName = "klimoLocalGroupNonce";
 	private static $defaultQuery = array( 
-		'post_type' => array('klimo_localgroup') );
+		'post_type' 		=> array('klimo_localgroup'),
+		'status' 			=> 'publish',
+		'posts_per_page'	=> -1
+	 );
 	
 	
 	
@@ -60,7 +63,7 @@ class LocalGroupsPage {
 		// query groups
 		ob_start();
         while (have_posts()) : the_post();
-            get_template_part('content');
+            get_template_part('content', 'klimo_localgroup');
         endwhile;
 	
 		$buffer = ob_get_contents();
