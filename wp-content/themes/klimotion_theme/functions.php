@@ -3,15 +3,9 @@
  *  @package Klimotion
  */
  
+// TODO: http://bjk5.com/post/44698559168/breaking-down-amazons-mega-dropdown
+
 
 include_once ('functions_render.php');
-
-
-add_filter( 'excerpt_more', 'new_excerpt_more' );
-
-
-function new_excerpt_more( $more ) {
-	return ' <a class="read-more" href="'. get_permalink( get_the_ID() ) . '">weiterlesen →</a>';
-}
 
 ?>

@@ -24,7 +24,7 @@ class NewIdeaForm {
     
 
     function __construct() {
-        $this -> form_action = "";
+        $this -> form_action = "wp-admin/admin-ajax.php?action=ideaform_submit-ajax";
         $this -> form_id = "ideaform";
         $this -> form_method = "POST";
     }

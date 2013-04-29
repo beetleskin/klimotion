@@ -4,11 +4,20 @@
 /* front end action hooks */
 add_action('init', 'LocalGroupsPage::initAjax');
 add_action('init', 'klimo_render_init');
+add_filter( 'excerpt_more', 'new_excerpt_more' );
 
 function klimo_render_init() {
 	wp_enqueue_style('thickbox');
 	wp_enqueue_script('thickbox');
 }
+
+
+function new_excerpt_more( $more ) {
+	return ' <a class="read-more" href="'. get_permalink( get_the_ID() ) . '">weiterlesen →</a>';
+}
+
+
+
 
 class LocalGroupsPage {
 	
