@@ -485,6 +485,10 @@ article.type-klimo_idea{
 	border: 3px solid #0b4982;
 }
 
+article footer.entry-meta{
+	padding: 0.3rem 0.3rem 0.3rem 2rem;
+}
+
 #noqueryresults{
 	margin-top: 20px;
 	background: white;
