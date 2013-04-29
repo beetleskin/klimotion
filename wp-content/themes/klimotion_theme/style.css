@@ -335,7 +335,7 @@ table.tribe-events-calendar tbody td{
 
 .tribe-events-no-entry{
 	margin-top: 20px;
-	border: 1px solid #bbb;
+	border: 1px solid #ccc;
     padding: 20px;
     font-size: 1.5rem;
 }
@@ -454,18 +454,33 @@ input[type="submit"]{
 	border-top: 1px solid #eee;
 }	
 
-.site-content > .page-header{
-	padding: 0rem 2rem 0;
+article.type-klimo_idea footer.entry-meta{
+	border-top: 1px solid #0b4982;
 }
 
-.site-content > .archive-post{
+article.type-klimo_localgroup footer.entry-meta{
+	border-top: 1px solid #00883b;
+}
+
+.site-content > .page-header{
+	padding: 0rem 2rem 0;
+	font-size: 2.4rem;
+}
+
+.type-tribe_events .entry-header{
+	padding: 2rem 0rem 0;
+
+}
+
+.site-content > .archive-post,
+.site-content > article.type-post{
 	border: 3px solid #eee;
 	margin-bottom: 2rem;
 }
 
 .archive-post article {
 	margin-bottom: 0px;
-}
+} 
 
 h1.page-title{
 	padding-bottom: 0.8rem;
@@ -487,6 +502,23 @@ article.type-klimo_idea{
 
 article footer.entry-meta{
 	padding: 0.3rem 0.3rem 0.3rem 2rem;
+}
+
+
+article.type-klimo_idea .entry-inner > div{
+	font-weight: bold;
+}
+
+
+article.type-klimo_idea .entry-inner div > p,
+article.type-klimo_idea .entry-inner div > a{
+	font-weight: normal;
+}
+
+.entry-group-contact p,
+.entry-idea-group ul,
+.entry-idea-excerpt p{
+	margin: 0px;
 }
 
 #noqueryresults{
@@ -512,4 +544,82 @@ article footer.entry-meta{
 	border: 1px solid #ccc;
 }
 
+article.type-klimo_localgroup .localgroup_info,
+article.type-klimo_idea .entry-idea-aims{
+	margin-top: 20px;
+	padding: 2rem 0rem 2rem 0rem;
+	border-top: 2px dotted;
+	border-bottom: 2px dotted;
+}
 
+article.type-klimo_localgroup .entry-group-ideas,
+article.type-klimo_localgroup .entry-content,
+article.type-klimo_idea .entry-idea-excerpt,
+.site-content > article.type-klimo_idea .entry-content,
+article.type-klimo_idea .entry-idea-attachments,
+article.type-klimo_idea .entry-idea-links
+{
+	border-bottom: 2px dotted;
+	padding: 2rem 0rem 2rem 0rem;
+}
+
+article.type-klimo_localgroup .entry-group-ideas,
+article.type-klimo_localgroup .entry-content,
+article.type-klimo_localgroup .localgroup_info{
+	border-color: rgba(1,139,1,0.2);
+}
+
+article.type-klimo_idea .entry-idea-aims,
+article.type-klimo_idea .entry-idea-excerpt,
+.site-content > article.type-klimo_idea .entry-content,
+article.type-klimo_idea .entry-idea-attachments,
+article.type-klimo_idea .entry-idea-links{
+	border-color: rgba(30,73,125,0.2);
+}
+
+#article_wrap article.type-klimo_localgroup .entry-content{
+	border-bottom: 0px;
+	padding: 0px 0px 5px 0px;
+}
+.site-content > article.type-klimo_localgroup .entry-inner > div:last-of-type,
+.site-content > article.type-klimo_idea .entry-inner > div:last-of-type{
+	padding: 2rem 0rem 2rem 0rem;
+	border: none;
+}
+.commentlist li.comment article {
+	padding: 15px;
+	background: #fff;
+	box-shadow: 0;
+	box-shadow: 0;
+	border: 1px solid #ccc;
+}
+
+#respond #commentform input, 
+#respond #commentform textarea{
+	border: 1px solid #ccc;
+}
+
+#tribe-events-event-meta {
+	border-bottom: 2px dotted; 
+	border-top: 2px dotted; 
+	border-color: rgba(216,216,216,0.5);
+	margin: 8px 0 18px 0;
+	padding: 12px 0 2px;
+	overflow: hidden;
+	clear: both;
+	font-size: 12px;
+}
+
+article.type-tribe_events .entry-inner{
+	border: 3px solid #eee;
+	
+}
+
+.tribe_events .entry-inner{
+	padding: 0rem 2rem 0rem;
+}
+
+.page-header .taxonomy-description {
+	margin-bottom: 2rem;
+	font-size: 1.6rem;
+}
