@@ -29,7 +29,7 @@ class NewGroupForm {
     
 
     function __construct() {
-        $this -> form_action = "";
+        $this -> form_action = "wp-admin/admin-ajax.php?action=groupform_submit-ajax";;
         $this -> form_id = "groupform";
         $this -> form_method = "POST";
     }

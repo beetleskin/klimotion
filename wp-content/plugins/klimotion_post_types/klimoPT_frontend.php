@@ -14,7 +14,10 @@ add_action('init', 'kpt_fe_hook_init', 100);
 add_filter('created_klimo_idea_topics', 'kpt_add_idea_menu_term_item_hook');
 add_filter('sidebar_login_widget_logged_out_links', 'kpt_sidebar_login_loggedout_links_hook');
 add_filter('sidebar_login_widget_logged_in_links', 'kpt_sidebar_login_loggedin_links_hook');
-add_filter( 'wpmem_register_form', 'kpt_adapt_register_form' );
+add_filter('wpmem_register_form', 'kpt_adapt_register_form');
+add_filter('login_url', 'kpt_override_login_page', 10, 2);
+add_filter('register_url', 'kpt_override_register_page', 10, 2);
+add_filter('lostpassword_url', 'kpt_override_lostpw_page', 10, 2);
 
 
 /**
@@ -26,9 +29,53 @@ function kpt_fe_hook_init() {
 	NewGroupForm::initAjax();
 }
 
+
 /**
  * WP_MEMBERS
  */
+function kpt_override_login_page($login_url, $redirect) {
+	$wpm_login_url = get_permalink(get_page_by_path( 'wpm_login' ) );
+
+	if(!$wpm_login_url) {
+		// TODO: log error
+		return $login_url;
+	}
+	
+	if ( !empty($redirect) )
+		$wpm_login_url = add_query_arg('redirect_to', urlencode($redirect), $wpm_login_url);	
+
+	return $wpm_login_url;
+}
+
+function kpt_override_register_page($register_url, $redirect) {
+	$wpm_register_url = get_permalink(get_page_by_path( 'wpm_register' ) );
+	
+	if(!$wpm_register_url) {
+		// TODO: log error
+		return $register_url;
+	}
+	
+	if ( !empty($redirect) )
+		$wpm_register_url = add_query_arg('redirect_to', urlencode($redirect), $wpm_register_url);	
+
+	return $wpm_register_url;
+}
+
+function kpt_override_lostpw_page($lostpw_url, $redirect) {
+	$wpm_lostpw_url = get_permalink(get_page_by_path( 'wpm_password' ) );
+
+	if(!$wpm_lostpw_url) {
+		// TODO: log error
+		return $lostpw_url;
+	}
+	
+	if ( !empty($redirect) )
+		$wpm_lostpw_url = add_query_arg('redirect_to', urlencode($redirect), $wpm_lostpw_url);	
+
+	return $wpm_lostpw_url;
+}
+
+
 function kpt_adapt_register_form($form) {
 	$form = str_replace("First Name", "Vorname", $form);
 	$form = str_replace("Last Name", "Nachname", $form);
