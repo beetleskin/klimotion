@@ -455,7 +455,7 @@ input[type="submit"]{
 }	
 
 .site-content > .page-header{
-	padding: 2rem 2rem 0;
+	padding: 0rem 2rem 0;
 }
 
 .site-content > .archive-post{
