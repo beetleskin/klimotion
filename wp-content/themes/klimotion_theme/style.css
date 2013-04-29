@@ -613,3 +613,8 @@ article.type-tribe_events .entry-inner{
 .tribe_events .entry-inner{
 	padding: 0rem 2rem 0rem;
 }
+
+.page-header .taxonomy-description {
+	margin-bottom: 2rem;
+	font-size: 1.6rem;
+}
