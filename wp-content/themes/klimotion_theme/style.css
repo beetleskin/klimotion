@@ -467,6 +467,11 @@ article.type-klimo_localgroup footer.entry-meta{
 	font-size: 2.4rem;
 }
 
+.type-tribe_events .entry-header{
+	padding: 2rem 0rem 0;
+
+}
+
 .site-content > .archive-post,
 .site-content > article.type-post{
 	border: 3px solid #eee;
