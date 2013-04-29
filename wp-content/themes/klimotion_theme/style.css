@@ -71,6 +71,7 @@ margin: 0 0 0.1em;
 .entry-meta {
 	font-size: 1.2rem;
 	font-style: italic;
+	padding: 0px;
 }
 
 .hentry .entry-inner,
@@ -450,9 +451,61 @@ input[type="submit"]{
 .not-found footer {
 	padding: 20px;
 	padding: 2rem;
-	border-top: 1px solid #ccc;
+	border-top: 1px solid #eee;
 }	
 
 .site-content > .page-header{
 	padding: 2rem 2rem 0;
 }
+
+.site-content > .archive-post{
+	border: 3px solid #eee;
+	margin-bottom: 2rem;
+}
+
+.archive-post article {
+	margin-bottom: 0px;
+}
+
+h1.page-title{
+	padding-bottom: 0.8rem;
+	margin: 0px;
+}
+
+.taxonomy-description{
+	margin-bottom: 2rem;
+}
+
+article.type-klimo_localgroup{
+	border: 3px solid #00883b;
+	margin-bottom: 2rem;
+}
+
+article.type-klimo_idea{
+	border: 3px solid #0b4982;
+}
+
+#noqueryresults{
+	margin-top: 20px;
+	background: white;
+	padding: 5px;
+	box-sizing:border-box;
+    -moz-box-sizing:border-box;
+    -webkit-box-sizing:border-box;
+    border: 3px solid #00883b;
+}
+
+#noqueryresults p{
+	margin: 0px;
+}
+#noqueryresults h1{
+	font-size: 2.4rem;
+}
+
+.wpcf7-form input[type=text], 
+.wpcf7-form input[type=email], 
+.wpcf7-form textarea {
+	border: 1px solid #ccc;
+}
+
+
