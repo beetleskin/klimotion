@@ -61,7 +61,7 @@
 			<?php the_content(); ?>
 		</div><!-- .entry-content -->
 		
-		<?php if( !empty($args['idea-attachment']) ): ?>
+		<?php if( !empty($args['attachments_meta']) ): ?>
 			<div class="entry-idea-attachments">
 				<?php foreach ( $args['attachments_meta'] as $no => $attachment): ?>
 				      <div class="idea-attachment">
