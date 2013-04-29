@@ -2,7 +2,6 @@
  * @author Stefan Kaiser
  */
 
-
 jQuery(function($) { ideaform : {
 	
 		function IdeaForm(wrapper) {
