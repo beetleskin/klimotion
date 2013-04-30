@@ -383,7 +383,7 @@ table.tribe-events-calendar td div.type-tribe_events{
 }
 
 .eventsListWidget .upcoming li{
-border: none;
+border: 1px solid #ccc;
 padding: 8px !important;
 }
 

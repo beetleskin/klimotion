@@ -51,8 +51,11 @@ ob_end_clean();
 			if( $event->AllDay ) {
 				echo ' <small><em>('.__('All Day','tribe-events-calendar').')</em></small>';
          	}*/
+         	if( !$event->AllDay ) {
+         		echo ("Uhr");
+         	}
       ?> 
-	</div>
+	</div> 
 	<div class="event">
 		<a href="<?php echo get_permalink($post->ID); ?>"><?php echo $post->post_title; ?></a>
 	</div>
