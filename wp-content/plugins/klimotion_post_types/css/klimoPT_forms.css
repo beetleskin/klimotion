@@ -162,7 +162,16 @@ label[for=group_contact_publish]{
 	font-style: normal;
 }
 
-#groupform #errormessage{
+/* error handling */
+#errormessage {
 	background: #eee;
-	padding: 2rem;
+}
+
+#errormessage p {
+	padding: 0em 1em 0.5em 1em;
+	margin: 0;
+}
+
+#errormessage p:first-child {
+	padding-top: 0.5rem;
 }
