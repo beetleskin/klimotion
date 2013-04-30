@@ -164,22 +164,22 @@ class NewGroupForm {
       	  			<legend>Ansprechpartner</legend>
       
 					<div class="form-field-wrap">
-						<label for="group_contact_name"><?php echo __("Name") ?></label>
+						<label for="group_contact_name"><?php echo __("Name *") ?></label>
 						<input type="text" id="group_contact_name" name="group_contact_name"  placeholder="Name">
 					</div><!-- .form-field-wrap -->
 					
 					<div class="form-field-wrap">
-						<label for="group_contact_surname"><?php echo __("Vorname") ?></label>
+						<label for="group_contact_surname"><?php echo __("Vorname *") ?></label>
 						<input type="text" id="group_contact_surname" name="group_contact_surname"  placeholder="Vorname">
 					</div><!-- .form-field-wrap -->
 					
 					<div class="form-field-wrap">
-						<label for="group_contact_mail"><?php echo __("E-Mail") ?></label>
+						<label for="group_contact_mail"><?php echo __("E-Mai *") ?></label>
 						<input type="email" id="group_contact_mail" name="group_contact_mail"  placeholder="E-Mail">
 					</div><!-- .form-field-wrap -->
 					
 					<div class="form-field-wrap">
-						<label for="group_contact_phone"><?php echo __("Telefon") ?></label>
+						<label for="group_contact_phone"><?php echo __("Telefon *") ?></label>
 						<input type="email" id="group_contact_phone" name="group_contact_phone"  placeholder="Telefon">
 					</div><!-- .form-field-wrap -->
 					
@@ -188,7 +188,6 @@ class NewGroupForm {
 						<input type="checkbox" id="group_contact_publish" name="group_contact_publish" value="group_contact_publish" checked="checked">
 					</div><!-- .form-field-wrap -->
 				</fieldset>
-
 				<button form="<?php echo $this->form_id ?>" id="group_submit" <?php if($data['isLoggedIn'] == false) echo 'nopriv="nopriv"' ?>>Abschicken</button>
         	</form>
        </div><!-- .groupform_wrap -->
