@@ -310,6 +310,10 @@ table.tribe-events-calendar tbody td{
 	padding: 5px;
 }
 
+#content .tribe-events-calendar a,
+#content .tribe-events-calendar a:visited{
+	color: #0b4982;
+}
 
 #tribe-events-loop .type-tribe_events {
 	padding: 0px 20px 20px 20px !important;
@@ -383,6 +387,10 @@ border: none;
 padding: 8px !important;
 }
 
+.tribe-events-next-month img{
+}
+
+
 /*End: Kalender*/
 
 /*Side-bar Login*/
@@ -399,11 +407,8 @@ input[type="submit"]{
 	padding: 3px;
 	border: solid 1px #ccc;
 }
-.entry-content ul{
-	margin-left: 0;
-	list-style: none;
-	font-style: italic;
-}
+
+
 #wpmem_reg fieldset div,
 #wpmem_login fieldset div{
 	margin-bottom: 20px;
@@ -471,8 +476,13 @@ article.type-klimo_localgroup footer.entry-meta{
 	padding: 2rem 0rem 0;
 
 }
+.site-content header.page-header~div.archive-post,
+.site-content header.page-header~div.archive-post .type-klimo_localgroup .entry-content{
+	border: none; 
+}
 
-.site-content > .archive-post,
+.site-content > .archive-post, 
+.site-content > .archive-post article.type-post,
 .site-content > article.type-post,
 .site-content > article.type-page{
 	border: 3px solid #eee;
@@ -481,6 +491,7 @@ article.type-klimo_localgroup footer.entry-meta{
 
 .entry-inner > article.type-page{
 	margin-bottom: 0px;
+	padding: 0rem 0rem 1rem 0rem;
 }
 .site-content > article.type-page{}
 .archive-post article {
@@ -635,4 +646,15 @@ article.type-tribe_events .entry-inner{
 
 .site-content .page-header h1.page-title:only-child{
 	margin-bottom: 2rem;
+}
+
+article.type-klimo_localgroup footer.entry-meta:empty{
+	border:none;
+}
+
+.entry-content ul{
+	margin-left: 0;
+	list-style: disc !important;
+	padding-left: 2rem;
+	font-style: italic;
 }

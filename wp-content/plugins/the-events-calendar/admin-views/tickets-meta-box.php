@@ -31,7 +31,7 @@ if ( !defined( 'ABSPATH' ) ) {
 		</td>
 	</tr>
 	<tr id="ticket_form" class="ticket_form">
-		<td colspan="2" class="tribe_sectionheader">
+		<td colspan="2" class="tribe_sectionheader">kjkljlk
 			<div id="tribe-loading"><span></span></div>
 			<table id="ticket_form_table" class="eventtable ticket_form">
 

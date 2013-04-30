@@ -30,7 +30,7 @@
 			
 			<?php if( !empty($args['city_meta']) ): ?>
 			<div class="entry-group-city">
-				Stadt: 
+				Ort: 
 				<?php echo $args['zip_meta']; ?> <?php echo $args['city_meta']; ?>
 			</div><!-- .entry-group-city -->
 			<?php endif ?>
@@ -38,7 +38,7 @@
 		
 		<div class="localgroup_info">
 			<div class="entry-group-scopes">
-				Wirkungskreise: 
+				Wirkungskreise:
 				<?php the_terms($post->ID, "klimo_scopes", "", " | "); ?>
 			</div><!-- .entry-grou-scopes -->
 			

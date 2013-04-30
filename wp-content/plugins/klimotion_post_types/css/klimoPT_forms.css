@@ -156,3 +156,13 @@ label[for=group_contact_publish]{
 }
 
 
+#content .form-field-wrap a,
+#content .form-field-wrap a:visited{
+	color: #0b4982;
+	font-style: normal;
+}
+
+#groupform #errormessage{
+	background: #eee;
+	padding: 2rem;
+}

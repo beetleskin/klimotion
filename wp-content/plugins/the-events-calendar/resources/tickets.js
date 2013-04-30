@@ -228,7 +228,7 @@ jQuery( document ).ready( function ( $ ) {
 
 	function tickets_start_spin() {
 		jQuery( '#event_tickets' ).css( 'opacity', '0.5' );
-		jQuery( "#tribe-loading" ).show();
+		//jQuery( "#tribe-loading" ).show();
 	}
 
 	function tickets_stop_spin() {

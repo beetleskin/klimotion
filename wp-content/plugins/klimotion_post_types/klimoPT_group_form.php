@@ -109,7 +109,7 @@ class NewGroupForm {
 		        	</div><!-- .form-field-wrap -->
 			        
 					<div class="form-field-wrap">
-						<label for="group_scopes"><?php echo __("Wirkungskreis") ?> *</label>
+						<label for="group_scopes"><?php echo __("Wirkungskreis") ?> * (nach jedem Begriff <a href="http://klimotion.de/wp-content/uploads/2013/04/tab-key.png" target="_blank">Tab</a> drücken): </label>
 						<input type="text" id="group_scopes" name="group_scopes">
 					</div><!-- .form-field-wrap -->
 					
