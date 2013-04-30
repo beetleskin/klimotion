@@ -479,6 +479,10 @@ article.type-klimo_localgroup footer.entry-meta{
 	margin-bottom: 2rem;
 }
 
+.entry-inner > article.type-page{
+	margin-bottom: 0px;
+}
+.site-content > article.type-page{}
 .archive-post article {
 	margin-bottom: 0px;
 } 

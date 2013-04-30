@@ -19,10 +19,10 @@ form#groupform h1{
 }
 
 form#ideaform h1{
-	color: #1e497d;
+	color: #0b4982;
 }
 form#groupform h1{
-	color: #018a01;
+	color: #00883b;
 }
 
 fieldset div label {
@@ -47,11 +47,11 @@ fieldset legend {
 }
 
 form#ideaform fieldset legend {
-	color: #1e497d;
+	color: #0b4982;
 }
 
 form#groupform fieldset legend {
-	color: #018a01;
+	color: #00883b;
 }
 
 form#ideaform fieldset div.form-field-wrap label[for=ideadescription],
@@ -108,11 +108,11 @@ fieldset{
 	padding: 20px;
 }
 form#groupform fieldset{
-	border-color: #018a01;
+	border-color: #00883b;
 }
 
 form#ideaform fieldset{
-	border-color: #1e497d;
+	border-color: #0b4982;
 }
 
 fieldset #idea_title{
