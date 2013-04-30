@@ -23,14 +23,14 @@ Text Domain: klimotion_theme
 }
 
 #main{
-	padding: 1.5rem 0;
+	padding: 4.5rem 0 3rem 0;
 }
 
 .scheme-white #masthead {
 	border-bottom: none;
 }
 
-.scheme-white .main-navigation ul ul {
+.scheme-white.main-navigation ul ul {
 	padding-top: 0px;
 }
 
