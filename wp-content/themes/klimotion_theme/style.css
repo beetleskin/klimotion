@@ -476,18 +476,20 @@ article.type-klimo_localgroup footer.entry-meta{
 	padding: 2rem 0rem 0;
 
 }
+
 .site-content header.page-header~div.archive-post,
-.site-content header.page-header~div.archive-post .type-klimo_localgroup .entry-content{
+.site-content header.page-header~div.archive-post .type-klimo_localgroup .entry-content,
+.site-content > .archive-post{
 	border: none; 
 }
-
-.site-content > .archive-post, 
+ 
 .site-content > .archive-post article.type-post,
 .site-content > article.type-post,
 .site-content > article.type-page{
 	border: 3px solid #eee;
 	margin-bottom: 2rem;
 }
+
 
 .entry-inner > article.type-page{
 	margin-bottom: 0px;
