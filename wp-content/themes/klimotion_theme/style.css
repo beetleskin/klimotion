@@ -274,7 +274,7 @@ ul#menu-klimo_primary > li:hover .sub-menu {
 #tribe-events-content {
 	position: relative;
 	margin-bottom: 48px;
-	padding: 5px;
+	padding: 0px;
 }
 
 .tribe_events .entry-inner{
@@ -390,7 +390,9 @@ padding: 8px !important;
 .tribe-events-next-month img{
 }
 
-
+.tribe-events-next-month{
+	margin-left: 0px;
+}
 /*End: Kalender*/
 
 /*Side-bar Login*/
@@ -669,4 +671,15 @@ article.type-klimo_localgroup footer.entry-meta:empty{
 	list-style: disc !important;
 	padding-left: 2rem;
 	font-style: italic;
+}
+
+.tribe-events-next-month img{
+	z-index: 99999;
+	display: inline;
+	float: left;
+}
+
+.tribe-events-month-nav a{
+	font-size: 1.2rem;
+	font-style: bold;
 }
