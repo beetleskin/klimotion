@@ -140,7 +140,7 @@ class GA_Admin extends Yoast_GA_Plugin_Admin {
                 });
             });
         </script>
-        <link rel="shortcut icon" href="<link rel="shortcut icon""/>
+        <link rel="shortcut icon" href="<?php echo GAWP_URL; ?>images/favicon.ico"/>
 		<?php
 		}
 	}
