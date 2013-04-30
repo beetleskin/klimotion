@@ -68,13 +68,18 @@ jQuery(function($) { ideaform : {
 				};
 				
 				me.form.ajaxForm(formOptions);
-				me.submit.click(function(event) {
+				me.submit.click(function() {
+					
 					if( $(this).attr('nopriv') !== undefined ) {
-						$("html body").animate({ scrollTop: 0 }, "slow", function(){
+						
+						$( (jQuery.browser.webkit)? "body": "html").animate({ scrollTop: 0 }, "slow", function(){
 							$('#errormessage', me.form).fadeTo(400, 0.2).fadeTo(400, 1.0);
 						});
+						
 					} else {
+						
 						me.form.submit();
+						
 					}
 					
 					// no further click handling
