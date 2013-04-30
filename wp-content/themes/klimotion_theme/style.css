@@ -667,7 +667,7 @@ article.type-klimo_localgroup footer.entry-meta:empty{
 }
 
 .entry-content ul{
-	margin-left: 0;
+	margin-left: 0; 
 	list-style: disc !important;
 	padding-left: 2rem;
 	font-style: italic;
