@@ -52,7 +52,7 @@ ob_end_clean();
 				echo ' <small><em>('.__('All Day','tribe-events-calendar').')</em></small>';
          	}*/
          	if( !$event->AllDay ) {
-         		echo ("Uhr");
+         		echo (" Uhr");
          	}
       ?> 
 	</div> 
