@@ -474,9 +474,19 @@ article.type-klimo_localgroup footer.entry-meta{
 
 .type-tribe_events .entry-header{
 	padding: 2rem 0rem 0;
-
+	margin-bottom: 2em;
 }
 
+.tribe-events-calendar-buttons{
+	position: absolute;
+	right: 0;
+	top: -16px !important;
+}
+
+.grid #tribe-events-calendar-header{
+	height: 30px !important;
+}
+ 
 .site-content header.page-header~div.archive-post,
 .site-content header.page-header~div.archive-post .type-klimo_localgroup .entry-content,
 .site-content > .archive-post{
