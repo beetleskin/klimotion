@@ -74,7 +74,7 @@ class Inline_attachments {
 		$active_plugins = apply_filters( 'active_plugins', get_option( 'active_plugins' ) );
 		$abd = "attachments-bulk-delete/attachments-bulk-delete.php";
 		$enabled = get_option("ia_bulk_delete_enabled");
-		if (!in_array($abd, $active_plugins) && $enabled){
+		if (!in_array($abd, $active_plugins) && $enabled === 'true'){
 			return true;
 		}
 	}
@@ -374,7 +374,7 @@ class Inline_attachments {
 				line-height: 0px;
 			}
 			<?php
-				if(get_option("ia_hide_thickbox_buttons") == true){
+				if(get_option("ia_hide_thickbox_buttons") === 'true'){
 					echo "\n\t\t#open_attachments_lightbox,#wp-content-media-buttons,#media-buttons {display: none;}";
 				}
 			?>
@@ -540,7 +540,7 @@ class Inline_attachments {
 					
 					$count = 0;
 					foreach($inline_attachments_features as $feature){
-						$enabled = $_POST["features"][$count] == true ? $_POST["features"][$count] : false;
+						$enabled = $_POST["features"][$count] == true ? $_POST["features"][$count] : 'false';
 						update_option($feature[1], $enabled);
 						$count ++;
 					}
@@ -671,7 +671,7 @@ class Inline_attachments {
 					?>
 					<li>
 						<?php 
-							$enabled = get_option($feature[1]);
+							$enabled = get_option($feature[1]) === 'true' ? true : false;
 						?>
 						<input <?php echo ($enabled == true ? ' checked="checked"' : ''); ?> id="features[<?php echo $count; ?>]" type="checkbox" value="true" name="features[<?php echo $count; ?>]">
 						<label for="features[<?php echo $count; ?>]"><?php echo $inline_attachments_features[$count][0]; ?></label>
