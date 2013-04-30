@@ -6,7 +6,7 @@
  * @since Cazuela 1.0
  */
 ?>
-<link href="images" rel="shortcut icon" />
+<link href="http://klimotion.de/wp-content/uploads/2013/04/klimo-fav.ico" rel="shortcut icon" />
 
 <header class="entry-header">
 	<?php if (has_post_thumbnail() ): ?>
