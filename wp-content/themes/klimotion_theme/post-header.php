@@ -1,3 +1,4 @@
+
 <?php
 /**
  * Template part for displaying post header.
@@ -6,8 +7,6 @@
  * @since Cazuela 1.0
  */
 ?>
-<link href="http://klimotion.de/wp-content/uploads/2013/04/klimo-fav.ico" rel="shortcut icon" />
-
 <header class="entry-header">
 	<?php if (has_post_thumbnail() ): ?>
 		<div class="entry-thumbnail">
