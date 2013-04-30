@@ -17,6 +17,7 @@ if ( !defined( "DOING_AJAX" ) || !DOING_AJAX ) {
 	if ( isset( $wp_query->query_vars['eventDate'] ) ) {
 		$old_date                          = $wp_query->query_vars['eventDate'];
 		$wp_query->query_vars['eventDate'] = $current_date;
+		
 	}
 }else{
 	$current_date = $tribe_ecp->date;

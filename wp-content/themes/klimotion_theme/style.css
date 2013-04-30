@@ -60,6 +60,13 @@ Text Domain: klimotion_theme
 margin: 0 0 0.1em;
 }
 
+.type-klimo_localgroup .entry-thumbnail a img {
+  	width: 16%;
+ 	height: auto;
+  	float: left;
+  	padding: 0px 15px 2px 0px;
+}
+
 .entry-thumbnail a img {
   	width: 17%;
  	height: auto;
