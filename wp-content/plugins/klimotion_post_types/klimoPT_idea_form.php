@@ -159,7 +159,7 @@ class NewIdeaForm {
       	  				<?php wp_editor("", 'ideadescription', array(
 				        	'media_buttons' => false,
 				        	'textarea_name' => 'ideadescription',
-				        	'tabindex'		=> 0,
+				        	'quicktags'		=> false,
 				        	'teeny'			=> true,
 				        	'textarea_rows'	=> 8,
 							));

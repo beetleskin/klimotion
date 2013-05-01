@@ -129,7 +129,7 @@ class NewGroupForm {
 				        <?php wp_editor("", 'groupdescription', array(
 				        	'media_buttons' => false,
 				        	'textarea_name' => 'group_description',
-				        	'tabindex'		=> 0
+				        	'quicktags' => false
 							));
 						?>
 					</div><!-- .form-field-wrap -->
@@ -410,7 +410,7 @@ class NewGroupForm {
 		$postData[$element] = $value;
 		
 		
-		// check district
+		// check members
 		$element = 'group_member';
 		$value = intval(wp_strip_all_tags($args[$element], true));
 		$postData[$element] = $value;
@@ -473,7 +473,12 @@ class NewGroupForm {
 		// check description
 		$element = 'group_description';
 		$value = force_balance_tags($args[$element]);
-        if(strlen($value) > self::$validationConfig['description_max_chars']) {
+		if(empty($value)) {
+            $response['error'][] = array(
+                'element'   => $element,
+                'message'   => "Gib eine Kurzbeschreibung für deine Lokalgruppe an.",
+            );
+        } else if(strlen($value) > self::$validationConfig['description_max_chars']) {
             $response['error'][] = array(
                 'element'   => $element,
                 'message'   => "Die Kurzbeschreibung deiner Lokalgruppe ist zu lang (maximal " . self::$validationConfig['description_max_chars'] . " Zeichen).",
