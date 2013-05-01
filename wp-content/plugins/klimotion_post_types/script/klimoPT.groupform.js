@@ -5,6 +5,9 @@
 
 jQuery(function($) { ideaform : {
 	
+	var fileApiSupported = window.FormData !== undefined;
+
+	
 		function GroupForm(wrapper) {
 			var me = this;
 			this.wrapper = $(wrapper);
@@ -84,6 +87,11 @@ jQuery(function($) { ideaform : {
 				tinyMCE.get("groupdescription").save();
 				
 				// validate file size
+				// Files API came with HTML5, skip file size check if not supported
+				if( !fileApiSupported )
+					return isFormValid;
+					
+					
 				$('input[type="file"]', me.wrapper).each(function() {
 					var f = this.files[0];
 					if( f != undefined && f.size > me.config.ajaxConfig.file_size_max) {
