@@ -437,11 +437,18 @@ class NewIdeaForm {
 		// check excerp
 		$element = 'idea_excerp';
 		$value = sanitize_text_field($args[$element]);
-		// too long?
-		if( mb_strlen($value, get_option( 'blog_charset' )) > self::$validationConfig['excerp_max_chars']) {
+		$val_len = mb_strlen($value, get_option( 'blog_charset' ));
+		// too short?
+		if( $val_len <= 0 ) {
             $response['error'][] = array(
                 'element'   => $element,
-                'message'   => "Kurzbeschreibung darf maximal " . self::$validationConfig['excerp_max_chars'] . " Zeichen lang sein.",
+                'message'   => "Gib eine Kurzbeschreibung für deine Idee an.",
+            );
+		// too long?
+        } else if( $val_len  > self::$validationConfig['excerp_max_chars']) {
+            $response['error'][] = array(
+                'element'   => $element,
+                'message'   => "Die Kurzbeschreibung darf maximal " . self::$validationConfig['excerp_max_chars'] . " Zeichen lang sein.",
             );
         }
 		$postData[$element] = $value;
@@ -456,6 +463,12 @@ class NewIdeaForm {
 		// check topic
 		$element = 'idea_topics';
 		$value = array_key_exists('idea_topics', $_POST)? $_POST['idea_topics'] : array();
+		if(empty($value)) {
+			$response['error'][] = array(
+                'element'   => $element,
+                'message'   => "Gib bitte mindestens ein Thema für deine Idee an.",
+            );
+		}
 		$postData[$element] = $value;
 		
 		
@@ -471,7 +484,7 @@ class NewIdeaForm {
 		if( count($value) < self::$validationConfig['aims_min']) {
             $response['error'][] = array(
                 'element'   => $element,
-                'message'   => "Gib bitte mindestens " . self::$validationConfig['aims_min'] . " Projektziel" . ((self::$validationConfig['aims_min'] > 1)? "e" : "") . " an",
+                'message'   => "Gib bitte mindestens " . self::$validationConfig['aims_min'] . " Projektziel" . ((self::$validationConfig['aims_min'] > 1)? "e" : "") . " an.",
             );
         }
 		$postData[$element] = $value;
