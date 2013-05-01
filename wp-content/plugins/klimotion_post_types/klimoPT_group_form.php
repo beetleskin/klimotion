@@ -100,6 +100,7 @@ class NewGroupForm {
 	        			<p>Um eine <strong>neue Gruppe</strong> zu erstellen musst du <a href="<?php echo $data['nopriv_redirect']; ?>">eingeloggt</a> sein!</p>
         			<?php endif; ?>
 	        	</div>
+	        	<p class="form-hitn"><small><i>Erforderliche Felder sind mit einem "*" markiert!</i></small></p>
 	        
 	        	<fieldset form="<?php echo $this->form_id ?>"> 
       	  			<legend>Infos zur Lokalgruppe</legend>
