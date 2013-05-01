@@ -537,7 +537,16 @@ class NewIdeaForm {
 
     private static function securityCheck(&$args) {
         $response = array();
+		
+		// check capability
+		if( !is_user_logged_in() || !user_can_create_post(get_current_user_id()) ) {
+			$response['securityError'] = array(
+                'message'  => '<div id="securityErrorMessage"><p>Um eine <strong>neue Idee</strong> zu erstellen musst du <a href="' . wp_login_url(home_url("/newideapage/")) . '">eingeloggt</a> sein!</p></div>',
+            );
+			return $response;
+		}
         
+		
         $nonce = NULL;
         if(key_exists(self::$nonceName, $args)) {
             $nonce = $args[self::$nonceName];
@@ -555,9 +564,8 @@ class NewIdeaForm {
 	
     private static function createSuccessMessage($postID) {
 		$postPermaLink = get_post_permalink($postID, false);
-        
         $html = '<div id="submitSuccessMessage">';
-        $html .= '<p>Deine Idee wurde erfoglreich abgeschickt und wird von uns geprüft.</p>';
+        $html .= '<p>Danke für deinen Eintrag! Er wird online erscheinen, sobald wir ihn geprüft haben!.</p>';
         $html .= '<div class="redirect thePost"><a href="' . $postPermaLink . '">Idee ansehen</a></div>';
         $html .= '<div class="redirect newIdea"><a href=".">Neue Idee Schreiben</a></div>';
         $html .= '</div>';

@@ -591,13 +591,22 @@ class NewGroupForm {
 
     private static function securityCheck(&$args) {
         $response = array();
+		
+		// check capability
+		if( !is_user_logged_in() || !user_can_create_post(get_current_user_id()) ) {
+			$response['securityError'] = array(
+                'message'  => '<div id="securityErrorMessage"><p>Um eine <strong>neue Gruppe</strong> zu erstellen musst du <a href="' . wp_login_url(home_url("/newgrouppage/")) . '">eingeloggt</a> sein!</p></div>',
+            );
+			return $response;
+		}
+		
         
         $nonce = NULL;
         if(key_exists(self::$nonceName, $args)) {
             $nonce = $args[self::$nonceName];
         }
 
-        if( !isset($nonce) || wp_verify_nonce($nonce, self::$nonceName) != 1 ) {
+        if( !isset($nonce) || wp_verify_nonce($nonce, self::$nonceName) != 1) {
             $response['securityError'] = array(
                 'message'  => '<div id="securityErrorMessage"><p>Sorry, deine Session ist abgelaufen ... </p><a href=".">Neue Lokalgruppe erstellen</a></div>',
             );
@@ -611,7 +620,7 @@ class NewGroupForm {
 		$postPermaLink = get_post_permalink($postID, false);
         
         $html = '<div id="submitSuccessMessage">';
-        $html .= '<p>Deine Lokalgruppe wurde erfoglreich abgeschickt und wird von uns geprüft.</p>';
+        $html .= '<p>Danke für deinen Eintrag! Er wird online erscheinen, sobald wir ihn geprüft haben!.</p>';;
         $html .= '<div class="redirect thePost"><a href="' . $postPermaLink . '">Lokalgruppe ansehen</a></div>';
         $html .= '<div class="redirect newGroup"><a href=".">Neue Lokalgruppe erstellen</a></div>';
         $html .= '</div>';
