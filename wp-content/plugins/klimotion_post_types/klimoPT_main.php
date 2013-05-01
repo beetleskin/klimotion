@@ -28,6 +28,7 @@ add_action('init', 'kpt_data_init');
 function kpt_change_roles() {
 	$subscriber_role = get_role('subscriber');
 	$subscriber_role->add_cap("edit_posts");
+	$subscriber_role->add_cap("edit_published_posts");
 }
 
 

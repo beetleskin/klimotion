@@ -593,7 +593,7 @@ class NewGroupForm {
         $response = array();
 		
 		// check capability
-		if( !is_user_logged_in() || !user_can_create_post(get_current_user_id()) ) {
+		if( !is_user_logged_in() || !user_can(get_current_user_id(), "edit_posts") ) {
 			$response['securityError'] = array(
                 'message'  => '<div id="securityErrorMessage"><p>Um eine <strong>neue Gruppe</strong> zu erstellen musst du <a href="' . wp_login_url(home_url("/newgrouppage/")) . '">eingeloggt</a> sein!</p></div>',
             );
