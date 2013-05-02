@@ -165,7 +165,6 @@ label[for=group_contact_publish]{
 /* error handling */
 #errormessage {
 	background: #eee;
-	padding: 2rem;
 	font-style: italic;
 }
 
