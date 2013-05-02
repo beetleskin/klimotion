@@ -535,8 +535,12 @@ article.type-klimo_localgroup{
 
 article.type-klimo_idea{
 	border: 3px solid #0b4982;
+}
+.site-content > .archive-post article.type-klimo_idea{
+	border: 3px solid #0b4982;
 	margin-bottom: 2rem;
 }
+
 
 article footer.entry-meta{
 	padding: 0.3rem 0.3rem 0.3rem 2rem;
@@ -691,4 +695,8 @@ article.type-klimo_localgroup footer.entry-meta:empty{
 .tribe-events-month-nav a{
 	font-size: 1.2rem;
 	font-style: bold;
+}
+
+.wpmem_login .form fieldset > div{
+	float: left;
 }
