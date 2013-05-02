@@ -535,6 +535,7 @@ article.type-klimo_localgroup{
 
 article.type-klimo_idea{
 	border: 3px solid #0b4982;
+	margin-bottom: 2rem;
 }
 
 article footer.entry-meta{
@@ -657,9 +658,10 @@ article.type-tribe_events .entry-inner{
 }
 
 .page-header .taxonomy-description {
-	margin: 1rem 0 0 0;
+	margin: 1rem 0 2rem 0;
 	font-size: 1.6rem;
 }
+
 
 .page-header .page-title{
 	padding: 2rem 0rem 0rem;

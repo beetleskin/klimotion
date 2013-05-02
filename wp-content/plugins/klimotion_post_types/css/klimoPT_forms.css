@@ -162,7 +162,9 @@ label[for=group_contact_publish]{
 	font-style: normal;
 }
 
-#groupform #errormessage{
+#groupform #errormessage,
+#ideaform #errormessage{
 	background: #eee;
 	padding: 2rem;
+	font-style: italic;
 }

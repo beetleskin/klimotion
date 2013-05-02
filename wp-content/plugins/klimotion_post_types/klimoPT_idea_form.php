@@ -147,7 +147,7 @@ class NewIdeaForm {
 	        		</div><!-- .form-field-wrap -->
 	        		
 	        		<div class="form-field">
-	        			<label for="idea_aims">Ziele *</label>
+	        			<label for="idea_aims">Ziele * (nach jedem Begriff <a href="http://klimotion.de/wp-content/uploads/2013/04/tab-key.png" target="_blank">Tab</a> drücken):</label>
 	    			    <input type="text" id="idea_aims" name="idea_aims">
 	        		</div>
 	     
