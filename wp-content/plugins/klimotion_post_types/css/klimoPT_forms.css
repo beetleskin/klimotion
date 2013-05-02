@@ -168,3 +168,11 @@ label[for=group_contact_publish]{
 	padding: 2rem;
 	font-style: italic;
 }
+
+#errormessage p {
+	padding: 0em 1em 0.5em 1em;
+	margin: 0;
+}
+#errormessage p:first-child {
+	padding-top: 0.5rem;
+}

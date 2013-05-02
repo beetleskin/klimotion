@@ -100,6 +100,7 @@ class NewGroupForm {
 	        			<p>Um eine <strong>neue Gruppe</strong> zu erstellen musst du <a href="<?php echo $data['nopriv_redirect']; ?>">eingeloggt</a> sein!</p>
         			<?php endif; ?>
 	        	</div>
+	        	<p class="form-hitn"><small><i>Erforderliche Felder sind mit einem "*" markiert!</i></small></p>
 	        
 	        	<fieldset form="<?php echo $this->form_id ?>"> 
       	  			<legend>Infos zur Lokalgruppe</legend>
@@ -128,7 +129,7 @@ class NewGroupForm {
 				        <?php wp_editor("", 'groupdescription', array(
 				        	'media_buttons' => false,
 				        	'textarea_name' => 'group_description',
-				        	'tabindex'		=> 0
+				        	'quicktags' => false
 							));
 						?>
 					</div><!-- .form-field-wrap -->
@@ -409,7 +410,7 @@ class NewGroupForm {
 		$postData[$element] = $value;
 		
 		
-		// check district
+		// check members
 		$element = 'group_member';
 		$value = intval(wp_strip_all_tags($args[$element], true));
 		$postData[$element] = $value;
@@ -472,7 +473,12 @@ class NewGroupForm {
 		// check description
 		$element = 'group_description';
 		$value = force_balance_tags($args[$element]);
-        if(strlen($value) > self::$validationConfig['description_max_chars']) {
+		if(empty($value)) {
+            $response['error'][] = array(
+                'element'   => $element,
+                'message'   => "Gib eine Kurzbeschreibung für deine Lokalgruppe an.",
+            );
+        } else if(strlen($value) > self::$validationConfig['description_max_chars']) {
             $response['error'][] = array(
                 'element'   => $element,
                 'message'   => "Die Kurzbeschreibung deiner Lokalgruppe ist zu lang (maximal " . self::$validationConfig['description_max_chars'] . " Zeichen).",
@@ -591,13 +597,22 @@ class NewGroupForm {
 
     private static function securityCheck(&$args) {
         $response = array();
+		
+		// check capability
+		if( !is_user_logged_in() || !user_can(get_current_user_id(), "edit_posts") ) {
+			$response['securityError'] = array(
+                'message'  => '<div id="securityErrorMessage"><p>Um eine <strong>neue Gruppe</strong> zu erstellen musst du <a href="' . wp_login_url(home_url("/newgrouppage/")) . '">eingeloggt</a> sein!</p></div>',
+            );
+			return $response;
+		}
+		
         
         $nonce = NULL;
         if(key_exists(self::$nonceName, $args)) {
             $nonce = $args[self::$nonceName];
         }
 
-        if( !isset($nonce) || wp_verify_nonce($nonce, self::$nonceName) != 1 ) {
+        if( !isset($nonce) || wp_verify_nonce($nonce, self::$nonceName) != 1) {
             $response['securityError'] = array(
                 'message'  => '<div id="securityErrorMessage"><p>Sorry, deine Session ist abgelaufen ... </p><a href=".">Neue Lokalgruppe erstellen</a></div>',
             );
@@ -611,7 +626,7 @@ class NewGroupForm {
 		$postPermaLink = get_post_permalink($postID, false);
         
         $html = '<div id="submitSuccessMessage">';
-        $html .= '<p>Deine Lokalgruppe wurde erfoglreich abgeschickt und wird von uns geprüft.</p>';
+        $html .= '<p>Danke für deinen Eintrag! Er wird online erscheinen, sobald wir ihn geprüft haben!.</p>';;
         $html .= '<div class="redirect thePost"><a href="' . $postPermaLink . '">Lokalgruppe ansehen</a></div>';
         $html .= '<div class="redirect newGroup"><a href=".">Neue Lokalgruppe erstellen</a></div>';
         $html .= '</div>';

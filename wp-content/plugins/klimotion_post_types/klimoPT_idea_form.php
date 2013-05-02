@@ -105,7 +105,7 @@ class NewIdeaForm {
 	        			<p>Um eine <strong>neue Idee</strong> zu erstellen musst du <a href="<?php echo $data['nopriv_redirect']; ?>">eingeloggt</a> sein!</p>
         			<?php endif; ?>
 	        	</div>
-	        	
+	        	<p class="form-hitn"><small><i>Erforderliche Felder sind mit einem "*" markiert!</i></small></p>
 	        	
         		<fieldset form="<?php echo $this->form_id ?>">   
         			<legend>Kurzbeschreibung</legend>
@@ -159,7 +159,7 @@ class NewIdeaForm {
       	  				<?php wp_editor("", 'ideadescription', array(
 				        	'media_buttons' => false,
 				        	'textarea_name' => 'ideadescription',
-				        	'tabindex'		=> 0,
+				        	'quicktags'		=> false,
 				        	'teeny'			=> true,
 				        	'textarea_rows'	=> 8,
 							));
@@ -437,11 +437,18 @@ class NewIdeaForm {
 		// check excerp
 		$element = 'idea_excerp';
 		$value = sanitize_text_field($args[$element]);
-		// too long?
-		if( mb_strlen($value, get_option( 'blog_charset' )) > self::$validationConfig['excerp_max_chars']) {
+		$val_len = mb_strlen($value, get_option( 'blog_charset' ));
+		// too short?
+		if( $val_len <= 0 ) {
             $response['error'][] = array(
                 'element'   => $element,
-                'message'   => "Kurzbeschreibung darf maximal " . self::$validationConfig['excerp_max_chars'] . " Zeichen lang sein.",
+                'message'   => "Gib eine Kurzbeschreibung für deine Idee an.",
+            );
+		// too long?
+        } else if( $val_len  > self::$validationConfig['excerp_max_chars']) {
+            $response['error'][] = array(
+                'element'   => $element,
+                'message'   => "Die Kurzbeschreibung darf maximal " . self::$validationConfig['excerp_max_chars'] . " Zeichen lang sein.",
             );
         }
 		$postData[$element] = $value;
@@ -456,6 +463,12 @@ class NewIdeaForm {
 		// check topic
 		$element = 'idea_topics';
 		$value = array_key_exists('idea_topics', $_POST)? $_POST['idea_topics'] : array();
+		if(empty($value)) {
+			$response['error'][] = array(
+                'element'   => $element,
+                'message'   => "Gib bitte mindestens ein Thema für deine Idee an.",
+            );
+		}
 		$postData[$element] = $value;
 		
 		
@@ -471,7 +484,7 @@ class NewIdeaForm {
 		if( count($value) < self::$validationConfig['aims_min']) {
             $response['error'][] = array(
                 'element'   => $element,
-                'message'   => "Gib bitte mindestens " . self::$validationConfig['aims_min'] . " Projektziel" . ((self::$validationConfig['aims_min'] > 1)? "e" : "") . " an",
+                'message'   => "Gib bitte mindestens " . self::$validationConfig['aims_min'] . " Projektziel" . ((self::$validationConfig['aims_min'] > 1)? "e" : "") . " an.",
             );
         }
 		$postData[$element] = $value;
@@ -537,7 +550,16 @@ class NewIdeaForm {
 
     private static function securityCheck(&$args) {
         $response = array();
+		
+		// check capability
+		if( !is_user_logged_in() || !user_can(get_current_user_id(), "edit_posts") ) {
+			$response['securityError'] = array(
+                'message'  => '<div id="securityErrorMessage"><p>Um eine <strong>neue Idee</strong> zu erstellen musst du <a href="' . wp_login_url(home_url("/newideapage/")) . '">eingeloggt</a> sein!</p></div>',
+            );
+			return $response;
+		}
         
+		
         $nonce = NULL;
         if(key_exists(self::$nonceName, $args)) {
             $nonce = $args[self::$nonceName];
@@ -555,9 +577,8 @@ class NewIdeaForm {
 	
     private static function createSuccessMessage($postID) {
 		$postPermaLink = get_post_permalink($postID, false);
-        
         $html = '<div id="submitSuccessMessage">';
-        $html .= '<p>Deine Idee wurde erfoglreich abgeschickt und wird von uns geprüft.</p>';
+        $html .= '<p>Danke für deinen Eintrag! Er wird online erscheinen, sobald wir ihn geprüft haben!.</p>';
         $html .= '<div class="redirect thePost"><a href="' . $postPermaLink . '">Idee ansehen</a></div>';
         $html .= '<div class="redirect newIdea"><a href=".">Neue Idee Schreiben</a></div>';
         $html .= '</div>';
