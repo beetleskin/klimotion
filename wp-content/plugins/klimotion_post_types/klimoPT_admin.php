@@ -60,7 +60,7 @@ function kpt_hook_metaboxes() {
 
 function kpt_hook_metabox_idea_groups($post) {
 	
-	$groups_selected_list = kpt_get_localgroups_by_idea($post->ID, false);
+	$groups_selected_list = kpt_get_localgroups_by_idea($post->ID, false, false);
 	$groups_selected_IDs = array();
 	foreach ($groups_selected_list as $group) {
 		$groups_selected_IDs[] = $group->ID;

@@ -31,7 +31,7 @@ class LocalGroupsPage {
 	private static $nonceName = "klimoLocalGroupNonce";
 	private static $defaultQuery = array( 
 		'post_type' 		=> array('klimo_localgroup'),
-		'status' 			=> 'publish',
+		'post_status' 			=> 'publish',
 		'posts_per_page'	=> -1
 	 );
 	
