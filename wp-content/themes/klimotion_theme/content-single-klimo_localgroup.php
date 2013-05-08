@@ -13,7 +13,7 @@
 	$args['homepage_meta'] = get_post_meta($post->ID, '_homepage', true);
 	$args['city_meta'] = get_post_meta($post->ID, '_city', true);
 	$args['zip_meta'] = get_post_meta($post->ID, '_zip', true);
-	$args['ideas_meta'] = kpt_get_ideas_by_localgroup($post->ID);
+	$args['ideas_meta'] = kpt_get_ideas_by_localgroup($post->ID, false, true);
 	
 ?>
 
