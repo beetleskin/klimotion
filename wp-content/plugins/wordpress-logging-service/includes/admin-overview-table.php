@@ -14,6 +14,7 @@ class WlsAdminOverviewTable extends WP_List_Table {
 	
 	
 	function __construct( ) {
+				
 		$this->_logs_by_id = array();
 		$this->_seen_entries = array();
 		$this->_blog_info_cache = array();
@@ -70,7 +71,7 @@ class WlsAdminOverviewTable extends WP_List_Table {
 		$per_page = $log_entries_per_page;
 		$current_page = $this->get_pagenum();
 		
-		$order = isset( $_REQUEST["order"] ) ? $_REQUEST["order"] : "DESC";
+		$order = isset( $_REQUEST["order"] ) ? $_REQUEST["order"] : "ASC";
 		
 		/* Get entries for a page and their total count. */
 		$this->items = wls_get_entries( $log_id, ( $current_page - 1 ) * $per_page, $current_page * $per_page, $seen, $order, $min_severity, 'entries', $entry_id );

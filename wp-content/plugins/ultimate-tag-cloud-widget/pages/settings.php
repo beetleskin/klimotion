@@ -2,7 +2,7 @@
 /**
  * Ultimate Tag Cloud Widget
  * @author     Rickard Andersson <rickard@0x539.se>
- * @version    2.1
+ * @version    2.2.3
  * @license    GPLv2
  * @package    utcw
  * @subpackage pages
@@ -13,7 +13,7 @@
  * @var array $configurations
  * @var array $terms
  * @var array $users
- * @var UTCW $this
+ * @var UTCW_Widget $this
  */
 if ( ! defined( 'ABSPATH' ) ) die();
 
@@ -33,6 +33,19 @@ if ( ! defined( 'ABSPATH' ) ) die();
 
 <fieldset class='utcw' id="<?php echo $this->get_field_id( 'utcw-tab-data' ) ?>">
 	<legend></legend>
+
+    <a class="utcw-help" title="<?php _e('How the tag cloud should find tags to display. Popularity based selection is the default strategy which shows the most popular tags.', 'utcw') ?>">?</a>
+    <strong><?php _e('Selection strategy:', 'utcw') ?></strong><br>
+    <label>
+        <input type="radio" name="<?php echo $this->get_field_name('strategy') ?>" value="popularity" <?php if ($config->strategy === 'popularity') echo 'checked="checked"' ?>>
+        <?php _e('Popularity','utcw') ?>
+    </label><br>
+    <label>
+        <input type="radio" name="<?php echo $this->get_field_name('strategy') ?>" value="random" <?php if ($config->strategy === 'random') echo 'checked="checked"' ?>>
+        <?php _e('Random','utcw') ?>
+    </label><br>
+    <br>
+    
 	<a class="utcw-help"
 	   title="<?php _e( 'Only posts from the selected authors will be used when calculating the tag cloud.', 'utcw' ) ?>">?</a>
 	<strong><?php _e( 'Authors:', 'utcw' ) ?></strong><br>
@@ -272,7 +285,11 @@ if ( ! defined( 'ABSPATH' ) ) die();
 	<input type="checkbox" name="<?php echo $this->get_field_name( 'show_title' ) ?>"
 		   id="<?php echo $this->get_field_id( 'show_title' ) ?>" <?php echo $config->show_title === true ? 'checked="checked"' : ''?>>
 	<label for="<?php echo $this->get_field_id( 'show_title' ) ?>"
-		   title="<?php _e( 'This is a title', 'utcw' ) ?>"><?php _e( 'Show title (hover text)', 'utcw' ) ?></label><br>
+		   title="<?php _e( 'This is a title', 'utcw' ) ?>"><?php _e( 'Show title (hover text)', 'utcw' ) ?></label><br>	<a class="utcw-help"
+	   title="<?php _e( 'Uncheck this option if you do not want your tag cloud to contain links to the archive page for each tag.', 'utcw' ) ?>">?</a>
+	<input type="checkbox" name="<?php echo $this->get_field_name( 'show_links' ) ?>"
+		   id="<?php echo $this->get_field_id( 'show_links' ) ?>" <?php echo $config->show_links === true ? 'checked="checked"' : ''?>>
+	<label for="<?php echo $this->get_field_id( 'show_links' ) ?>"><?php _e( 'Show links', 'utcw' ) ?></label><br>
 	<br>
 
 	<a class="utcw-help"

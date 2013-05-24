@@ -49,7 +49,7 @@ function wls_superadmin_overview_page() {
     case 'mark-seen':
     	$entries = explode( ',', $_REQUEST['entries'] );
     	wls_mark_seen( $entries );
-		wls_superadmin_overview_page_default(); 
+		wls_superadmin_overview_page_default();
 		break;
     default:
     	wls_superadmin_overview_page_default();
@@ -75,7 +75,7 @@ function wls_superadmin_overview_page_default() {
 				foreach( $logs as $log ) {
 					?>
 					<li>
-						<?php 
+						<?php
 							echo "<strong><a href=\"".wls_get_pagenow()."&wls_action=view&id={$log->id}\">{$log->log_name}</a></strong>&nbsp;-&nbsp;".esc_attr( $log->description )."&nbsp;";
 							echo "<a href=\"".wls_get_pagenow()."&wls_action=clear&id={$log->id}\" title=\"".__( "Remove all log entries from this category.", WLS_TXD )."\">&curren;</a>&nbsp;";
 							echo "<a href=\"".wls_get_pagenow()."&wls_action=unregister&id={$log->id}\" title=\"".__( "Delete this log category permanently (with all entries).", WLS_TXD )."\" >&times;</a>";
@@ -94,7 +94,7 @@ function wls_superadmin_overview_page_default() {
 			</p>
 		</form>
 		
-		<!-- Show severity filter and return it's current setting. --> 
+		<!-- Show severity filter and return it's current setting. -->
 		<?php $min_severity = wls_show_severity_filter(); ?>
 		
 		<!-- Log entry table -->
@@ -152,10 +152,10 @@ function wls_show_severity_filter( $args = array( 'wls_action' => 'default' ), $
 	
 		<h3><?php _e( 'New entries', WLS_TEXTDOMAIN ); ?></h3>
 		<p>
-			<?php 
-				printf( __( 'You have currently %d new log entries of severity %s or more.', WLS_TEXTDOMAIN ), 
+			<?php
+				printf( __( 'You have currently %d new log entries of severity %s or more.', WLS_TEXTDOMAIN ),
 					$unseen[$min_severity], '<code>'.wls_severity_to_string( $min_severity ).'</code>'
-				); 
+				);
 				if( $unseen[$min_severity] > $log_entries_per_page ) {
 					echo ' ';
 					printf( __( 'Showing oldest %d.', WLS_TEXTDOMAIN ), $log_entries_per_page );
@@ -163,7 +163,7 @@ function wls_show_severity_filter( $args = array( 'wls_action' => 'default' ), $
 			?>
 		</p>
 		<?php
-	}	
+	}
 	?>
 		<form method="post">
 			<?php
@@ -205,7 +205,7 @@ function wls_superadmin_overview_page_view( $log_id ) {
 	<div class="wrap">
 		<h2><?php printf( __( 'Log category: %s', WLS_TEXTDOMAIN ), $log->log_name ); ?></h2>
 		<p><?php echo $log->description; ?></p>
-		<?php	
+		<?php
 			/* Show severity filter and return it's current setting. */
 			$min_severity = wls_show_severity_filter( array( 'wls_action' => 'view', 'id' => $log_id ), false );
 		?>
@@ -215,7 +215,7 @@ function wls_superadmin_overview_page_view( $log_id ) {
 			<input type="hidden" name="id" value="<?php echo $log_id; ?>" />
 			<?php
 				$table = new WlsAdminOverviewTable();
-				$table->prepare_items( $log_id, true, $min_severity );				
+				$table->prepare_items( $log_id, true, $min_severity );
 				$table->display();
 							
 			?>
@@ -255,7 +255,7 @@ function wls_string_to_severity( $s ) {
 		return 4;
 	else if( $s == 'fatal' )
 		return 5;
-	else 
+	else
 		return 0;
 }
 
@@ -278,11 +278,17 @@ function wls_category_to_style( $category ) {
 	}
 }
 
+/* Remove _wp_http_referer */
+add_action( "init", "wls_remove_http_referer" );
 
-/*function wls_remove_getargs() {
-	if ( isset( $_GET['_wp_http_referer']) && !empty( $_GET['_wp_http_referer'] ) ) {
-	 	wp_redirect( remove_query_arg( array('_wp_http_referer', '_wpnonce'), stripslashes($_SERVER['REQUEST_URI']) ) );
-	 	exit;
+function wls_remove_http_referer() {
+	if ( isset( $_REQUEST["page"] )
+			&& $_REQUEST["page"] == "wls-superadmin-overview"
+			&& isset( $_GET['_wp_http_referer'])
+			&& !empty( $_GET['_wp_http_referer'] ) ) {
+		wp_redirect( remove_query_arg( array('_wp_http_referer', '_wpnonce'), stripslashes($_SERVER['REQUEST_URI']) ) );
+		exit;
 	}
-}*/
+}
+
 ?>

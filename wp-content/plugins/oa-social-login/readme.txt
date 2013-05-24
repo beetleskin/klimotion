@@ -1,16 +1,16 @@
 === Social Login ===
 Contributors: ClaudeSchlesser
-Tags: social login, social connect, facebook login, linkedin, livejournal, google, yahoo, twitter login, openid, paypal, vkontakte, hyves, widget, plugin, social network login, comments
+Tags: social login, social connect, facebook login, linkedin, livejournal, google, yahoo, twitter login, openid, paypal, google, vkontakte, hyves, widget, plugin, social network login, comments
 Requires at least: 3.0
 Tested up to: 3.5.1
-Stable tag: 4.0
+Stable tag: 4.3
 
 Allow your visitors to comment and login with social networks like Twitter, Facebook, Paypal, LinkedIn, LiveJournal, OpenID, VKontakte, Google, Yahoo
 
 == Description ==
 
-The Social Login Plugin is a professional though free Wordpress (BuddyPress compatible) Plugin in English/German that allows your visitors to comment, 
-login and register with social networks like Twitter, Facebook, LinkedIn, Paypal, LiveJournal, Hyves, Вконтакте, Google or Yahoo. 
+Social Login is a professionally developed and free Wordpress (BuddyPress compatible) plugin that allows your visitors to comment, 
+login and register with 20+ Social Networks like for example Facebook, Twitter, Google, LinkedIn, Paypal, LiveJournal, Hyves, Вконтакте and Yahoo.<br /><br />
 <strong>Make your blog social!</strong><br />
 
 <strong>Choose where to add the Social Login Plugin:</strong>
@@ -19,6 +19,7 @@ login and register with social networks like Twitter, Facebook, LinkedIn, Paypal
  <li>On the login page</li>
  <li>On the registration page</li>
  <li>In your sidebar</li>
+ <li>With a shortcode</li>
 </ul>
 
 <strong>Optionally add the Social Login widget:</strong>
@@ -119,6 +120,15 @@ http://docs.oneall.com/plugins/guide/social-login-wordpress/
 5. **Login** - Login formular with small buttons (Social Network Buttons are included)
 
 == Changelog ==
+
+= 4.3 =
+* Social Network Avatars improved
+* Social Link shortcode/hook/action added
+* Administration: Tabs for Social Login added
+* Administration: Column Registration in the user list fixed
+* Redirection filters added
+* Settings security improved
+* Button to cancel email confirmation added
 
 = 4.0 =
 * Social Link Service added
@@ -252,6 +262,9 @@ http://docs.oneall.com/plugins/guide/social-login-wordpress/
 == Testimonials ==
 
 <strong>Used by thousands of users around the world!</strong>
+
+<em>Loving the service, seen a massive increase in painless signups to my blog. Thanks!</em>
+<strong>Richard B.</strong>
 
 <em>You have no idea how it THRILLED me to integrate oneall. It was SO amazingly easy, your team has simplified the whole process of signing up for 
 authorization on multiple social media sites. I HAD NO QUESTIONS/STEPS THAT YOU HADN'T ALREADY ANTICIPATED. It saved me HOURS of work!</em>

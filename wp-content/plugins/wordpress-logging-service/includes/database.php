@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 function wls_logs_table() {
 	global $wpdb;
@@ -77,7 +77,7 @@ function wls_get_log( $log_id ) {
  * @param $log_id log id or 'all' for all logs
  * @param $seen if true, will show all entries. if false, only unseen
  */
-function wls_get_entries( $log_id = 'all', $from = 0, $to = 100, $seen = true, $order = 'DESC', $min_severity = 0,
+function wls_get_entries( $log_id = 'all', $from = 0, $to = 100, $seen = true, $order = 'ASC', $min_severity = 0,
 		$what = 'entries', $entry_id = 0 ) {
 
 	global $wpdb;
@@ -208,8 +208,8 @@ function wls_delete_entries( $entry_ids ) {
 	} else {
 		$where = "WHERE id = $entry_ids";
 	}
-	$deleted = $wpdb->query( 
-		"DELETE FROM ".wls_entries_table()." $where" 
+	$deleted = $wpdb->query(
+		"DELETE FROM ".wls_entries_table()." $where"
 	);
 	return $deleted;
 }

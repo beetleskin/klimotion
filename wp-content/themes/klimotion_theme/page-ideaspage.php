@@ -1,6 +1,6 @@
 <?php
 /**
- * Template Name: Lokale Gruppen
+ * Template Name: Ideenpool
  *
  * @package Cazuela
  * @since Cazuela 1.0

@@ -81,6 +81,11 @@ margin: 0 0 0.1em;
 	padding: 0px;
 }
 
+.entry-meta .meta-description {
+	font-style: normal;
+	font-weight: bold
+}
+
 .hentry .entry-inner,
 .not-found .entry-inner,
 .entry-thumbnail img{
@@ -675,7 +680,7 @@ article.type-tribe_events .entry-inner{
 	margin-bottom: 2rem;
 }
 
-article.type-klimo_localgroup footer.entry-meta:empty{
+article footer.entry-meta:empty{
 	border:none;
 }
 

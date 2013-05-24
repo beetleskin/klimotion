@@ -4,9 +4,9 @@ Tags: log, logging
 Donate link: http://zaantar.eu/financni-prispevek
 Author URI: http://zaantar.eu
 Plugin URI: http://wordpress.org/extend/plugins/wordpress-logging-service
-Requires at least: 3.2
-Tested up to: 3.5
-Stable tag: 1.5.2
+Requires at least: 3.5
+Tested up to: 3.5.1
+Stable tag: 1.5.3
 License: GPL2
 
 Provides a simple API for storing miscellaneous log entries and their overview in admin area.
@@ -37,6 +37,10 @@ Czech language, you could make some use of them: [here](http://zaantar.eu/progra
 * If you find other developer's plugin or if you develop yourself one that uses WLS, please tell me (zaantar@gmail.com) so I can add it to this list.
 
 == Changelog ==
+
+= 1.5.3 =
+* Reverse default ordering of the log entries, oldest show first now.
+* Fix cumulating _wp_http_referer issue.
 
 = 1.5.2 =
 * Fix incorrectly displayed record's blog name in multisite.
