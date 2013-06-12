@@ -157,8 +157,8 @@ function ngg_default_options() {
 	$ngg_options['galPagedGalleries']	= 0;		  					// Number of galleries per page (in a album)
 	$ngg_options['galColumns']			= 0;							// Number of columns for the gallery
 	$ngg_options['galShowSlide']		= true;							// Show slideshow
-	$ngg_options['galTextSlide']		= __('[Show as slideshow]','nggallery'); // Text for slideshow
-	$ngg_options['galTextGallery']		= __('[Show picture list]','nggallery'); // Text for gallery
+	$ngg_options['galTextSlide']		= __('[Slideshow anzeigen]','nggallery'); // Text for slideshow
+	$ngg_options['galTextGallery']		= __('[Bilder-Liste anzeigen]','nggallery'); // Text for gallery
 	$ngg_options['galShowOrder']		= 'gallery';					// Show order
 	$ngg_options['galSort']				= 'sortorder';					// Sort order
 	$ngg_options['galSortDir']			= 'ASC';						// Sort direction
