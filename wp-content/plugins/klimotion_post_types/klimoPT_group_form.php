@@ -175,7 +175,7 @@ class NewGroupForm {
 					</div><!-- .form-field-wrap -->
 					
 					<div class="form-field-wrap">
-						<label for="group_contact_mail"><?php echo __("E-Mai *") ?></label>
+						<label for="group_contact_mail"><?php echo __("E-Mail *") ?></label>
 						<input type="email" id="group_contact_mail" name="group_contact_mail"  placeholder="E-Mail">
 					</div><!-- .form-field-wrap -->
 					
@@ -278,6 +278,7 @@ class NewGroupForm {
 		
 		$post_args = array(
             'ping_status'   => 'open',
+            'comment_status'=> 'open',
             'post_status'   => 'pending',
             'post_type'     => 'klimo_localgroup',
             'post_title'    => $group_name,

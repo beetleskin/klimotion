@@ -1,6 +1,6 @@
 <?php
 /**
- * Template Name: Lokale Gruppen
+ * Template Name: Ideenpool
  *
  * @package Cazuela
  * @since Cazuela 1.0
@@ -30,7 +30,7 @@ get_header(); ?>
 				// query ideas!
 				$ideas = query_posts( array(
 					'post_type' 		=> array('klimo_idea'),
-					'status'			=> 'publish',
+					'post_status'		=> 'publish',
 					'posts_per_page'	=> -1
 				) );
 			?>	

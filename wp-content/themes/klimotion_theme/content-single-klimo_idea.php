@@ -15,7 +15,7 @@
         'exclude'     => get_post_thumbnail_id()
     ));
 	$args['links_meta'] = get_post_meta($post->ID, '_links', true);
-	$args['group_meta'] = kpt_get_localgroups_by_idea($post->ID);
+	$args['group_meta'] = kpt_get_localgroups_by_idea($post->ID, false, true);
 	$args['initiator_meta'] = array();
 	foreach ($args['group_meta'] as $i => $group) {
 		if($group->initiated) {

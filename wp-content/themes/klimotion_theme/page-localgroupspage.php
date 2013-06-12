@@ -1,6 +1,6 @@
 <?php
 /**
- * Template Name: Lokale Gruppen
+ * Template Name: Lokalgruppen
  *
  * @package Cazuela
  * @since Cazuela 1.0

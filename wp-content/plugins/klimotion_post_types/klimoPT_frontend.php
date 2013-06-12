@@ -241,8 +241,9 @@ function kpt_add_idea_menu_term_item_hook($term_id) {
 	// create item
 	$menu_items = wp_get_nav_menu_items($menu->term_id);
 	$parent_id = 0;
+	$ideasPageID = get_page_by_path('ideaspage')->ID;
 	foreach ($menu_items as $item) {
-		if($item->object == 'page' && $item->object_id == $groupsPage) {
+		if($item->object == 'page' && $item->object_id == $ideasPageID) {
 			$parent_id = $item->ID;
 			break;
 		}

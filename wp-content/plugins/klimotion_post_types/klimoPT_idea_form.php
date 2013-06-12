@@ -293,6 +293,7 @@ class NewIdeaForm {
 		
 		$post_args = array(
             'ping_status'   => 'open',
+            'comment_status'=> 'open',
             'post_status'   => 'pending',
             'post_type'     => 'klimo_idea',
             'post_title'    => $idea_title,

@@ -1,7 +1,7 @@
 <?php
-/* 
+/*
 Plugin Name: Wordpress Logging Service
-Version: 1.5.2
+Version: 1.5.3
 Description: Provides a simple API for storing miscellaneous log entries and their overview in admin area.
 Author: Zaantar
 Author URI: http://zaantar.eu
@@ -13,7 +13,7 @@ Plugin URI: http://wordpress.org/extend/plugins/wordpress-logging-service
 /*  Copyright 2011 Zaantar (email: zaantar@gmail.com)
 
     This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU General Public License, version 2, as 
+    it under the terms of the GNU General Public License, version 2, as
     published by the Free Software Foundation.
 
     This program is distributed in the hope that it will be useful,
@@ -170,7 +170,7 @@ function wls_is_registered( $log_name ) {
 	global $wpdb;
 	$query = '
 		SELECT COUNT(*)
-		FROM '.wls_logs_table().' 
+		FROM '.wls_logs_table().'
 		WHERE log_name LIKE %s';
 	return ( $wpdb->get_var( $wpdb->prepare( $query, $log_name ) ) > 0 );
 }
@@ -180,8 +180,8 @@ function wls_register( $log_name, $description ) {
 	if( wls_is_registered( $log_name ) ) {
 		return false;
 	}
-	$ok = $wpdb->insert( wls_logs_table(), 
-		array( 'log_name' => $log_name, 'description' => $description ) ); 
+	$ok = $wpdb->insert( wls_logs_table(),
+		array( 'log_name' => $log_name, 'description' => $description ) );
 	return ( $ok != false );
 }
 
@@ -210,8 +210,8 @@ function wls_log( $log_name, $text, $user_id, $date, $blog_id, $category = WLS_N
 	if( !wls_is_registered( $log_name ) ) {
 		return false;
 	}
-	$data = array( 
-		'log_id' => wls_get_log_id( $log_name ), 
+	$data = array(
+		'log_id' => wls_get_log_id( $log_name ),
 		'blog_id' => $blog_id,
 		'date' => $date,
 		'user_id' => $user_id,
@@ -224,7 +224,7 @@ function wls_log( $log_name, $text, $user_id, $date, $blog_id, $category = WLS_N
 		$ok = true;
 		wls_update_last_log( $data );
 	} else if( ( $lastlog['log_data']['log_id'] != $data['log_id'] )
-		or ( $lastlog['log_data']['blog_id'] != $data['blog_id'] ) 
+		or ( $lastlog['log_data']['blog_id'] != $data['blog_id'] )
 		or ( $lastlog['log_data']['user_id'] != $data['user_id'] )
 		or ( $lastlog['log_data']['category'] != $data['category'] )
 		or ( $lastlog['log_data']['text'] != $data['text'] ) ) {

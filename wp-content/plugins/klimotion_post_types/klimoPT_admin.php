@@ -3,7 +3,9 @@
  * @package Klimotion_Post_Types
  */
 
- 
+include_once('klimoPT_data.php');
+
+
 /* back end action hooks */
 add_action('add_meta_boxes', 'kpt_hook_metaboxes' );
 add_action('save_post', 'kpt_hook_save_post_idea', 1, 2);
@@ -11,6 +13,22 @@ add_action('save_post', 'kpt_hook_save_post_group', 1, 2);
 add_action('admin_init',  'kpt_hook_add_admin_style');
 add_action('admin_init',  'kpt_hook_add_admin_script');
  
+add_filter('delete_post', 'kpt_hook_delete_post');
+
+
+
+
+function kpt_hook_delete_post($postID) {
+	$pType = get_post($postID)->post_type;
+
+	if($pType == 'klimo_idea') {
+		kpt_delete_idea_group_relation($postID, -1);
+	} else if($pType == 'klimo_localgroup') {
+		kpt_delete_idea_group_relation(-1, $postID);
+	}
+	
+	return $postID;
+}
  
  
 function kpt_hook_add_admin_style() {
@@ -42,7 +60,7 @@ function kpt_hook_metaboxes() {
 
 function kpt_hook_metabox_idea_groups($post) {
 	
-	$groups_selected_list = kpt_get_localgroups_by_idea($post->ID, false);
+	$groups_selected_list = kpt_get_localgroups_by_idea($post->ID, false, false);
 	$groups_selected_IDs = array();
 	foreach ($groups_selected_list as $group) {
 		$groups_selected_IDs[] = $group->ID;
@@ -210,7 +228,7 @@ function kpt_hook_save_post_idea($post_id, $post) {
 	
 	
 	// save local groups
-	$old_groups = kpt_get_localgroups_by_idea($post->ID);
+	$old_groups = kpt_get_localgroups_by_idea($post->ID, false, false);
 	$new_group_ids = array_key_exists('meta-group', $_POST)? $_POST['meta-group'] : array();
 	foreach ($old_groups as $old_group) {
 		if(! in_array($old_group->ID, $new_group_ids)) {

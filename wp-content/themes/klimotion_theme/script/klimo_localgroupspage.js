@@ -18,13 +18,13 @@ jQuery(function($) { klimo_localgroupspage : {
 
 
 			this.__contruct = function() {
-				
+
 				// prepare map
 				var mapOpts = {
 					map: me.opts.map,
 					series: { 
 						regions: [{
-							scale: ['#FFFFFF','#FFFB00', 'FF9D00', 'FF4800', 'FF482B' ,'C90000'],
+							scale: ['#FFFFFF', '#0b4982'],
 				            attribute: 'fill',
 				            normalizeFunction: 'linear',
 				            values: me.opts.mapVals

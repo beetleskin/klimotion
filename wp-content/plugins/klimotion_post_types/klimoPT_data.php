@@ -14,12 +14,27 @@ function kpt_data_init() {
 	kpt_add_localGroup();
 }
 
-function kpt_delete_idea_group_relation($idea_id, $group_id) {
+
+function kpt_delete_idea_group_relation($idea_id=-1, $group_id=-1) {
 	global $wpdb;
 	$table_name = KPT_dbtable_post_idea_relations;
-	$query = "DELETE FROM $table_name WHERE $table_name.localgroup = $group_id AND idea = $idea_id;";
+	
+	$query = "";
+	
+	if($idea_id !== -1 && $group_id !== -1) {
+		// group and idea id given
+		$query = "DELETE FROM $table_name WHERE $table_name.localgroup = $group_id AND idea = $idea_id;";
+	} else if($idea_id !== -1 && is_int($idea_id) && $group_id === -1) {
+		// only idea id given
+		$query = "DELETE FROM $table_name WHERE idea = $idea_id;";
+	} else if($idea_id === -1 && $group_id !== -1 && is_int($group_id)) {
+		// only idea id given
+		$query = "DELETE FROM $table_name WHERE $table_name.localgroup = $group_id;";
+	}
+	
 	return $wpdb->query($query);
 }
+
 
 function kpt_insert_idea_group_relation($idea_id, $group_id, $initiated=false, $uid=-1) {
 	global $wpdb;
@@ -37,7 +52,7 @@ function kpt_insert_idea_group_relation($idea_id, $group_id, $initiated=false, $
 	return $result;
 }
 
-function kpt_get_ideas_by_localgroup($group_id, $get_posts=false) {
+function kpt_get_ideas_by_localgroup($group_id, $get_posts=false, $filterNonPublc=true) {
 	global $wpdb;
 	$table_name = KPT_dbtable_post_idea_relations;
 	$query = "
@@ -46,7 +61,12 @@ function kpt_get_ideas_by_localgroup($group_id, $get_posts=false) {
 		INNER JOIN $wpdb->posts
 		ON $table_name.idea = $wpdb->posts.ID
 		WHERE $table_name.localgroup = $group_id";
+	if( $filterNonPublc ) {
+		$query .= " AND $wpdb->posts.post_status = 'publish'";
+	}
+	$query .= ";";
 	$relations = $wpdb->get_results($query);
+		
 	
 	if( !$get_posts ) {
 		return $relations;
@@ -62,7 +82,7 @@ function kpt_get_ideas_by_localgroup($group_id, $get_posts=false) {
 }
 
 
-function kpt_get_localgroups_by_idea($idea_id, $get_posts=false) {
+function kpt_get_localgroups_by_idea($idea_id, $get_posts=false, $filterNonPublc=true) {
 	global $wpdb;
 	$table_name = KPT_dbtable_post_idea_relations;
 	$query = "
@@ -71,6 +91,10 @@ function kpt_get_localgroups_by_idea($idea_id, $get_posts=false) {
 		INNER JOIN $wpdb->posts
 		ON $table_name.localgroup = $wpdb->posts.ID
 		WHERE $table_name.idea = $idea_id";
+	if( $filterNonPublc ) {
+		$query .= " AND $wpdb->posts.post_status = 'publish'";
+	}
+	$query .= ";";
 	$relations = $wpdb->get_results($query);
 	
 	
