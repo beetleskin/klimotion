@@ -54,10 +54,6 @@ form#groupform fieldset legend {
 	color: #00883b;
 }
 
-form#ideaform fieldset div.form-field-wrap label[for=ideadescription],
-form#groupform fieldset div.form-field-wrap label[for=groupdescription]{
-	height: 0px;
-}
 
 form#ideaform fieldset div.form-field-wrap #idea_files td{
 	padding-right: 10px;

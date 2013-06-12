@@ -125,7 +125,7 @@ class NewGroupForm {
 					</div><!-- .form-field-wrap -->
   	  				
 					<div class="form-field-wrap">
-						<label for="groupdescription"><?php echo __("Kurzvorstellung") ?> *</label>
+						<label for="groupdescription"><?php echo __("Kurzvorstellung") ?></label>
 				        <?php wp_editor("", 'groupdescription', array(
 				        	'media_buttons' => false,
 				        	'textarea_name' => 'group_description',
