@@ -149,13 +149,13 @@ function display_day( $day, $monthView ) {
 								 	echo ' ' . date_i18n( get_option('time_format', 'g:i a'), $end) . '<br />';
 							}
 						} ?>
-					</div>
+					<!--</div>
 					<?php if ( function_exists('has_post_thumbnail') && has_post_thumbnail() ) { ?>
 						<div class="tribe-events-event-thumb"><?php the_post_thumbnail( array(75,75));?></div>
 					<?php } ?>
 					<?php echo has_excerpt() ? TribeEvents::truncate($post->post_excerpt) : TribeEvents::truncate(get_the_content(), 30); ?>
 
-				</div>
+				</div>-->
 				<span class="tribe-events-arrow"></span>
 			</div>
 		</div>
