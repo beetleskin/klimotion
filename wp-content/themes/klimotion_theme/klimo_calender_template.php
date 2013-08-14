@@ -16,8 +16,8 @@ get_header(); ?>
 
 			<?php while ( have_posts() ) : the_post(); ?>
 				<?php thsp_content_nav( 'nav-above' ); ?>
-
-				<?php get_template_part( 'content', 'page' ); ?>
+				
+				<?php get_template_part( 'content', 'calendar' ); ?>
 				<?php thsp_content_nav( 'nav-below' ); ?>
 
 				<?php comments_template( '', true ); ?>
