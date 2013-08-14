@@ -33,8 +33,8 @@ class NewIdeaForm {
         $data = array();
         
 		// defaults
-        $nopriv_redirect = wp_login_url(get_permalink());
-		$isLoggedIn = get_current_user_id() != 0;
+        $data['nopriv_redirect'] = wp_login_url(get_permalink());
+		$data['isLoggedIn'] = get_current_user_id() != 0;
         
 		
 		// groups:
@@ -74,10 +74,6 @@ class NewIdeaForm {
 		}
 
 		
-		// leftover
-        $data['isLoggedIn'] = $isLoggedIn;
-        $data['nopriv_redirect'] = $nopriv_redirect;
-		
 		$this->renderData = &$data;
         return $data;
     }
@@ -93,9 +89,6 @@ class NewIdeaForm {
 
         $data = $this->preRender();
         ?>        
-        
-        <?php if($data['isLoggedIn'] == false) : //TODO: display hint if not logged in ?>
-        <?php endif; ?>
         
         <div id="ideaform_wrap">   	
 		    <form action="<?php echo $this->form_action ?>" id="<?php echo $this->form_id ?>" <?php if($data['isLoggedIn'] == false) echo 'nopriv="nopriv"' ?> method="<?php echo $this->form_method ?>" novalidate="novalidate">
