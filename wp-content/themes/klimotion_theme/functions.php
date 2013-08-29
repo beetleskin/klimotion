@@ -7,5 +7,7 @@
 
 
 include_once ('functions_render.php');
+include_once ('inc/LocalGroupsPage.class.php');
+
 
 ?>
