@@ -47,16 +47,13 @@ function kpt_override_login_page($login_url, $redirect) {
 	return $wpm_login_url;
 }
 
-function kpt_override_register_page($register_url, $redirect) {
+function kpt_override_register_page($register_url) {
 	$wpm_register_url = get_permalink(get_page_by_path( 'wpm_register' ) );
 	
 	if(!$wpm_register_url) {
 		// TODO: log error
 		return $register_url;
 	}
-	
-	if ( !empty($redirect) )
-		$wpm_register_url = add_query_arg('redirect_to', urlencode($redirect), $wpm_register_url);	
 
 	return $wpm_register_url;
 }
